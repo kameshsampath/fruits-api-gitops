@@ -1,4 +1,0 @@
-image:
-  repository: registry-192.168.64.83.nip.io/kameshsampath/fruits-api
-  pullPolicy: Always
-  tag: ""

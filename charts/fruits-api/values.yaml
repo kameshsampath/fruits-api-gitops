@@ -1,10 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: registry-192.168.64.80.nip.io/kameshsampath/fruits-api
+  name: registry-192.168.64.80.nip.io/kameshsampath/fruits-api
   pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
 
 imagePullSecrets: [ ]
 nameOverride: ""
@@ -26,8 +24,8 @@ podSecurityContext: { }
 
 securityContext: { }
   # capabilities:
-  #   drop:
-  #   - ALL
+#   drop:
+#   - ALL
 # readOnlyRootFilesystem: true
 # runAsNonRoot: true
 # runAsUser: 1000

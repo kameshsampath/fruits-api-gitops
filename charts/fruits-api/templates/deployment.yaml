@@ -28,18 +28,18 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-          - name: QUARKUS_DATASOURCE_USERNAME
-            value: {{ .Values.postgresql.global.postgresql.postgresqlUsername }}
-          - name: QUARKUS_DATASOURCE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "fruits-api.fullname" . }}-postgresql
-                key: postgresql-password
-          - name: QUARKUS_DATASOURCE_JDBC_URL
-            value: "jdbc:postgresql://{{ include "fruits-api.fullname" . }}-postgresql:5432/fruitsdb"
+            - name: QUARKUS_DATASOURCE_USERNAME
+              value: {{ .Values.postgresql.global.postgresql.postgresqlUsername }}
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "fruits-api.fullname" . }}-postgresql
+                  key: postgresql-password
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              value: "jdbc:postgresql://{{ include "fruits-api.fullname" . }}-postgresql:5432/fruitsdb"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

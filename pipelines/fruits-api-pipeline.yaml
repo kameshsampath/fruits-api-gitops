@@ -17,7 +17,7 @@ spec:
       description: the built container image name
     - name: image-tag
       description: the image tag
-      default: 1.0.0
+      default: latest
     - name: path-to-image-context
       description: the context directory from where to build the application
       default: .

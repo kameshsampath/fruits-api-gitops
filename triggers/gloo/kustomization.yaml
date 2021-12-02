@@ -1,0 +1,9 @@
+namespace: gloo-system
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+  # enable this if you have disabled discovery
+  # - event-listener-upstream.yaml
+  - event-listener-route.yaml
+  

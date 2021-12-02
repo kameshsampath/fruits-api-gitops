@@ -1,0 +1,45 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openshift-client-role
+rules:
+  # Core API
+  - apiGroups: [""]
+    resources: ["services", "pods", "deployments", "configmaps", "secrets"]
+    verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
+  # Apps API
+  - apiGroups: ["apps"]
+    resources: ["deployments", "daemonsets", "jobs"]
+    verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
+  # Tekton API
+  - apiGroups: ["tekton.dev"]
+    resources: ["*"]
+    verbs: ["*"]
+  # Gloo APIS
+  - apiGroups: [ "portal.gloo.solo.io" ]
+    resources: ["*"]
+    verbs: [ "*" ]  
+  - apiGroups: [ "enterprise.gloo.solo.io" ]
+    resources: ["*"]
+    verbs: [ "*" ]
+  - apiGroups: [ "ratelimit.solo.io" ]
+    resources: ["*"]
+    verbs: [ "*" ]
+  - apiGroups: [ "fed.gateway.solo.io" ]
+    resources: ["*"]
+    verbs: [ "*" ]
+  - apiGroups: [ "multicluster.solo.io" ]
+    resources: ["*"]
+    verbs: [ "*" ]
+  - apiGroups: [ "gloo.solo.io" ]
+    resources: ["*"]
+    verbs: [ "*" ]
+  - apiGroups: [ "gateway.solo.io" ]
+    resources: ["*"]
+    verbs: [ "*" ]
+  - apiGroups: [ "fed.solo.io" ]
+    resources: ["*"]
+    verbs: [ "*" ]
+  - apiGroups: [ "fed.ratelimit.solo.io" ]
+    resources: ["*"]
+    verbs: [ "*" ]

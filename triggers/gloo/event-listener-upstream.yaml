@@ -1,0 +1,12 @@
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  name: gitea-webhook-http-8080
+  namespace: gloo-system
+spec:
+  kube:
+    selector:
+      eventlistener: gitea-webhook
+    serviceName: el-gitea-webhook
+    serviceNamespace: default
+    servicePort: 8080

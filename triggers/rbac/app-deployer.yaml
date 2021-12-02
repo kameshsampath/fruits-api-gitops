@@ -1,0 +1,78 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: app-deployer-role
+rules:
+  - apiGroups: [ 'serving.knative.dev' ]
+    resources: [ '*' ]
+    verbs: [ '*' ]
+  - apiGroups: [ 'eventing.knative.dev' ]
+    resources: [ '*' ]
+    verbs: [ '*' ]
+  - apiGroups: [ 'sources.knative.dev' ]
+    resources: [ '*' ]
+    verbs: [ '*' ]
+  - apiGroups: [ 'projectcontour.io' ]
+    resources: [ '*' ]
+    verbs: [ '*' ]
+  - apiGroups:
+      - ''
+    resources:
+      - pods
+      - pods/exec
+      - services
+      - endpoints
+      - configmaps
+      - secrets
+    verbs:
+      - '*'
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+      - daemonsets
+      - replicasets
+      - statefulsets
+    verbs:
+      - '*'
+  - apiGroups:
+      - ''
+    resources:
+      - pods
+    verbs:
+      - get
+  - apiGroups:
+      - apps
+    resources:
+      - replicasets
+    verbs:
+      - get
+      # Gloo APIS
+  - apiGroups: [ "portal.gloo.solo.io" ]
+    resources: [ "*" ]
+    verbs: [ "*" ]
+  - apiGroups: [ "enterprise.gloo.solo.io" ]
+    resources: [ "*" ]
+    verbs: [ "*" ]
+  - apiGroups: [ "ratelimit.solo.io" ]
+    resources: [ "*" ]
+    verbs: [ "*" ]
+  - apiGroups: [ "fed.gateway.solo.io" ]
+    resources: [ "*" ]
+    verbs: [ "*" ]
+  - apiGroups: [ "multicluster.solo.io" ]
+    resources: [ "*" ]
+    verbs: [ "*" ]
+  - apiGroups: [ "gloo.solo.io" ]
+    resources: [ "*" ]
+    verbs: [ "*" ]
+  - apiGroups: [ "gateway.solo.io" ]
+    resources: [ "*" ]
+    verbs: [ "*" ]
+  - apiGroups: [ "fed.solo.io" ]
+    resources: [ "*" ]
+    verbs: [ "*" ]
+  - apiGroups: [ "fed.ratelimit.solo.io" ]
+    resources: [ "*" ]
+    verbs: [ "*" ]

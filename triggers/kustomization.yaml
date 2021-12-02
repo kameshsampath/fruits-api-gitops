@@ -1,0 +1,10 @@
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+  - gitea-trigger-bindings.yaml
+  - gitea-webhook-listener.yaml
+  - fruits-api-trigger-template.yaml
+  - rbac
+  - gloo
+  

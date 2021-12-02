@@ -1,0 +1,17 @@
+namespace:  default
+
+generatorOptions:
+  disableNameSuffixHash: true
+  
+configMapGenerator:
+  - name: maven-settings
+    files:
+      - settings.xml
+
+resources:
+  - sa.yaml
+  - git-source-pvc.yaml
+  - cluster-role.yaml
+  - cluster-role-binding.yaml
+  - fruits-api-pipeline.yaml
+  

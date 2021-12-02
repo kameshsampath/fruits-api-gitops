@@ -1,0 +1,8 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: APIDoc
+metadata:
+  name: apidoc-v1-fruits
+spec:
+  openApi:
+    content:
+      fetchUrl: http://fruits-api.default.svc.cluster.local:8080/swagger.json

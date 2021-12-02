@@ -1,0 +1,99 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: fruits-api-deploy
+spec:
+  params:
+    - name: contextDir
+      description: the context directory from where to build the application
+      default: .
+    - name: repo_name
+      description: >-
+        The Git Repo name
+      default: gitea/fruits-api
+    - name: git-url
+      description: the git repository source url
+      default: 'https://gitea-192.168.64.81.nip.io/$(params.repo_name)'
+    - name: git-revision
+      description: the git revision to use
+      default: main
+    - name: image-name
+      description: the built container image name
+      default: example.com/kameshsampath/fruits-api
+    - name: path-to-image-context
+      description: the context directory from where to build the application
+      default: .
+    - name: path-to-dockerfile
+      description: the built container image name
+      default: src/main/docker/Dockerfile.jvm
+    - name: git-ssl-verify
+      description: >-
+        to verify ssl ceritificates, for local gitea repos set to false
+      default: "false"
+  workspaces:
+    - name: git-source
+    - name: maven-settings
+  tasks:
+    - name: fetch-repo
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: $(params.git-url)
+        - name: revision
+          value: $(params.git-revision)
+        - name: sslVerify
+          value: $(params.git-ssl-verify)
+      workspaces:
+        - name: output
+          workspace: git-source
+    - name: build-and-test-app
+      taskRef:
+        name: maven
+      runAfter:
+        - fetch-repo
+      params:
+        - name: GOALS
+          value:
+            - clean
+            - test
+      workspaces:
+        - name: source
+          workspace: git-source
+        - name: maven-settings
+          workspace: maven-settings
+    - name: build-app
+      taskRef:
+        name: maven
+      runAfter:
+        - build-and-test-app
+      params:
+        - name: GOALS
+          value:
+            - -DskipTests
+            - clean
+            - package
+      workspaces:
+        - name: source
+          workspace: git-source
+        - name: maven-settings
+          workspace: maven-settings
+    - name: build-image
+      taskRef:
+        name: kaniko
+      runAfter:
+        - build-app
+      params:
+        - name: IMAGE
+          value: $(params.image-name)
+        - name: CONTEXT
+          value: $(params.path-to-image-context)
+        - name: DOCKERFILE
+          value: $(params.path-to-dockerfile)
+        - name: EXTRA_ARGS
+          value:
+            - "--insecure"
+      workspaces:
+        - name: source
+          workspace: git-source
+ 

@@ -1,0 +1,24 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: Portal
+metadata:
+  name: fruits-portal
+spec:
+  displayName: Fruits  Portal
+  description: The Gloo Portal for the Fruits API and much more!
+  banner:
+    fetchUrl: https://fruityvice.com/images/cherry.png
+  favicon:
+    fetchUrl: https://fruityvice.com/images/favicon-16x16.png
+  customStyling: {}
+  staticPages: []
+
+  domains:
+  - portal.kameshs.me
+
+  publishedEnvironments:
+  - name: dev
+    namespace: default
+
+  allApisPublicViewable: true # this will make APIs visible by unauthenticated users
+  portalUrlPrefix: http://portal.kameshs.me/
+

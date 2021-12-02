@@ -1,0 +1,9 @@
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources: 
+  - dev1-password-secret.yaml
+  - dev-environment.yaml
+  - portal.yaml
+  - user-dev1.yaml
+  - group-devs.yaml

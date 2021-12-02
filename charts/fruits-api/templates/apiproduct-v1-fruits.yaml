@@ -1,0 +1,23 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: APIProduct
+metadata:
+  name: fruits-product
+  labels:
+    app: fruits-api
+spec:
+  displayInfo: 
+    title: Fruits Product
+    description: API Product for Fruits service
+  versions:
+  - name: v1
+    apis:
+      - apiDoc:
+          name: apidoc-v1-fruits
+          namespace: default
+    gatewayConfig:
+      route:
+        inlineRoute:
+          backends:
+            - upstream:
+                name: default-fruits-api-8080
+                namespace: gloo-system

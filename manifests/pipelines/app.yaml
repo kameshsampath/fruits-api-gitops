@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fruits-api-pipelines
+spec:
+  destination:
+    name: ''
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: pipelines
+    # update this to your fork
+    repoURL: 'https://gitea-192.168.64.81.nip.io/gitea/fruits-api-gitops'
+    targetRevision: HEAD
+    helm:
+      parameters: [ ]
+      valueFiles:
+        - ../helm_vars/fruits-api/values.yaml
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

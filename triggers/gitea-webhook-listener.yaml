@@ -1,0 +1,14 @@
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: gitea-webhook
+  namespace: default
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - name: tekton-fruits-api-webhook
+      bindings:
+        - ref: gitea-triggerbinding
+      template:
+        ref: tekton-fruits-api-trigger-template

@@ -1,0 +1,30 @@
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: Environment
+metadata:
+  name: dev
+spec:
+  domains:
+  # the domain name where the API will be exposed
+    - api.kameshs.me
+  displayInfo:
+    description: This environment is meant for developers to deploy and test their APIs.
+    displayName: Development
+  # a global basepath for our APIs
+  basePath: /fruits 
+  # we will select our APIProduct using a selector and the 2 version of it
+  apiProducts:
+    - namespaces:
+        - "*"
+      labels:
+        - key: app
+          operator: In
+          values:
+            - fruits-api
+      versions:
+        names:
+          - v1
+      # this will dynamically prefix the API with the version names
+      basePath: "{%version%}"
+  gatewayConfig:
+    # we actually want to expose the APIs on a Gateway (optional)
+    disableRoutes: false

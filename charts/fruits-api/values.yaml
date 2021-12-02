@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  name: registry-192.168.64.80.nip.io/kameshsampath/fruits-api
-  pullPolicy: Always
+  name: registry-192.168.64.80.nip.io/kameshsampath/fruits-api:1.0.0
+  pullPolicy: IfNotPresent
 
 imagePullSecrets: [ ]
 nameOverride: ""
@@ -23,7 +23,7 @@ podSecurityContext: { }
 # fsGroup: 2000
 
 securityContext: { }
-  # capabilities:
+# capabilities:
 #   drop:
 #   - ALL
 # readOnlyRootFilesystem: true

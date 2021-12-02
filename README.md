@@ -61,7 +61,7 @@ kubectl apply --context $CLUSTER1 --kustomize pipelines
 Get the gloo gateway-proxy LoadBalancer ip,
 
 ```shell
-export GLOO_GATEWAY_PROXY_IP="$(glooctl proxy address | cut -d':' -f1)"
+export GLOO_GATEWAY_PROXY_IP="$(kubectl --context="$CLUSTER1" -n gloo-system  get svc gateway-proxy -ojsonpath='{.status.loadBalancer.ingress[*].ip}')"
 ```
 
 Create Tekton Triggers that will run the image build once changes are pushed to fruits-api,
@@ -76,7 +76,7 @@ kustomize build triggers  | envsubst | kubectl apply --context $CLUSTER1 -f -
 
 ```shell
 # Ensures colors are also removed form output
-export TARGET_CLUSTER="$(kubectl --context=cluster1 cluster-info | sed 's/\x1b\[[0-9;]*m//g' | awk 'NR==1{print $7}')"
+export TARGET_CLUSTER="$(kubectl --context="$CLUSTER1" cluster-info | sed 's/\x1b\[[0-9;]*m//g' | awk 'NR==1{print $7}')"
 yq eval '.spec.destination.server = strenv(TARGET_CLUSTER)' manifests/app/app.yaml | kubectl apply --context="$MGMT" -n argocd -f - 
 ```
 
@@ -86,7 +86,7 @@ __TODO__: automate via task
 
 - Create a git repository on gitea with name `fruits-api`
 - Push the sources of fruits-api to it
-- Add Gitea webhook pointing to 'https://el-gitea-webhook-${GLOO_GATEWAY_PROXY_IP}.nip.io'
+- Add Gitea webhook pointing to 'http://el-gitea-webhook-${GLOO_GATEWAY_PROXY_IP}.nip.io'
 - Trigger test delivery to see the pipeline getting started
 
 ### Manual Trigger Pipeline
@@ -95,9 +95,10 @@ Build and Deploy the fruits-api image,
 
 ```
 tkn pipeline start fruits-api-deploy \
+  --context="$CLUSTER1" \
   --namespace=default \
   --serviceaccount=openshift-client-sa \
-  --param image-name=registry-192.168.64.83.nip.io/kameshsampath/fruits-api \
+  --param image-name=registry-192.168.64.80.nip.io/kameshsampath/fruits-api \
   --workspace name=maven-settings,config=maven-settings \
   --workspace name=git-source,claimName=fruits-api-git-source \
   --use-param-defaults \

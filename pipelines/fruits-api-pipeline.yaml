@@ -15,6 +15,9 @@ spec:
       default: main
     - name: image-name
       description: the built container image name
+    - name: image-tag
+      description: the image tag
+      default: 1.0.0
     - name: path-to-image-context
       description: the context directory from where to build the application
       default: .
@@ -80,7 +83,7 @@ spec:
         - build-app
       params:
         - name: IMAGE
-          value: $(params.image-name)
+          value: "$(params.image-name):$(params.image-tag)"
         - name: CONTEXT
           value: $(params.path-to-image-context)
         - name: DOCKERFILE

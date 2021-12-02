@@ -97,6 +97,7 @@ Build and Deploy the fruits-api image,
 tkn pipeline start fruits-api-deploy \
   --namespace=default \
   --serviceaccount=openshift-client-sa \
+  --param image-name=registry-192.168.64.83.nip.io/kameshsampath/fruits-api \
   --workspace name=maven-settings,config=maven-settings \
   --workspace name=git-source,claimName=fruits-api-git-source \
   --use-param-defaults \

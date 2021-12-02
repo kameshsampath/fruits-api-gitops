@@ -4,7 +4,7 @@ image:
   repository: registry-192.168.64.83.nip.io/kameshsampath/fruits-api
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "no-tag"
+  tag: ""
 
 imagePullSecrets: [ ]
 nameOverride: ""
@@ -29,7 +29,7 @@ securityContext: { }
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
+# runAsNonRoot: true
 # runAsUser: 1000
 
 service:

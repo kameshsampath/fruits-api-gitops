@@ -3,9 +3,9 @@ kind: Application
 metadata:
   name: fruits-api
   annotations:
-    argocd-image-updater.argoproj.io/image-list: fruits-api=registry-192.168.64.83.nip.io/kameshsampath/fruits-api
-    argocd-image-updater.argoproj.io/myimage.update-strategy: digest
-    argocd-image-updater.argoproj.io/myimage.ignore-tags: latest, master
+    argocd-image-updater.argoproj.io/image-list: fruits-api=registry-192.168.64.83.nip.io/kameshsampath/fruits-api:1.0.0
+    argocd-image-updater.argoproj.io/fruits-api.update-strategy: digest
+    argocd-image-updater.argoproj.io/fruits-api.ignore-tags: latest, master
 spec:
   destination:
     name: ''

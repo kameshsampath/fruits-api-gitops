@@ -39,7 +39,7 @@ spec:
               value: "jdbc:postgresql://{{ include "fruits-api.fullname" . }}-postgresql:5432/fruitsdb"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: '{{ .Values.image.name }}@dummy
+          image: '{{ .Values.image.name }}@{{ .Values.image.tag | default "latest" }}'
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

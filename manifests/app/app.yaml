@@ -3,9 +3,8 @@ kind: Application
 metadata:
   name: fruits-api
   annotations:
-    argocd-image-updater.argoproj.io/image-list: fruits-api=yourorg/yourimage
+    argocd-image-updater.argoproj.io/image-list: fruits-api=example.com/kameshsampath/fruits-api
     argocd-image-updater.argoproj.io/fruits-api.update-strategy: latest
-    argocd-image-updater.argoproj.io/fruits-api.allow-tags: regexp:^v1.0.0-[0-9a-zA-Z]+$
 spec:
   destination:
     name: ''
@@ -19,7 +18,7 @@ spec:
     helm:
       parameters: [ ]
       valueFiles:
-        - ../helm_vars/fruits-api/values.yaml
+        - ./helm_vars/fruits-api/values.yaml
   project: default
   syncPolicy:
     automated:

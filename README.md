@@ -56,15 +56,6 @@ Create the pipeline that will help us build the fruits-api application,
 kubectl apply --context $CLUSTER1 --kustomize pipelines
 ```
 
-## Create Gitops Secret
-
-```shell
-GITEA_PAT_TOKEN=$()
-kubectl create secret \
-  -n default generic image-updater-secret \
-  --from-literal=token=$GITEA_PAT_TOKEN
-```
-
 ## Tekton Triggers
 
 Get the gloo gateway-proxy LoadBalancer ip,
@@ -80,6 +71,14 @@ kustomize build triggers  | envsubst | kubectl apply --context $CLUSTER1 -f -
 ```
 
 ## Build and Deploy
+
+## using Argocd
+
+```shell
+# Ensures colors are also removed form output
+export TARGET_CLUSTER="$(kubectl --context=cluster1 cluster-info | sed 's/\x1b\[[0-9;]*m//g' | awk 'NR==1{print $7}')"
+yq eval '.spec.destination.server = strenv(TARGET_CLUSTER)' manifests/app/app.yaml | kubectl apply --context="$MGMT" -n argocd -f - 
+```
 
 Building via triggers.
 

@@ -1,8 +1,9 @@
 replicaCount: 1
 
 image:
-  name: registry-192.168.64.80.nip.io/kameshsampath/fruits-api:1.0.0
+  name: registry-192.168.64.80.nip.io/kameshsampath/fruits-api
   pullPolicy: IfNotPresent
+  tag: ""
 
 imagePullSecrets: [ ]
 nameOverride: ""

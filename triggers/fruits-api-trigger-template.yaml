@@ -11,6 +11,8 @@ spec:
       default: main
     - name: gitrepositoryurl
       description: The git repository url
+    - name: imageName
+      description: The image to be built
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -28,7 +30,7 @@ spec:
           - name: github-repo-revision
             value: '$(tt.params.gitrevision)'
           - name: image-name
-            value: example.com/kameshsampath/fruits-api
+            value: '$(tt.params.imageName)'
         workspaces:
           - name: maven-settings
             configmap:

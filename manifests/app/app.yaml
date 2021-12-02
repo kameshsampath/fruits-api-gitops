@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: fruits-api
   annotations:
-    argocd-image-updater.argoproj.io/image-list: fruits-api=example.com/kameshsampath/fruits-api
+    argocd-image-updater.argoproj.io/image-list: fruits-api=registry-192.168.64.83.nip.io/kameshsampath/fruits-api
     argocd-image-updater.argoproj.io/fruits-api.update-strategy: latest
 spec:
   destination:
@@ -18,7 +18,7 @@ spec:
     helm:
       parameters: [ ]
       valueFiles:
-        - ./helm_vars/fruits-api/values.yaml
+        - ../../helm_vars/fruits-api/values.yaml
   project: default
   syncPolicy:
     automated:

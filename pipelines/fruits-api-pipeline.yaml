@@ -7,19 +7,14 @@ spec:
     - name: contextDir
       description: the context directory from where to build the application
       default: .
-    - name: repo_name
-      description: >-
-        The Git Repo name
-      default: gitea/fruits-api
     - name: git-url
       description: the git repository source url
-      default: 'https://gitea-192.168.64.81.nip.io/$(params.repo_name)'
+      default: 'https://gitea-192.168.64.81.nip.io/gitea/fruits-api'
     - name: git-revision
       description: the git revision to use
       default: main
     - name: image-name
       description: the built container image name
-      default: example.com/kameshsampath/fruits-api
     - name: path-to-image-context
       description: the context directory from where to build the application
       default: .

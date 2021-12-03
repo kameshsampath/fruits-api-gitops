@@ -3,8 +3,7 @@ kind: Application
 metadata:
   name: fruits-api
   annotations:
-    argocd-image-updater.argoproj.io/image-list: "fruitsapi=registry-192.168.64.80.nip.io/kameshsampath/fruits-api:^[0-9]$"
-    argocd-image-updater.argoproj.io/fruitsapi.update-strategy: digest
+    argocd-image-updater.argoproj.io/image-list: "fruitsapi=registry-192.168.64.80.nip.io/kameshsampath/fruits-api:1.x-0"
 spec:
   destination:
     name: ''

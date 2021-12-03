@@ -10,6 +10,10 @@ spec:
       default: staging
     - name: gitrepositoryurl
       description: The git repository url
+    - name: imagename
+      description: The container image name
+    - name: gitsslverify
+      description: TLS verification for git url
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -22,12 +26,14 @@ spec:
         pipelineRef:
           name: fruits-api-deploy
         params:
-          - name: github-repo-url
+          - name: git-url
             value: '$(tt.params.gitrepositoryurl)'
-          - name: github-repo-revision
+          - name: git-revision
             value: '$(tt.params.gitrevision)'
           - name: image-name
-            value: example.com/kameshsampath/fruits-api
+            value: '$(tt.params.imagename)'
+          - name: git-ssl-verify
+            value: '$(tt.params.gitsslverify)'
         workspaces:
           - name: maven-settings
             configmap:

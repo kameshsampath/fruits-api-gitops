@@ -98,6 +98,7 @@ tkn pipeline start fruits-api-deploy \
   --context="$CLUSTER1" \
   --namespace=default \
   --serviceaccount=openshift-client-sa \
+  --param git-url=https://gitea-192.168.64.81.nip.io/gitea/fruits-api \
   --param image-name=registry-192.168.64.80.nip.io/kameshsampath/fruits-api \
   --workspace name=maven-settings,config=maven-settings \
   --workspace name=git-source,claimName=fruits-api-git-source \

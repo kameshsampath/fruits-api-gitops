@@ -9,15 +9,11 @@ spec:
       default: .
     - name: git-url
       description: the git repository source url
-      default: 'https://gitea-192.168.64.81.nip.io/gitea/fruits-api'
     - name: git-revision
       description: the git revision to use
       default: main
     - name: image-name
       description: the built container image name
-    - name: image-tag
-      description: the image tag
-      default: 1.0.0
     - name: path-to-image-context
       description: the context directory from where to build the application
       default: .
@@ -53,6 +49,7 @@ spec:
       params:
         - name: GOALS
           value:
+            - -B
             - clean
             - test
       workspaces:
@@ -68,9 +65,43 @@ spec:
       params:
         - name: GOALS
           value:
+            - -B
             - -DskipTests
             - clean
             - package
+      workspaces:
+        - name: source
+          workspace: git-source
+        - name: maven-settings
+          workspace: maven-settings
+    - name: compute-image-tag
+      runAfter:
+        - build-app
+      params:
+        - name: CONTEXT_DIR
+          value: "$(params.contextDir)"
+      taskSpec:
+        params:
+          - name: CONTEXT_DIR
+            description: The directory where pom.xml is available
+        steps:
+          - name: maven-exec
+            image: gcr.io/cloud-builders/mvn@sha256:57523fc43394d6d9d2414ee8d1c85ed7a13460cbb268c3cd16d28cfb3859e641
+            command: [ "/usr/bin/mvn" ]
+            workingDir: $(workspaces.source.path)/$(params.CONTEXT_DIR)
+            args:
+              - -s
+              - $(workspaces.maven-settings.path)/settings.xml
+              - '-q'
+              - '-Dexec.executable=echo'
+              - '-Dexec.args=${project.version}'
+              - '--non-recursive'
+              - 'exec:exec'
+        workspaces:
+          - name: source
+          - name: maven-settings
+        results:
+          - name: POM-VERSION
       workspaces:
         - name: source
           workspace: git-source
@@ -80,10 +111,10 @@ spec:
       taskRef:
         name: kaniko
       runAfter:
-        - build-app
+        - compute-image-tag
       params:
         - name: IMAGE
-          value: "$(params.image-name):$(params.image-tag)"
+          value: "$(params.image-name):$(tasks.compute-image-tag.results.POM-VERSION)"
         - name: CONTEXT
           value: $(params.path-to-image-context)
         - name: DOCKERFILE

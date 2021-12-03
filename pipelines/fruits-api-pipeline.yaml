@@ -77,31 +77,11 @@ spec:
     - name: compute-image-tag
       runAfter:
         - build-app
+      taskRef:
+        name: pom-version
       params:
         - name: CONTEXT_DIR
           value: "$(params.contextDir)"
-      taskSpec:
-        params:
-          - name: CONTEXT_DIR
-            description: The directory where pom.xml is available
-        steps:
-          - name: maven-exec
-            image: gcr.io/cloud-builders/mvn@sha256:57523fc43394d6d9d2414ee8d1c85ed7a13460cbb268c3cd16d28cfb3859e641
-            command: [ "/usr/bin/mvn" ]
-            workingDir: $(workspaces.source.path)/$(params.CONTEXT_DIR)
-            args:
-              - -s
-              - $(workspaces.maven-settings.path)/settings.xml
-              - '-q'
-              - '-Dexec.executable=echo'
-              - '-Dexec.args=${project.version}'
-              - '--non-recursive'
-              - 'exec:exec'
-        workspaces:
-          - name: source
-          - name: maven-settings
-        results:
-          - name: POM-VERSION
       workspaces:
         - name: source
           workspace: git-source

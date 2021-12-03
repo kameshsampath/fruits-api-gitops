@@ -53,7 +53,7 @@ tkn hub install task openshift-client \
 Create the pipeline that will help us build the fruits-api application,
 
 ```bash
-kubectl apply --context $CLUSTER1 --kustomize pipelines
+kustomize build  pipelines | envsubst | kubectl apply --context $CLUSTER1 -f -
 ```
 
 ## Tekton Triggers
@@ -97,11 +97,24 @@ Build and Deploy the fruits-api image,
 tkn pipeline start fruits-api-deploy \
   --context="$CLUSTER1" \
   --namespace=default \
-  --serviceaccount=openshift-client-sa \
+  --serviceaccount=pipeline \
   --param git-url=https://gitea-192.168.64.81.nip.io/gitea/fruits-api \
-  --param image-name=registry-192.168.64.80.nip.io/kameshsampath/fruits-api \
+  --param image-name=ghcr.io/kameshsampath/fruits-api \
   --workspace name=maven-settings,config=maven-settings \
   --workspace name=git-source,claimName=fruits-api-git-source \
+  --use-param-defaults \
+  --showlog
+```
+
+## Pom Version Task
+
+```shell
+tkn task start pom-version \
+  --context="$CLUSTER1" \
+  --namespace=default \
+  --serviceaccount=pipeline \
+  --workspace name=maven-settings,config=maven-settings \
+  --workspace name=source,claimName=fruits-api-git-source \
   --use-param-defaults \
   --showlog
 ```

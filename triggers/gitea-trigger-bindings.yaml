@@ -11,6 +11,6 @@ spec:
     - name: gitrepositoryurl
       value: $(body.repository.clone_url)
     - name: imagename
-      value: 'registry-192.168.64.80.nip.io/kameshsampath/fruits-api'
+      value: 'ghcr.io/kameshsampath/fruits-api'
     - name: gitsslverify
       value: "false"

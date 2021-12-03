@@ -1,3 +1,4 @@
 resources:
   - pipelines.yaml
+  - triggers.yaml
 

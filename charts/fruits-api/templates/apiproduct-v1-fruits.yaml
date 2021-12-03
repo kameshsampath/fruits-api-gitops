@@ -3,21 +3,21 @@ kind: APIProduct
 metadata:
   name: fruits-product
   labels:
-    app: fruits-api
+    {{- include "fruits-api.labels" . | nindent 4 }}
 spec:
-  displayInfo: 
+  displayInfo:
     title: Fruits Product
     description: API Product for Fruits service
   versions:
-  - name: v1
-    apis:
-      - apiDoc:
-          name: apidoc-v1-fruits
-          namespace: default
-    gatewayConfig:
-      route:
-        inlineRoute:
-          backends:
-            - upstream:
-                name: default-fruits-api-8080
-                namespace: gloo-system
+    - name: v1
+      apis:
+        - apiDoc:
+            name: apidoc-v1-fruits
+            namespace: default
+      gatewayConfig:
+        route:
+          inlineRoute:
+            backends:
+              - upstream:
+                  name: default-{{ include "fruits-api.fullname" . }}-8080
+                  namespace: gloo-system

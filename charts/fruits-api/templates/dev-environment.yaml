@@ -4,22 +4,22 @@ metadata:
   name: dev
 spec:
   domains:
-  # the domain name where the API will be exposed
+    # the domain name where the API will be exposed
     - api.kameshs.me
   displayInfo:
     description: This environment is meant for developers to deploy and test their APIs.
     displayName: Development
   # a global basepath for our APIs
-  basePath: /fruits 
+  basePath: /fruits
   # we will select our APIProduct using a selector and the 2 version of it
   apiProducts:
     - namespaces:
         - "*"
       labels:
-        - key: app
+        - key: app.kubernetes.io/name
           operator: In
           values:
-            - fruits-api
+            - {{ include "fruits-api.name" . }}
       versions:
         names:
           - v1

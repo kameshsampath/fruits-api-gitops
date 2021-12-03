@@ -22,8 +22,8 @@ spec:
       default: src/main/docker/Dockerfile.jvm
     - name: git-ssl-verify
       description: >-
-        to verify ssl ceritificates, for local gitea repos set to false
-      default: "false"
+        to verify ssl certificates, for local gitea repos set to false
+      default: "true"
   workspaces:
     - name: git-source
     - name: maven-settings
@@ -89,7 +89,7 @@ spec:
           workspace: maven-settings
     - name: build-image
       taskRef:
-        name: kaniko
+        name: buildah`
       runAfter:
         - compute-image-tag
       params:
@@ -99,9 +99,6 @@ spec:
           value: $(params.path-to-image-context)
         - name: DOCKERFILE
           value: $(params.path-to-dockerfile)
-        - name: EXTRA_ARGS
-          value:
-            - "--insecure"
       workspaces:
         - name: source
           workspace: git-source

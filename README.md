@@ -39,6 +39,10 @@ tkn hub install task git-clone \
   --version=0.5 \
   --context="$CLUSTER1"
 
+tkn hub install task buildah \
+  --version=0.3 \
+  --context="$CLUSTER1"
+  
 tkn hub install task kaniko \
   --version=0.5 \
   --context="$CLUSTER1"
@@ -99,6 +103,7 @@ tkn pipeline start fruits-api-deploy \
   --namespace=default \
   --serviceaccount=pipeline \
   --param git-url=https://gitea-192.168.64.81.nip.io/gitea/fruits-api \
+  --param git-ssl-verify=false \
   --param image-name=ghcr.io/kameshsampath/fruits-api \
   --workspace name=maven-settings,config=maven-settings \
   --workspace name=git-source,claimName=fruits-api-git-source \

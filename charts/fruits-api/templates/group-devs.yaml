@@ -1,0 +1,32 @@
+{{- if .Values.enableRBAC -}}
+apiVersion: portal.gloo.solo.io/v1beta1
+kind: Group
+metadata:
+  name: developers
+  namespace: gloo-portal
+  labels:
+      {{- include "fruits-api.labels" . | nindent 4 }}
+spec:
+  displayName: developers
+  accessLevel:
+    apis:
+      - products:
+          namespaces:
+            - "*"
+          labels:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+                - {{ include "fruits-api.name" . }}
+        environments:
+          namespaces:
+            - "*"
+        usagePlans:
+          - basic
+    portals:
+      - name: fruits-portal
+        namespace: default
+  userSelector:
+    matchLabels:
+      groups.portal.gloo.solo.io/gloo-portal.developers: "true"
+{{- end }}

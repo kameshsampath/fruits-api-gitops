@@ -15,12 +15,12 @@ spec:
   staticPages: [ ]
 
   domains:
-    - portal.kameshs.me
+    - {{ printf "portal.%s" .Values.portalDomainSuffix }}
 
   publishedEnvironments:
     - name: dev
       namespace: default
 
   allApisPublicViewable: true # this will make APIs visible by unauthenticated users
-  portalUrlPrefix: http://portal.kameshs.me/
+  portalUrlPrefix: {{ printf "http://portal.%s/" .Values.portalDomainSuffix }}
 

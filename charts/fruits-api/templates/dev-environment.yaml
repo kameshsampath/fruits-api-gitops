@@ -2,13 +2,27 @@ apiVersion: portal.gloo.solo.io/v1beta1
 kind: Environment
 metadata:
   name: dev
+  namespace: default
+  labels:
+    {{- include "fruits-api.labels" . | nindent 4 }}
 spec:
   domains:
     # the domain name where the API will be exposed
-    - api.kameshs.me
+    - {{ printf "api.%s" .Values.portalDomainSuffix }}
   displayInfo:
     description: This environment is meant for developers to deploy and test their APIs.
     displayName: Development
+  {{ if .Values.enableRBAC }}
+  parameters:
+    usagePlans:
+      basic:
+        displayName: Basic plan with API key auth
+        authPolicy:
+          apiKey: { }
+        rateLimit:
+          requestsPerUnit: 3
+          unit: MINUTE
+  {{ end }}
   # a global basepath for our APIs
   basePath: /fruits
   # we will select our APIProduct using a selector and the 2 version of it

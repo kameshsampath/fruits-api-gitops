@@ -89,7 +89,7 @@ spec:
           workspace: maven-settings
     - name: build-image
       taskRef:
-        name: buildah`
+        name: buildah
       runAfter:
         - compute-image-tag
       params:

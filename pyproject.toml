@@ -11,6 +11,7 @@ ansible = "^5.0.1"
 kubernetes = "^20.13.0"
 jmespath = "^0.10.0"
 jsonpatch = "^1.32"
+pexpect = "^4.8.0"
 
 [tool.poetry.dev-dependencies]
 mkdocs = "^1.2.3"

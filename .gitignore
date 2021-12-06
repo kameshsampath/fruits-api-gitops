@@ -70,7 +70,6 @@ result-*
 .env*
 work
 .kube
-playbook.yml
 cleanup.yml
 test.yml
 __pycache__

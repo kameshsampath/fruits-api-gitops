@@ -1,0 +1,12 @@
+- name: "Create minikube Clusters"
+  import_playbook: clusters.yml
+- name: "Deploy Gitea"
+  import_playbook: gitea.yml
+- name: "Deploy Argocd"
+  import_playbook: argocd.yml
+- name: "Deploy Gloo"
+  import_playbook: gloo.yml
+- name: "Deploy Tektoncd"
+  import_playbook: pipelines.yml
+- name: "Deploy Extras"
+  import_playbook: extras.yml

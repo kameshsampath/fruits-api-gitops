@@ -40,5 +40,5 @@
 
     - name: "Setup .envrc"
       ansible.builtin.template:
-        src: "{{ playbook_dir }}/tempaltes/.envrc.j2"
+        src: "{{ playbook_dir }}/templates/.envrc.j2"
         dest: "{{ work_dir }}/.envrc"

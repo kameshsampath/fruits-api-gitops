@@ -1,0 +1,44 @@
+- name: "Create minikube Clusters"
+  hosts: all
+  vars_files:
+    - vars.yml
+  roles:
+    - role: kameshsampath.minikube
+  tasks:
+    - name: "Configure metallb"
+      ansible.builtin.expect:
+        command: "{{ minikube_binary }} -p {{ item.key }} addons configure metallb"
+        responses:
+          "-- Enter Load Balancer Start IP:": "{{ item.value.lbStartIP}}"
+          "-- Enter Load Balancer End IP:": "{{ item.value.lbEndIP}}"
+      loop: "{{ minikube_profiles | dict2items }}"
+      loop_control:
+         label: "{{ item.key }}"
+      register: lb_setup_result
+      when: item.value.create and not item.value.destroy
+    
+    - name: "Metallb result"
+      debug:
+        var: lb_setup_result
+
+    - name: "Ensure we are in mgmt context"
+      ansible.builtin.command:
+        argv:
+          - kubectl 
+          - config 
+          - use-context
+          - "mgmt"
+      environment:
+        KUBECONFIG: "{{ work_dir }}/.kube/config"
+    
+    - name: "Ensure right permissions to kubeconfig directory"
+      ansible.builtin.file:
+        state: directory
+        recurse: yes
+        path: "{{ work_dir }}/.kube"
+        mode: "0700"
+
+    - name: "Setup .envrc"
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/tempaltes/.envrc.j2"
+        dest: "{{ work_dir }}/.envrc"

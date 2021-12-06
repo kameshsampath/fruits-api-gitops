@@ -1,0 +1,22 @@
+- name: "Extra Components used by Applications"
+  hosts: all
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: "Download Sonatype nexus manifest"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/redhat-scholars/tekton-tutorial/master/install/utils/nexus.yaml"
+        dest: "{{ work_dir }}/nexus.yaml"
+    
+    - name: "Deploy Nexus"
+      kubernetes.core.k8s:
+        state: present
+        src: "{{ work_dir }}/nexus.yaml"
+        namespace: default
+        wait: yes
+        wait_timeout: 600
+        context: "{{ item.value.k8s_context }}"
+      loop: "{{ gloo_clusters | dict2items}}"
+      loop_control:
+        label: "{{ item.key }}"
+      when: item.key != 'mgmt'

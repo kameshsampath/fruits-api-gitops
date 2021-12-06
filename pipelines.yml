@@ -1,0 +1,91 @@
+- name: "Deploy Tektoncd pipelines"
+  hosts: all
+  vars_files:
+    - vars.yml
+  roles:
+   - role: kameshsampath.kubernetes_spices.tektoncd
+
+  tasks:
+
+    - name: "Query Gitea Service"
+      kubernetes.core.k8s_info:
+        kind: Service
+        name: gateway-proxy
+        namespace: gitea
+        context: "{{ kubernetes_spices_gitea_k8s_context }}"
+      register: gitea_svc_result
+
+    - name: "Query el-webhook Service"
+      kubernetes.core.k8s_info:
+        kind: Service
+        name: gateway-proxy
+        label_selectors:
+          - app = gloo
+        namespace: gloo-system
+        context: "{{ kubernetes_spices_tektoncd_k8s_context }}"
+      register: el_gitea_webhook_svc_result
+    
+    - name: "Set Gitea Service Facts"
+      set_fact:
+         gitea_nip_io: "https://gitea-{{ gitea_svc_result.resources[0].status.loadBalancer.ingress[0].ip }}.nip.io"
+         el_webhook_nip_io: "http://el-gitea-webhook-{{ el_gitea_webhook_svc_result.resources[0].status.loadBalancer.ingress[0].ip }}.nip.io"
+    
+    - name: "Clone Fruits API Repo"
+      ansible.builtin.uri:
+         url: "{{ gitea_nip_io }}/api/v1/repos/migrate"
+         method: POST
+         body_format: json
+         user: "gitea"
+         password: "password"
+         force_basic_auth: yes
+         body:
+           clone_addr: "{{ github_template_repos.fruits_api }}"
+           uid: 1
+           repo_name: "fruits-api-2"
+         status_code:
+           - 200
+           - 201
+           - 409 # ignore already exists
+         validate_certs: no
+
+    - name: "Add Hook Fruits API Repo"
+      ansible.builtin.uri:
+         url: "{{ gitea_nip_io }}/api/v1/repos/gitea/fruits-api-2/hooks"
+         method: POST
+         body_format: json
+         user: "gitea"
+         password: "password"
+         force_basic_auth: yes
+         body:
+           type: "gitea"
+           active: true
+           config:
+             content_type: "json"
+             method: "POST"
+             url: "{{ el_webhook_nip_io }}"
+         status_code:
+           - 200
+           - 201
+         #  - 409 # ignore already exists
+         validate_certs: no
+
+ 
+    - name: "Create Fruits API GitOps Repo"
+      ansible.builtin.uri:
+         url: "{{ gitea_nip_io }}/api/v1/user/repos"
+         method: POST
+         body_format: json
+         user: "gitea"
+         password: "password"
+         force_basic_auth: yes
+         body:
+           auto_init: false
+           description: "Gloo Fruits API GitOps Demo"
+           name: "fruits-api-gitops-2"
+           private: false
+           default_branch: main
+         status_code:
+           - 200
+           - 201
+           - 409 # ignore already exists
+         validate_certs: no

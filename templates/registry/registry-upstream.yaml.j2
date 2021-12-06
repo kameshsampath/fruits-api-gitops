@@ -1,0 +1,11 @@
+#jinja2: lstrip_blocks: "True"
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  name: kube-system-registry-5000
+  namespace: {{ kubernetes_spices_registry_namespace }}
+spec:
+  static:
+    hosts:
+     - addr: {{ kubernetes_spices_registry_node_ip }}
+       port: 5000

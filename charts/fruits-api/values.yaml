@@ -1,5 +1,6 @@
 replicaCount: 1
 
+# The fruits-api image to be used in the deployment
 image:
   name: ghcr.io/kameshsampath/fruits-api
   pullPolicy: IfNotPresent
@@ -31,10 +32,12 @@ securityContext: { }
 # runAsNonRoot: true
 # runAsUser: 1000
 
+# The fruits-api Kubernetes Service
 service:
   type: ClusterIP
   port: 8080
 
+# the pod resource limit and requests
   resources:
   limits:
     cpu: 512m
@@ -43,17 +46,23 @@ service:
     cpu: 256m
     memory: 512Mi
 
+# Kubernetes NodeSelector Labels
 nodeSelector: { }
 
+# Kubernetes Pod Tolerations
 tolerations: [ ]
 
+# Kubernetes Pod Affinity
 affinity: { }
 
 # Gloo Portal Configuration
+# Enable Gloo Portal
 enableRBAC: false
+# The Portal suffix to use with Gloo Dev Portal
+# e.g. api.kameshs.me, portal.kamesh.me
 portalDomainSuffix: kameshs.me
 
-# DB Configuration
+# DB Configuration to be used with Fruits API
 postgresql:
   global:
     postgresql:
@@ -61,4 +70,5 @@ postgresql:
       postgresqlUsername: postgres
       postgresqlPassword: password
       servicePort: 5432
+    # the ConfigMap that will hold the DB init script
     initdbScriptsConfigMap: postgres-schema

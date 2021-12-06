@@ -1,0 +1,7 @@
+- name: "Setup Gitea"
+  hosts: all
+  vars_files:
+    - vars.yml
+  
+  roles:
+   - role: kameshsampath.kubernetes_spices.gitea

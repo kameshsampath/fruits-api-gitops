@@ -1,0 +1,52 @@
+# the demo work directory
+work_dir: "{{ playbook_dir }}/work"
+# the kubeconfig directory
+kubeconfig_dir: "{{ work_dir }}/.kube"
+# the kubernetes version to use with minikube
+minikube_kubernetes_version: v1.21.6
+# the minikube home directory
+minikube_home_dir: "{{ work_dir }}/.minikube"
+# the helm.sh version to use
+helm_version: 3.7.1
+# the kubectl version
+kubectl_version: 1.21.6
+
+# minikube Kubernetes Clusters
+minikube_profiles:
+  # cluster where management and infrastructure components are deployed
+  # e.g. gitea, argocd
+  mgmt:
+    create: yes
+    destroy: no
+    addons:
+      - metallb
+    lbStartIP: 192.168.64.80
+    lbEndIP: 192.168.64.90
+  cluster1:
+    create: yes
+    destroy: no
+    addons:
+      - metallb
+    lbStartIP: 192.168.64.100
+    lbEndIP: 192.168.64.110
+# Gloo Edge Kubernetes clusters
+gloo_clusters:
+  cluster1:
+    cloud: minikube
+    k8s_context: cluster1
+    cluster_name: cluster1
+    enable_portal: yes
+
+enable_portal_monetization: yes
+
+kubernetes_spices_argocd_k8s_context: "mgmt"
+kubernetes_spices_tektoncd_k8s_context: "cluster1"
+
+# Gitea
+kubernetes_spices_gitea_k8s_context: "mgmt"
+gitea_tls_cert_path: "{{ work_dir}}/ssl/gitea-tls.crt"
+
+# GitHub Template Repo
+github_template_repos: 
+  fruits_api: 'https://github.com/kameshsampath/fruits-api.git'
+  fruits_api_gitops: 'https://github.com/kameshsampath/fruits-api-gitops.git'

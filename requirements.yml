@@ -1,0 +1,6 @@
+---
+roles:
+  - name: kameshsampath.minikube
+collections:
+  - name: kameshsampath.gloo
+  - name: kameshsampath.kubernetes_spices

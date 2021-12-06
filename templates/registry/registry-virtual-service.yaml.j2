@@ -1,0 +1,19 @@
+#jinja2: lstrip_blocks: "True"
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: registry-http
+  namespace: {{ kubernetes_spices_registry_namespace }}
+spec:
+  virtualHost:
+    domains:
+      - "{{ gloo_http_lb_ip }}"
+      - "{{ gloo_nip_io }}"
+    routes:
+      - matchers:
+          - prefix: /
+        routeAction:
+          single:
+            upstream:
+              name: kube-system-registry-5000
+              namespace: {{ kubernetes_spices_registry_namespace }}

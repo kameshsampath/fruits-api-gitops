@@ -1,0 +1,6 @@
+- name: "Deploy Gloo Edge and Gloo Portal"
+  hosts: all
+  vars_files:
+    - vars.yml
+  roles:
+    - role: kameshsampath.gloo.edge

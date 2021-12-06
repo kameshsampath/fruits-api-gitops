@@ -1,18 +1,16 @@
 # Fruits App Demo
 
-A simple fruits API demo with Gloo Edge
+The fruits demo  Gitops repository that will be used to demonstrate the GitOps base API deployment with Gloo Portal. This GitOps repository will be used to deploy the [Fruits API](https://github.com/kameshsampath/fruits-api).
 
-# Tools and Frameworks
+Please check the [HTML Documentation](https://kameshsampath.github.io/fruits-api-gitops) for complete setup.
 
-- [tektoncd](https://tekton.dev)
-
-# Using Cluster1
+## Using Cluster1
 
 ```shell
 kubectl config use-context $CLUSTER1
 ```
 
-# Setup
+## Setup
 
 Install tektoncd,
 
@@ -76,7 +74,7 @@ kustomize build triggers  | envsubst | kubectl apply --context $CLUSTER1 -f -
 
 ## Build and Deploy
 
-## using Argocd
+## Argocd
 
 ```shell
 # Ensures colors are also removed form output
@@ -84,20 +82,11 @@ export TARGET_CLUSTER="$(kubectl --context="$CLUSTER1" cluster-info | sed 's/\x1
 yq eval '.spec.destination.server = strenv(TARGET_CLUSTER)' manifests/app/app.yaml | kubectl apply --context="$MGMT" -n argocd -f - 
 ```
 
-Building via triggers.
-
-__TODO__: automate via task
-
-- Create a git repository on gitea with name `fruits-api`
-- Push the sources of fruits-api to it
-- Add Gitea webhook pointing to 'http://el-gitea-webhook-${GLOO_GATEWAY_PROXY_IP}.nip.io'
-- Trigger test delivery to see the pipeline getting started
-
 ### Manual Trigger Pipeline
 
 Build and Deploy the fruits-api image,
 
-```
+```shell
 tkn pipeline start fruits-api-deploy \
   --context="$CLUSTER1" \
   --namespace=default \

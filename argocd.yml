@@ -1,0 +1,39 @@
+- name: "Setup Argocd"
+  hosts: all
+  vars_files:
+    - vars.yml
+  roles:
+    - role: kameshsampath.kubernetes_spices.argocd
+  tasks:
+    - name: "Create ghcr.io token secret"
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          kind: Secret
+          apiVersion: v1
+          metadata:
+            namespace: argocd
+            name: ghcr-io
+          data:
+            username: "{{ lookup('env', 'GITHUB_USERNAME') | b64encode }}"
+            token: "{{ lookup('env', 'GHCR_PASSWORD') | b64encode }}"
+        context: "{{ kubernetes_spices_argocd_k8s_context }}"
+
+    - name: "Configure Image Updater Registries"
+      kubernetes.core.k8s:
+        state: patched
+        context: "{{ kubernetes_spices_argocd_k8s_context }}"
+        kind: ConfigMap
+        name: argocd-image-updater-config
+        namespace: argocd
+        definition:
+          data:
+            registries.conf: |
+              registries:
+                - name: ghcr
+                  prefix: ghcr.io
+                  api_url: https://docker.pkg.github.com
+                  ping: yes
+                  defaultns: kameshsampath
+                  tagsortmode: latest-first
+                  credentials: secret:argocd/ghcr-io#token

@@ -1,0 +1,684 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://kameshsampath.github.com/fruits-api-gitops/deploy/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.4">
+    
+    
+      
+        <title>Deploy API - Gitops with Gloo - Quick and easy way to build, deploy and publish your APIs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2a4617e2.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Red+Hat+Display:300,400,400i,700%7C&display=fallback">
+        <style>:root{--md-text-font:"Red Hat Display";--md-code-font:""}</style>
+      
+    
+    
+    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"..":".."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pipelines" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gitops with Gloo - Quick and easy way to build, deploy and publish your APIs" class="md-header__button md-logo" aria-label="Gitops with Gloo - Quick and easy way to build, deploy and publish your APIs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gitops with Gloo - Quick and easy way to build, deploy and publish your APIs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deploy API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gitops with Gloo - Quick and easy way to build, deploy and publish your APIs" class="md-nav__button md-logo" aria-label="Gitops with Gloo - Quick and easy way to build, deploy and publish your APIs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Gitops with Gloo - Quick and easy way to build, deploy and publish your APIs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools-and-sources/" class="md-nav__link">
+        Get Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../env-setup/" class="md-nav__link">
+        Environment Setup
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Deploy Microservices
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Deploy Microservices
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pipelines" class="md-nav__link">
+    Pipelines
+  </a>
+  
+    <nav class="md-nav" aria-label="Pipelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploy-tektoncd-tasks" class="md-nav__link">
+    Deploy Tektoncd Tasks
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Tektoncd Tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven" class="md-nav__link">
+    maven
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-clone" class="md-nav__link">
+    git-clone
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buildah" class="md-nav__link">
+    buildah
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kaniko" class="md-nav__link">
+    kaniko
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openshift-client" class="md-nav__link">
+    openshift-client
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-tektoncd-pipelines" class="md-nav__link">
+    Create Tektoncd pipelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tekton-triggers" class="md-nav__link">
+    Tekton Triggers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gitops" class="md-nav__link">
+    GitOps
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clean-up/" class="md-nav__link">
+        Cleanup
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pipelines" class="md-nav__link">
+    Pipelines
+  </a>
+  
+    <nav class="md-nav" aria-label="Pipelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploy-tektoncd-tasks" class="md-nav__link">
+    Deploy Tektoncd Tasks
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy Tektoncd Tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven" class="md-nav__link">
+    maven
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-clone" class="md-nav__link">
+    git-clone
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buildah" class="md-nav__link">
+    buildah
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kaniko" class="md-nav__link">
+    kaniko
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openshift-client" class="md-nav__link">
+    openshift-client
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-tektoncd-pipelines" class="md-nav__link">
+    Create Tektoncd pipelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tekton-triggers" class="md-nav__link">
+    Tekton Triggers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gitops" class="md-nav__link">
+    GitOps
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+  <h1>Deploy Microservices</h1>
+
+<p>At the end of chapter you would have,</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Deployed Tekton tasks and pipelines reuqired to build Fruits API</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Deployed the Argocd Application to deploy Fruits API</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Configure the Fruits API Webhook with Gitea</li>
+</ul>
+<h2 id="pipelines">Pipelines<a class="headerlink" href="#pipelines" title="Permanent link">&para;</a></h2>
+<p>As part of the demo we will be using <a href="https://tekton.dev">tektoncd</a> pipelines to build and push the image to the container registry.</p>
+<h3 id="deploy-tektoncd-tasks">Deploy Tektoncd Tasks<a class="headerlink" href="#deploy-tektoncd-tasks" title="Permanent link">&para;</a></h3>
+<p>The following Tektoncd community tasks will be used by the FruitsAPI as part of the application build, since tektoncd does not install these out of the box we wil install them manually,</p>
+<h4 id="maven"><a href="https://hub.tekton.dev/tekton/task/maven">maven</a><a class="headerlink" href="#maven" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>tkn hub install task maven <span class="se">\</span>
+  --version<span class="o">=</span><span class="m">0</span>.2 <span class="se">\</span>
+  --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span>
+</code></pre></div>
+<h4 id="git-clone"><a href="https://hub.tekton.dev/tekton/task/git-clone">git-clone</a><a class="headerlink" href="#git-clone" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>tkn hub install task git-clone <span class="se">\</span>
+  --version<span class="o">=</span><span class="m">0</span>.5 <span class="se">\</span>
+  --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span>
+</code></pre></div>
+<h4 id="buildah"><a href="https://hub.tekton.dev/tekton/task/buildah">buildah</a><a class="headerlink" href="#buildah" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>tkn hub install task buildah <span class="se">\</span>
+  --version<span class="o">=</span><span class="m">0</span>.3 <span class="se">\</span>
+  --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span>
+</code></pre></div>
+<h4 id="kaniko"><a href="https://hub.tekton.dev/tekton/task/kaniko">kaniko</a><a class="headerlink" href="#kaniko" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>tkn hub install task kaniko <span class="se">\</span>
+  --version<span class="o">=</span><span class="m">0</span>.5 <span class="se">\</span>
+  --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span>
+</code></pre></div>
+<h4 id="openshift-client"><a href="https://hub.tekton.dev/tekton/task/openshift-client">openshift-client</a><a class="headerlink" href="#openshift-client" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>tkn hub install task openshift-client <span class="se">\</span>
+   --version<span class="o">=</span><span class="m">0</span>.2 <span class="se">\</span>
+  --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span> 
+</code></pre></div>
+<h2 id="create-tektoncd-pipelines">Create Tektoncd pipelines<a class="headerlink" href="#create-tektoncd-pipelines" title="Permanent link">&para;</a></h2>
+<p>Create the pipeline that will help us build the fruits-api application,</p>
+<div class="highlight"><pre><span></span><code>kustomize build  pipelines <span class="p">|</span> envsubst <span class="p">|</span> kubectl apply --context <span class="nv">$CLUSTER1</span> -f -
+</code></pre></div>
+<h2 id="tekton-triggers">Tekton Triggers<a class="headerlink" href="#tekton-triggers" title="Permanent link">&para;</a></h2>
+<p>The Tekton Triggers take care of rebuilding the application as and when the new code is pushed into the Git repository.</p>
+<p>Get the gloo gateway-proxy LoadBalancer ip to configure the gloo routes and the same will be used to configure the Git Webhooks later,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GLOO_GATEWAY_PROXY_IP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span> -n gloo-system  get svc gateway-proxy -ojsonpath<span class="o">=</span><span class="s1">&#39;{.status.loadBalancer.ingress[*].ip}&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Create Tekton Triggers that will run the image build once changes are pushed to fruits-api,</p>
+<div class="highlight"><pre><span></span><code>kustomize build triggers  <span class="p">|</span> envsubst <span class="p">|</span> kubectl apply --context <span class="nv">$CLUSTER1</span> -f -
+</code></pre></div>
+<h2 id="gitops">GitOps<a class="headerlink" href="#gitops" title="Permanent link">&para;</a></h2>
+<p>Query the <code>cluster1</code> info to get the cluster API URL and run the following command to create <code>fruits-api</code> ArgoCD application.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Ensures colors are also removed form output</span>
+<span class="nb">export</span> <span class="nv">TARGET_CLUSTER</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span> cluster-info <span class="p">|</span> sed <span class="s1">&#39;s/\x1b\[[0-9;]*m//g&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;NR==1{print $7}&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+yq <span class="nb">eval</span> <span class="s1">&#39;.spec.destination.server = strenv(TARGET_CLUSTER)&#39;</span> manifests/app/app.yaml <span class="p">|</span> kubectl apply --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$MGMT</span><span class="s2">&quot;</span> -n argocd -f - 
+</code></pre></div>
+<p>The Argocd application will apply the helm chart <code>$DEMO_HOME/charts/fruits-api using Helm values from $DEMO_HOME/helm_vars/fruits-api/values.yaml</code>.</p>
+<p>The helm values supports by the chart are,</p>
+<div class="highlight"><pre><span></span><code><span class="nt">replicaCount</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+
+<span class="c1"># The fruits-api image to be used in the deployment</span>
+<span class="nt">image</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ghcr.io/kameshsampath/fruits-api</span>
+  <span class="nt">pullPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+  <span class="nt">tag</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+
+<span class="nt">imagePullSecrets</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="p p-Indicator">]</span>
+<span class="nt">nameOverride</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+<span class="nt">fullnameOverride</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+
+<span class="nt">serviceAccount</span><span class="p">:</span>
+  <span class="c1"># Specifies whether a service account should be created</span>
+  <span class="nt">create</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="c1"># Annotations to add to the service account</span>
+  <span class="nt">annotations</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+  <span class="c1"># The name of the service account to use.</span>
+  <span class="c1"># If not set and create is true, a name is generated using the fullname template</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+
+<span class="nt">podAnnotations</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+
+<span class="nt">podSecurityContext</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+<span class="c1"># fsGroup: 2000</span>
+
+<span class="nt">securityContext</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+<span class="c1"># capabilities:</span>
+<span class="c1">#   drop:</span>
+<span class="c1">#   - ALL</span>
+<span class="c1"># readOnlyRootFilesystem: true</span>
+<span class="c1"># runAsNonRoot: true</span>
+<span class="c1"># runAsUser: 1000</span>
+
+<span class="c1"># The fruits-api Kubernetes Service</span>
+<span class="nt">service</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ClusterIP</span>
+  <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span>
+
+<span class="c1"># the pod resource limit and requests</span>
+  <span class="nt">resources</span><span class="p">:</span>
+  <span class="nt">limits</span><span class="p">:</span>
+    <span class="nt">cpu</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">512m</span>
+    <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+  <span class="nt">requests</span><span class="p">:</span>
+    <span class="nt">cpu</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">256m</span>
+    <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">512Mi</span>
+
+<span class="c1"># Kubernetes NodeSelector Labels</span>
+<span class="nt">nodeSelector</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+
+<span class="c1"># Kubernetes Pod Tolerations</span>
+<span class="nt">tolerations</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="p p-Indicator">]</span>
+
+<span class="c1"># Kubernetes Pod Affinity</span>
+<span class="nt">affinity</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+
+<span class="c1"># Gloo Portal Configuration</span>
+<span class="c1"># Enable Gloo Portal</span>
+<span class="nt">enableRBAC</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="c1"># The Portal suffix to use with Gloo Dev Portal</span>
+<span class="c1"># e.g. api.kameshs.me, portal.kamesh.me</span>
+<span class="nt">portalDomainSuffix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kameshs.me</span>
+
+<span class="c1"># DB Configuration to be used with Fruits API</span>
+<span class="nt">postgresql</span><span class="p">:</span>
+  <span class="nt">global</span><span class="p">:</span>
+    <span class="nt">postgresql</span><span class="p">:</span>
+      <span class="nt">postgresqlDatabase</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">fruitsdb</span>
+      <span class="nt">postgresqlUsername</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+      <span class="nt">postgresqlPassword</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">password</span>
+      <span class="nt">servicePort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5432</span>
+    <span class="c1"># the ConfigMap that will hold the DB init script</span>
+    <span class="nt">initdbScriptsConfigMap</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres-schema</span>
+</code></pre></div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../env-setup/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Environment Setup" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Environment Setup
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../clean-up/" class="md-footer__link md-footer__link--next" aria-label="Next: Cleanup" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Cleanup
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.ca141e46.min.js"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6baa0517.min.js"></script>
+      
+    
+  </body>
+</html>

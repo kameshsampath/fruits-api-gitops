@@ -1,4 +1,4 @@
 
 ```bash
-source $DEMO_HOME/.envrc
+source $DEMO_WORK_DIR/.envrc
 ```

@@ -12,7 +12,7 @@ spec:
   source:
     path: charts/fruits-api
     # update this to your fork
-    repoURL: 'https://gitea-192.168.64.81.nip.io/gitea/fruits-api-gitops'
+    repoURL: '${FRUITS_API_GITOPS_REPO_URL}'
     targetRevision: HEAD
     helm:
       parameters: [ ]

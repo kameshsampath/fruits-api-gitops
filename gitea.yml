@@ -5,3 +5,11 @@
   
   roles:
    - role: kameshsampath.kubernetes_spices.gitea
+  
+  tasks:
+    - name: "direnv allow"
+      ansible.builtin.command:
+        argv:
+          - direnv
+          - allow
+          - "{{ playbook_dir }}"

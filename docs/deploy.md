@@ -12,6 +12,10 @@ At the end of chapter you would have,
 - [x] Deployed the Argocd Application to deploy Fruits API
 - [x] Configure the Fruits API Webhook with Gitea
 
+## Ensure Environment
+
+---8<--- "includes/env.md"
+
 ## Pipelines
 
 As part of the demo we will be using [tektoncd](https://tekton.dev) pipelines to build and push the image to the container registry.
@@ -41,14 +45,6 @@ tkn hub install task git-clone \
 ```shell
 tkn hub install task buildah \
   --version=0.3 \
-  --context="$CLUSTER1"
-```
-
-#### [kaniko](https://hub.tekton.dev/tekton/task/kaniko)
-
-```shell
-tkn hub install task kaniko \
-  --version=0.5 \
   --context="$CLUSTER1"
 ```
 
@@ -119,8 +115,8 @@ kubectl --context=$CLUSTER1 \
 ## Create the dev remote to Gitea
 
 ```shell
-export GITEA_URL="https://gitea-$(kubectl --context="$MGMT" -n gitea  get svc gateway-proxy -ojsonpath='{.status.loadBalancer.ingress[*].ip}').nip.io/gitea/fruits-api-gitops.git"
-git remote add dev $GITEA_URL
+export FRUITS_API_GITOPS_REPO_URL="https://gitea-$(kubectl --context="$MGMT" -n gitea  get svc gateway-proxy -ojsonpath='{.status.loadBalancer.ingress[*].ip}').nip.io/gitea/fruits-api-gitops.git"
+git remote add dev $FRUITS_API_GITOPS_REPO_URL
 ```
 
 Commit and push the local code to the Gitea repository.
@@ -130,7 +126,30 @@ git commit -a -m "Repo Init"
 git push dev main
 ```
 
-## GitOps
+The default Gitea credentials is `gitea/password`.
+
+## GitOps with Argocd
+
+## Add Gitea Repository to Argocd
+
+As the Gitea repository we will be using local and uses self signed certificates, let us configure that in Argocd to skip `sslVerify`,
+
+Login to Argocd,
+
+```shell
+# make sure we are in mgmt kubernetes context
+kubectl config use-context mgmt
+argocd login --insecure $(yq e '.serviceUrl' $DEMO_WORK_DIR/argocd_details.yaml) \
+  --username "${ARGOCD_ADMIN_USERNAME}" --password="${ARGOCD_ADMIN_PASSWORD}"
+```
+
+Add the local Gitea repository,
+
+```shell
+argocd repo add "$(yq e '.gitea_url' work/gitea_details.yaml)/${GITEA_USERNAME}/fruits-api-gitops.git" --username "${GITEA_USERNAME}" --password "${GITEA_PASSWORD}" --insecure-skip-server-verification
+```
+
+## Create Application
 
 Query the `cluster1` info to get the cluster API URL and run the following command to create `fruits-api` ArgoCD application.
 
@@ -147,4 +166,3 @@ The helm values supports by the chart are,
 ```yaml
 ---8<--- "charts/fruits-api/values.yaml"
 ```
-

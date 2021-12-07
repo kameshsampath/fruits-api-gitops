@@ -91,3 +91,10 @@
         state: absent
         context: "{{ argocd_k8s_context }}"
       when: argocd_app_cleanup | default(false)
+
+    - name: "direnv allow"
+      ansible.builtin.command:
+        argv:
+          - direnv
+          - allow
+          - "{{ playbook_dir }}"

@@ -20,3 +20,10 @@
       loop_control:
         label: "{{ item.key }}"
       when: item.key != 'mgmt'
+
+    - name: "direnv allow"
+      ansible.builtin.command:
+        argv:
+          - direnv
+          - allow
+          - "{{ playbook_dir }}"

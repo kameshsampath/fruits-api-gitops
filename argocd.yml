@@ -37,3 +37,10 @@
                   defaultns: kameshsampath
                   tagsortmode: latest-first
                   credentials: secret:argocd/ghcr-io#token
+
+    - name: "direnv allow"
+      ansible.builtin.command:
+        argv:
+          - direnv
+          - allow
+          - "{{ playbook_dir }}"

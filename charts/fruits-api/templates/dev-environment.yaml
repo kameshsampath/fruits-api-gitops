@@ -40,6 +40,10 @@ spec:
           - v1
       # this will dynamically prefix the API with the version names
       basePath: "{%version%}"
+      {{ if .Values.enableRBAC }}
+      usagePlans:
+       - basic
+      {{ end }}
   gatewayConfig:
     # we actually want to expose the APIs on a Gateway (optional)
     disableRoutes: false

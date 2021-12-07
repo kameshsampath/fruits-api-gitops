@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://kameshsampath.github.com/fruits-api-gitops/deploy/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.5">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.2a4617e2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.a617204b.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.9204c3b2.min.css">
@@ -36,7 +36,7 @@
       
     
     
-    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"..":".."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pipelines" class="md-skip">
+        <a href="#ensure-environment" class="md-skip">
           Skip to content
         </a>
       
@@ -254,6 +254,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#ensure-environment" class="md-nav__link">
+    Ensure Environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pipelines" class="md-nav__link">
     Pipelines
   </a>
@@ -291,13 +298,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#kaniko" class="md-nav__link">
-    kaniko
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#openshift-client" class="md-nav__link">
     openshift-client
   </a>
@@ -329,9 +329,77 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#gitops" class="md-nav__link">
-    GitOps
+  <a href="#create-the-dev-remote-to-gitea" class="md-nav__link">
+    Create the dev remote to Gitea
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gitops-with-argocd" class="md-nav__link">
+    GitOps with Argocd
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-gitea-repository-to-argocd" class="md-nav__link">
+    Add Gitea Repository to Argocd
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-application" class="md-nav__link">
+    Create Application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routes" class="md-nav__link">
+    Routes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#portal" class="md-nav__link">
+    Portal
+  </a>
+  
+    <nav class="md-nav" aria-label="Portal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-authentication" class="md-nav__link">
+    Enable Authentication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monetization" class="md-nav__link">
+    Monetization
+  </a>
+  
+    <nav class="md-nav" aria-label="Monetization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#db-setup" class="md-nav__link">
+    DB Setup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -383,6 +451,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#ensure-environment" class="md-nav__link">
+    Ensure Environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pipelines" class="md-nav__link">
     Pipelines
   </a>
@@ -420,13 +495,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#kaniko" class="md-nav__link">
-    kaniko
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#openshift-client" class="md-nav__link">
     openshift-client
   </a>
@@ -458,9 +526,77 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#gitops" class="md-nav__link">
-    GitOps
+  <a href="#create-the-dev-remote-to-gitea" class="md-nav__link">
+    Create the dev remote to Gitea
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gitops-with-argocd" class="md-nav__link">
+    GitOps with Argocd
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-gitea-repository-to-argocd" class="md-nav__link">
+    Add Gitea Repository to Argocd
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-application" class="md-nav__link">
+    Create Application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routes" class="md-nav__link">
+    Routes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#portal" class="md-nav__link">
+    Portal
+  </a>
+  
+    <nav class="md-nav" aria-label="Portal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-authentication" class="md-nav__link">
+    Enable Authentication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monetization" class="md-nav__link">
+    Monetization
+  </a>
+  
+    <nav class="md-nav" aria-label="Monetization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#db-setup" class="md-nav__link">
+    DB Setup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -485,6 +621,9 @@
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Deployed the Argocd Application to deploy Fruits API</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Configure the Fruits API Webhook with Gitea</li>
 </ul>
+<h2 id="ensure-environment">Ensure Environment<a class="headerlink" href="#ensure-environment" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span> <span class="nv">$DEMO_WORK_DIR</span>/.envrc
+</code></pre></div>
 <h2 id="pipelines">Pipelines<a class="headerlink" href="#pipelines" title="Permanent link">&para;</a></h2>
 <p>As part of the demo we will be using <a href="https://tekton.dev">tektoncd</a> pipelines to build and push the image to the container registry.</p>
 <h3 id="deploy-tektoncd-tasks">Deploy Tektoncd Tasks<a class="headerlink" href="#deploy-tektoncd-tasks" title="Permanent link">&para;</a></h3>
@@ -504,37 +643,102 @@
   --version<span class="o">=</span><span class="m">0</span>.3 <span class="se">\</span>
   --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span>
 </code></pre></div>
-<h4 id="kaniko"><a href="https://hub.tekton.dev/tekton/task/kaniko">kaniko</a><a class="headerlink" href="#kaniko" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>tkn hub install task kaniko <span class="se">\</span>
-  --version<span class="o">=</span><span class="m">0</span>.5 <span class="se">\</span>
-  --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span>
-</code></pre></div>
 <h4 id="openshift-client"><a href="https://hub.tekton.dev/tekton/task/openshift-client">openshift-client</a><a class="headerlink" href="#openshift-client" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>tkn hub install task openshift-client <span class="se">\</span>
    --version<span class="o">=</span><span class="m">0</span>.2 <span class="se">\</span>
   --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span> 
 </code></pre></div>
 <h2 id="create-tektoncd-pipelines">Create Tektoncd pipelines<a class="headerlink" href="#create-tektoncd-pipelines" title="Permanent link">&para;</a></h2>
-<p>Create the pipeline that will help us build the fruits-api application,</p>
-<div class="highlight"><pre><span></span><code>kustomize build  pipelines <span class="p">|</span> envsubst <span class="p">|</span> kubectl apply --context <span class="nv">$CLUSTER1</span> -f -
+<p>As the piplines will build and push the container image to <a href="https://github.com/features/packages">ghcr.io</a> it is required to have the following two variables set in your enviroment,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GITHUB_USERNAME</span><span class="o">=</span>&lt;your github username&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GHCR_PASSWORD</span><span class="o">=</span>&lt;your Github PAT&gt;
+</code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><code>GHCR_PASSWORD</code> is the <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">GitHub PAT</a> with the following permissions:</p>
+<ul>
+<li>repo <strong>read</strong> access</li>
+<li>package <strong>write</strong> access</li>
+</ul>
+</div>
+<p>Create the pipeline <code>fruits-api-deploy</code>,</p>
+<div class="highlight"><pre><span></span><code>kustomize build  pipelines <span class="se">\</span>
+  <span class="p">|</span> envsubst <span class="se">\</span>
+  <span class="p">|</span> kubectl apply --context <span class="nv">$CLUSTER1</span> -f -
 </code></pre></div>
 <h2 id="tekton-triggers">Tekton Triggers<a class="headerlink" href="#tekton-triggers" title="Permanent link">&para;</a></h2>
-<p>The Tekton Triggers take care of rebuilding the application as and when the new code is pushed into the Git repository.</p>
-<p>Get the gloo gateway-proxy LoadBalancer ip to configure the gloo routes and the same will be used to configure the Git Webhooks later,</p>
+<p>The Tekton Triggers take care of rebuilding the application as and when the new code is committed into the Git repository.</p>
+<p>Get the gloo <code>gateway-proxy</code> LoadBalancer ip to configure the gloo routes and the same will be used to configure the Git Webhooks later,</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GLOO_GATEWAY_PROXY_IP</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span> -n gloo-system  get svc gateway-proxy -ojsonpath<span class="o">=</span><span class="s1">&#39;{.status.loadBalancer.ingress[*].ip}&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
 </code></pre></div>
-<p>Create Tekton Triggers that will run the image build once changes are pushed to fruits-api,</p>
-<div class="highlight"><pre><span></span><code>kustomize build triggers  <span class="p">|</span> envsubst <span class="p">|</span> kubectl apply --context <span class="nv">$CLUSTER1</span> -f -
+<p>Verify to see if it has value set,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GLOO_GATEWAY_PROXY_IP</span><span class="si">}</span><span class="s2">&quot;</span>
 </code></pre></div>
-<h2 id="gitops">GitOps<a class="headerlink" href="#gitops" title="Permanent link">&para;</a></h2>
+<p>Create Tekton Triggers that will run the image build once changes are pushed to fruits-api,</p>
+<div class="highlight"><pre><span></span><code>kustomize build triggers  <span class="se">\</span>
+  <span class="p">|</span> envsubst <span class="p">|</span> kubectl apply --context <span class="nv">$CLUSTER1</span> -f -
+</code></pre></div>
+<p>Wait for the Gitea event listener webhook to be running,</p>
+<div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="nv">$CLUSTER1</span> <span class="se">\</span>
+  rollout status deploy/el-gitea-webhook --timeout<span class="o">=</span>120s
+</code></pre></div>
+<h2 id="create-the-dev-remote-to-gitea">Create the dev remote to Gitea<a class="headerlink" href="#create-the-dev-remote-to-gitea" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">FRUITS_API_GITOPS_REPO_URL</span><span class="o">=</span><span class="s2">&quot;https://gitea-</span><span class="k">$(</span>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$MGMT</span><span class="s2">&quot;</span> -n gitea  get svc gateway-proxy -ojsonpath<span class="o">=</span><span class="s1">&#39;{.status.loadBalancer.ingress[*].ip}&#39;</span><span class="k">)</span><span class="s2">.nip.io/gitea/fruits-api-gitops.git&quot;</span>
+git remote add dev <span class="nv">$FRUITS_API_GITOPS_REPO_URL</span>
+</code></pre></div>
+<p>Commit and push the local code to the Gitea repository.</p>
+<div class="highlight"><pre><span></span><code>git commit -a -m <span class="s2">&quot;Repo Init&quot;</span>
+git push dev main
+</code></pre></div>
+<p>The default Gitea credentials is <code>gitea/password</code>.</p>
+<h2 id="gitops-with-argocd">GitOps with Argocd<a class="headerlink" href="#gitops-with-argocd" title="Permanent link">&para;</a></h2>
+<h2 id="add-gitea-repository-to-argocd">Add Gitea Repository to Argocd<a class="headerlink" href="#add-gitea-repository-to-argocd" title="Permanent link">&para;</a></h2>
+<p>As the Gitea repository we will be using local and uses self signed certificates, let us configure that in Argocd to skip <code>sslVerify</code>,</p>
+<p>Login to Argocd,</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># make sure we are in mgmt kubernetes context</span>
+kubectl config use-context mgmt
+argocd login --insecure <span class="se">\</span>
+  <span class="s2">&quot;</span><span class="k">$(</span>yq e <span class="s1">&#39;.serviceUrl&#39;</span> <span class="nv">$DEMO_WORK_DIR</span>/argocd_details.yaml <span class="p">|</span> cut -d<span class="s1">&#39;/&#39;</span> -f3 <span class="k">)</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --username <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARGOCD_ADMIN_USERNAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  --password <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARGOCD_ADMIN_PASSWORD</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Add the local Gitea repository,</p>
+<div class="highlight"><pre><span></span><code>argocd repo add <span class="s2">&quot;</span><span class="k">$(</span>yq e <span class="s1">&#39;.gitea_url&#39;</span> work/gitea_details.yaml<span class="k">)</span><span class="s2">/</span><span class="si">${</span><span class="nv">GITEA_USERNAME</span><span class="si">}</span><span class="s2">/fruits-api-gitops.git&quot;</span> --username <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GITEA_USERNAME</span><span class="si">}</span><span class="s2">&quot;</span> --password <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GITEA_PASSWORD</span><span class="si">}</span><span class="s2">&quot;</span> --insecure-skip-server-verification
+</code></pre></div>
+<h2 id="create-application">Create Application<a class="headerlink" href="#create-application" title="Permanent link">&para;</a></h2>
 <p>Query the <code>cluster1</code> info to get the cluster API URL and run the following command to create <code>fruits-api</code> ArgoCD application.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Ensures colors are also removed form output</span>
 <span class="nb">export</span> <span class="nv">TARGET_CLUSTER</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span> cluster-info <span class="p">|</span> sed <span class="s1">&#39;s/\x1b\[[0-9;]*m//g&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;NR==1{print $7}&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
-yq <span class="nb">eval</span> <span class="s1">&#39;.spec.destination.server = strenv(TARGET_CLUSTER)&#39;</span> manifests/app/app.yaml <span class="p">|</span> kubectl apply --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$MGMT</span><span class="s2">&quot;</span> -n argocd -f - 
+yq <span class="nb">eval</span> <span class="se">\</span>
+  <span class="s1">&#39;.spec.destination.server = strenv(TARGET_CLUSTER) | .spec.source.repoURL = strenv(FRUITS_API_GITOPS_REPO_URL)&#39;</span> <span class="se">\</span>
+  manifests/app/app.yaml <span class="se">\</span>
+  <span class="p">|</span> kubectl apply --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$MGMT</span><span class="s2">&quot;</span> -n argocd -f - 
 </code></pre></div>
 <p>The Argocd application will apply the helm chart <code>$DEMO_HOME/charts/fruits-api using Helm values from $DEMO_HOME/helm_vars/fruits-api/values.yaml</code>.</p>
 <p>The helm values supports by the chart are,</p>
 <div class="highlight"><pre><span></span><code><span class="nt">replicaCount</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+
+<span class="c1"># Gloo Portal Configuration</span>
+<span class="nt">enablePortal</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="c1"># Enable Gloo Portal RBAC</span>
+<span class="nt">enableRBAC</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="c1"># The Portal suffix to use with Gloo Dev Portal</span>
+<span class="c1"># e.g. api.kameshs.me, portal.kamesh.me</span>
+<span class="nt">portalDomainSuffix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kameshs.me</span>
+
+<span class="c1"># DB Configuration to be used with Fruits API</span>
+<span class="nt">postgresql</span><span class="p">:</span>
+  <span class="nt">global</span><span class="p">:</span>
+    <span class="nt">postgresql</span><span class="p">:</span>
+      <span class="nt">postgresqlDatabase</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">fruitsdb</span>
+      <span class="nt">postgresqlUsername</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+      <span class="nt">postgresqlPassword</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">password</span>
+      <span class="nt">servicePort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5432</span>
+  <span class="c1"># the ConfigMap that will hold the DB init script</span>
+  <span class="nt">initdbScriptsConfigMap</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres-schema</span>
 
 <span class="c1"># The fruits-api image to be used in the deployment</span>
 <span class="nt">image</span><span class="p">:</span>
@@ -590,24 +794,105 @@ yq <span class="nb">eval</span> <span class="s1">&#39;.spec.destination.server =
 
 <span class="c1"># Kubernetes Pod Affinity</span>
 <span class="nt">affinity</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+</code></pre></div>
+<h2 id="routes">Routes<a class="headerlink" href="#routes" title="Permanent link">&para;</a></h2>
+<p>As we have already deployed the Gloo Edge, the service should have been auto discovered via Gloo. Let us run the following command to verify it,</p>
+<div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> get upstream default-fruits-api-8080 <span class="se">\</span>
+  -n gloo-system -o yaml
+</code></pre></div>
+<p>Lets create route to access the API,</p>
+<div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF | kubectl --context=&quot;${CLUSTER1}&quot; apply -f - </span>
+<span class="s">apiVersion: gateway.solo.io/v1</span>
+<span class="s">kind: VirtualService</span>
+<span class="s">metadata:</span>
+<span class="s">  name: fruits-api-http</span>
+<span class="s">  namespace: gloo-system</span>
+<span class="s">spec:</span>
+<span class="s">  virtualHost:</span>
+<span class="s">    domains:</span>
+<span class="s">      - fruits-api-${GLOO_GATEWAY_PROXY_IP}.nip.io</span>
+<span class="s">    routes:</span>
+<span class="s">      - matchers:</span>
+<span class="s">          - prefix: /</span>
+<span class="s">        routeAction:</span>
+<span class="s">          single:</span>
+<span class="s">            upstream:</span>
+<span class="s">              name: default-fruits-api-8080</span>
+<span class="s">              namespace: gloo-system</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>Now calling the service <code>http fruits-api-192.168.64.100.nip.io/api/fruits</code> will return a list of fruits.</p>
+<p>Lets delete the test route we have created as we will be using the Gloo Developer Portal to access the API.</p>
+<div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> delete vs -n gloo-system fruits-api-http
+</code></pre></div>
+<h2 id="portal">Portal<a class="headerlink" href="#portal" title="Permanent link">&para;</a></h2>
+<p>To enable porta edit and update the <code>$DEMO_HOME/helm_vars/fruits-api/values.yaml</code> <strong>enablePortal</strong> to <strong>true</strong>. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources,</p>
+<div class="highlight"><pre><span></span><code>yq -i e <span class="s1">&#39;.enablePortal=true&#39;</span> <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml
+git commit <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml -m <span class="s2">&quot;Enable Portal&quot;</span>
+git push dev main
+</code></pre></div>
+<p>Wait for Argocd to synchroize the commit, once the commit is synchronized you should see the Gloo Portal resources created in the <code>default</code> namespace,</p>
+<div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> get apidocs,apiproducts,portal,environment
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>NAME                                          AGE
+apidoc.portal.gloo.solo.io/apidoc-v1-fruits   2m21s
 
-<span class="c1"># Gloo Portal Configuration</span>
-<span class="c1"># Enable Gloo Portal</span>
-<span class="nt">enableRBAC</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="c1"># The Portal suffix to use with Gloo Dev Portal</span>
-<span class="c1"># e.g. api.kameshs.me, portal.kamesh.me</span>
-<span class="nt">portalDomainSuffix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kameshs.me</span>
+NAME                                            AGE
+apiproduct.portal.gloo.solo.io/fruits-product   2m21s
 
-<span class="c1"># DB Configuration to be used with Fruits API</span>
-<span class="nt">postgresql</span><span class="p">:</span>
-  <span class="nt">global</span><span class="p">:</span>
-    <span class="nt">postgresql</span><span class="p">:</span>
-      <span class="nt">postgresqlDatabase</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">fruitsdb</span>
-      <span class="nt">postgresqlUsername</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
-      <span class="nt">postgresqlPassword</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">password</span>
-      <span class="nt">servicePort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5432</span>
-    <span class="c1"># the ConfigMap that will hold the DB init script</span>
-    <span class="nt">initdbScriptsConfigMap</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres-schema</span>
+NAME                                       AGE
+portal.portal.gloo.solo.io/fruits-portal   2m21s
+
+NAME                                  AGE
+environment.portal.gloo.solo.io/dev   2m21s
+</code></pre></div>
+<p>Now you can open the portal on your browser using the domain <code>http://portal.kameshs.me</code></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Update your <code>/etc/hosts</code> as shown to allow accessing the portal using domain names
+<div class="highlight"><pre><span></span><code>  <span class="m">192</span>.168.64.100 api.kameshs.me api
+  <span class="m">192</span>.168.64.100 portal.kameshs.me portal
+</code></pre></div>
+Where <code>192.168.64.100</code> is the <code>minikube -pcluster1 ip</code></p>
+</div>
+<h3 id="enable-authentication">Enable Authentication<a class="headerlink" href="#enable-authentication" title="Permanent link">&para;</a></h3>
+<p>As you have observed by navigating to the <code>APIs</code> that all APIs are read only. To make the portal accessible we need to enable authentication.</p>
+<p>To enable porta edit and update the <code>$DEMO_HOME/helm_vars/fruits-api/values.yaml</code> <strong>enablePortal</strong> to <strong>true</strong>. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources,</p>
+<div class="highlight"><pre><span></span><code>yq -i e <span class="s1">&#39;.enableRBAC=true&#39;</span> <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml
+git commit <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml -m <span class="s2">&quot;Enable Portal RBAC&quot;</span>
+git push dev main
+</code></pre></div>
+<p>Now hit the login button and try login to the portal using the user <code>dev1</code> and password <code>mysecurepassword</code>. Now when you check the APIs section it has the <em>Try out</em> option that allows you try the APIs.</p>
+<p>When you try the API from CLI,</p>
+<div class="highlight"><pre><span></span><code>http api.kameshs.me/fruits/v1/api/fruits
+</code></pre></div>
+<p>You should see you are not authorized,</p>
+<p>Let use geneate an API Key for <code>dev1</code>,</p>
+<div class="highlight"><pre><span></span><code> http api.kameshs.me/fruits/v1/api/fruits <span class="s1">&#39;api-key: $API_KEY&#39;</span>
+</code></pre></div>
+<h2 id="monetization">Monetization<a class="headerlink" href="#monetization" title="Permanent link">&para;</a></h2>
+<p>Lets enable access to Admin console of the portal,</p>
+<div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span>  -n gloo-portal port-forward svc/gloo-portal-admin-server <span class="m">8080</span>
+</code></pre></div>
+<h3 id="db-setup">DB Setup<a class="headerlink" href="#db-setup" title="Permanent link">&para;</a></h3>
+<p>Lets create the requests table,</p>
+<div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> get cm <span class="se">\</span>
+  -n gloo-system postgres-schema -o yaml <span class="se">\</span>
+  <span class="p">|</span> yq e <span class="s1">&#39;.data[&quot;init-schema.sql&quot;]&#39;</span> &gt; /tmp/gloo-portal-db.sql
+</code></pre></div>
+<p>Deploy the <a href="https://www.adminer.org">DBAdminer</a> utility,</p>
+<div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> apply -k mainfests/dbadminer
+kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> rollout status deploy/db-adminer
+</code></pre></div>
+<p>Open the DB Adminer via the browser,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DB_ADMINER_IP</span><span class="o">=</span><span class="k">$(</span>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> get svc db-adminer -ojsonpath<span class="o">=</span><span class="s1">&#39;{.status.loadBalancer.ingress[*].ip}&#39;</span><span class="k">)</span>
+</code></pre></div>
+<p>Open the url <code>http://$(DB_ADMINER_IP):8080</code>, use the <code>Posygresql</code> as database with user id <code>postgres</code> and password <code>password</code>. Then run the following SQL command to create the <em>requests</em> tabl using the sql <code>/tmp/gloo-portal-db.sql</code></p>
+<p>Lets fire some requests to the API to generate the API calls graph,</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> i <span class="k">in</span> <span class="o">{</span><span class="m">1</span>..5<span class="o">}</span><span class="p">;</span> 
+<span class="k">do</span> 
+  http api.kameshs.me/fruits/v1/api/fruits <span class="s1">&#39;api-key: $API_KEY&#39;</span>
+<span class="k">done</span>
 </code></pre></div>
 
               
@@ -674,10 +959,10 @@ yq <span class="nb">eval</span> <span class="s1">&#39;.spec.destination.server =
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.ca141e46.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.cefbb252.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.6baa0517.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f8ea78.min.js"></script>
       
     
   </body>

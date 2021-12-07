@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://kameshsampath.github.com/fruits-api-gitops/tools-and-sources/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.5">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.2a4617e2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.a617204b.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.9204c3b2.min.css">
@@ -36,7 +36,7 @@
       
     
     
-    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"..":".."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#assumptions" class="md-skip">
+        <a href="#download-tools" class="md-skip">
           Skip to content
         </a>
       
@@ -200,6 +200,8 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           Get Started
@@ -216,6 +218,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -224,29 +228,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#assumptions" class="md-nav__link">
-    Assumptions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#download-tools" class="md-nav__link">
-    Download Tools
-  </a>
-  
-    <nav class="md-nav" aria-label="Download Tools">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#demo-sources" class="md-nav__link">
     Demo Sources
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -320,6 +304,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -328,29 +314,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#assumptions" class="md-nav__link">
-    Assumptions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#download-tools" class="md-nav__link">
-    Download Tools
-  </a>
-  
-    <nav class="md-nav" aria-label="Download Tools">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#demo-sources" class="md-nav__link">
     Demo Sources
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -368,7 +334,6 @@
                 
 
 <p>At the end of this chapter you will have the required tools and enviroment ready for running the demo.</p>
-<h2 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">&para;</a></h2>
 <h1 id="download-tools">Download Tools<a class="headerlink" href="#download-tools" title="Permanent link">&para;</a></h1>
 <p>We will be using the following tools as part of the tutorial. Please have them installed and configured before
 proceeding further.</p>
@@ -429,11 +394,11 @@ proceeding further.</p>
 <div class="highlight"><pre><span></span><code>git clone https://github.com/kameshsampath/fruits-api-gitops
 <span class="nb">cd</span> fruits-api-gitops
 </code></pre></div>
-<p>For convinience, we will refer the clone demo sources folder as <code>$TUTORIAL_HOME</code>,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">TUTORIAL_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">&quot;</span>
+<p>For convinience, we will refer the clone demo sources folder as <code>$DEMO_HOME</code>,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DEMO_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">&quot;</span>
 </code></pre></div>
 <p>Navigate to the project home,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> <span class="nv">$TUTORIAL_HOME</span>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> <span class="nv">$DEMO_HOME</span>
 </code></pre></div>
 
               
@@ -500,10 +465,10 @@ proceeding further.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.ca141e46.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.cefbb252.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.6baa0517.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f8ea78.min.js"></script>
       
     
   </body>

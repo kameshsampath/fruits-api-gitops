@@ -11,15 +11,15 @@
         <link rel="canonical" href="https://kameshsampath.github.com/fruits-api-gitops/">
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.5">
     
     
       
-        <title>Gitops with Gloo - Quick and easy way to build, deploy and publish your APIs</title>
+        <title>Fruits API GitOps Demo - Gitops with Gloo - Quick and easy way to build, deploy and publish your APIs</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.2a4617e2.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.a617204b.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.9204c3b2.min.css">
@@ -36,7 +36,7 @@
       
     
     
-    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?".":"."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -58,11 +58,6 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
-      
-        
-        <a href="#overview" class="md-skip">
-          Skip to content
-        </a>
       
     </div>
     <div data-md-component="announce">
@@ -93,7 +88,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              Fruits API GitOps Demo
             
           </span>
         </div>
@@ -186,38 +181,9 @@
       
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Overview
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="." class="md-nav__link md-nav__link--active">
         Overview
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -290,37 +256,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -329,11 +264,6 @@
 
   <h1>Overview</h1>
 
-<p>authors:
-- Kamesh Sampath<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#109;&#101;&#115;&#104;&#46;&#115;&#97;&#109;&#112;&#97;&#116;&#104;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#107;&#97;&#109;&#101;&#115;&#104;&#46;&#115;&#97;&#109;&#112;&#97;&#116;&#104;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
-  date: 2021-12-06</p>
-<hr />
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>The Fruits API GitOps demostrates how to use <a href="https://www.weave.works/technologies/gitops/">GitOps</a> principles in
 building and publishing your API using <a href="https://www.solo.io/products/gloo-edge/">Gloo Edge</a>. As part of this demo we
 will build a simple Java REST API using <a href="https://quarkus.io">Quarkus</a> and publish them them
@@ -388,10 +318,10 @@ using <a href="https://www.solo.io/products/gloo-portal/">Gloo Portal</a>.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.ca141e46.min.js"}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.cefbb252.min.js"}</script>
     
     
-      <script src="assets/javascripts/bundle.6baa0517.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f8ea78.min.js"></script>
       
     
   </body>

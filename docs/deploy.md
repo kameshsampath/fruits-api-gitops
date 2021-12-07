@@ -119,7 +119,7 @@ kubectl --context=$CLUSTER1 \
 ## Create the dev remote to Gitea
 
 ```shell
-export GITEA_URL="https://gitea-$(kubectl --context="$MGMT" -n gitea  get svc gateway-proxy -ojsonpath='{.status.loadBalancer.ingress[*].ip}')/gitea/fruits-api-gitops.git"
+export GITEA_URL="https://gitea-$(kubectl --context="$MGMT" -n gitea  get svc gateway-proxy -ojsonpath='{.status.loadBalancer.ingress[*].ip}').nip.io/gitea/fruits-api-gitops.git"
 git remote add dev $GITEA_URL
 ```
 

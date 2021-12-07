@@ -21,6 +21,18 @@
         label: "{{ item.key }}"
       when: item.key != 'mgmt'
 
+    - name: "Deploy db-adminer"
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('kubernetes.core.kustomize', dir=playbook_dir + '/manifests/dbadminer') }}"
+        wait: yes
+        wait_timeout: 120
+        context: "{{ item.value.k8s_context }}"
+      loop: "{{ gloo_clusters | dict2items}}"
+      loop_control:
+        label: "{{ item.key }}"
+      when: item.key != 'mgmt'
+
     - name: "direnv allow"
       ansible.builtin.command:
         argv:

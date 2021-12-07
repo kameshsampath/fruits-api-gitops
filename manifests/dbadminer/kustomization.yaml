@@ -1,0 +1,8 @@
+namespace: default
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+  - deployment.yaml
+  - service.yaml

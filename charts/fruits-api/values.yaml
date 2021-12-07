@@ -18,8 +18,8 @@ postgresql:
       postgresqlUsername: postgres
       postgresqlPassword: password
       servicePort: 5432
-    # the ConfigMap that will hold the DB init script
-    initdbScriptsConfigMap: postgres-schema
+  # the ConfigMap that will hold the DB init script
+  initdbScriptsConfigMap: postgres-schema
 
 # The fruits-api image to be used in the deployment
 image:

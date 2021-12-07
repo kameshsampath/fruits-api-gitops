@@ -1,5 +1,26 @@
 replicaCount: 1
 
+# Gloo Portal Configuration
+enablePortal: true
+
+# Enable Gloo Portal RBAC
+enableRBAC: false
+
+# The Portal suffix to use with Gloo Dev Portal
+# e.g. api.kameshs.me, portal.kamesh.me
+portalDomainSuffix: kameshs.me
+
+# DB Configuration to be used with Fruits API
+postgresql:
+  global:
+    postgresql:
+      postgresqlDatabase: fruitsdb
+      postgresqlUsername: postgres
+      postgresqlPassword: password
+      servicePort: 5432
+    # the ConfigMap that will hold the DB init script
+    initdbScriptsConfigMap: postgres-schema
+
 # The fruits-api image to be used in the deployment
 image:
   name: ghcr.io/kameshsampath/fruits-api
@@ -54,21 +75,3 @@ tolerations: [ ]
 
 # Kubernetes Pod Affinity
 affinity: { }
-
-# Gloo Portal Configuration
-# Enable Gloo Portal
-enableRBAC: false
-# The Portal suffix to use with Gloo Dev Portal
-# e.g. api.kameshs.me, portal.kamesh.me
-portalDomainSuffix: kameshs.me
-
-# DB Configuration to be used with Fruits API
-postgresql:
-  global:
-    postgresql:
-      postgresqlDatabase: fruitsdb
-      postgresqlUsername: postgres
-      postgresqlPassword: password
-      servicePort: 5432
-    # the ConfigMap that will hold the DB init script
-    initdbScriptsConfigMap: postgres-schema

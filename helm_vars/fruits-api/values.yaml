@@ -1,1 +1,3 @@
 enableRBAC: false
+enablePortal: false
+portalDomainSuffix: kameshs.me

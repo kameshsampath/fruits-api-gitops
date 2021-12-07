@@ -1,3 +1,4 @@
+{{- if .Values.enablePortal -}}
 apiVersion: portal.gloo.solo.io/v1beta1
 kind: APIDoc
 metadata:
@@ -8,3 +9,4 @@ spec:
   openApi:
     content:
       fetchUrl: "http://{{ include "fruits-api.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8080/swagger.json"
+{{- end }}

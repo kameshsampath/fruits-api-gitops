@@ -1,3 +1,4 @@
+{{- if .Values.enablePortal -}}
 apiVersion: portal.gloo.solo.io/v1beta1
 kind: Portal
 metadata:
@@ -23,4 +24,4 @@ spec:
 
   allApisPublicViewable: true # this will make APIs visible by unauthenticated users
   portalUrlPrefix: {{ printf "http://portal.%s/" .Values.portalDomainSuffix }}
-
+{{- end }}

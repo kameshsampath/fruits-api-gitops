@@ -1,4 +1,4 @@
 
 ```bash
-source $TUTORIAL_HOME/.envrc
+source $DEMO_HOME/.envrc
 ```

@@ -29,7 +29,7 @@ Lets ensure `poetry` is setup correctly, running the following command should re
 poetry --version
 ```
 
-Let us configure `poetry` to create the python3 virutalenv in the project directory `$TUTORIAL_HOME`,
+Let us configure `poetry` to create the python3 virutalenv in the project directory `$DEMO_HOME`,
 
 ```bash
 poetry config  virtualenvs.in-project true
@@ -41,7 +41,7 @@ To create the virutal environment run the following command,
 poetry install
 ```
 
-The command will instal all the required python modules in the `$TUTORIAL_HOME/.venv`.
+The command will instal all the required python modules in the `$DEMO_HOME/.venv`.
 
 Install the ansible roles and collections that will be used by the playbooks,
 

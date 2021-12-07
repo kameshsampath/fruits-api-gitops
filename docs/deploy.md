@@ -62,26 +62,72 @@ tkn hub install task openshift-client \
 
 ## Create Tektoncd pipelines
 
-Create the pipeline that will help us build the fruits-api application,
+As the piplines will build and push the container image to [ghcr.io](https://github.com/features/packages) it is required to have the following two variables set in your enviroment,
+
+```shell
+export GITHUB_USERNAME=<your github username>
+```
+
+```shell
+export GHCR_PASSWORD=<your Github PAT>
+```
+
+!!!important
+    `GHCR_PASSWORD` is the [GitHub PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) with the following permissions:
+
+     - repo **read** access
+     - package **write** access
+
+Create the pipeline `fruits-api-deploy`,
 
 ```bash
-kustomize build  pipelines | envsubst | kubectl apply --context $CLUSTER1 -f -
+kustomize build  pipelines \
+  | envsubst \
+  | kubectl apply --context $CLUSTER1 -f -
 ```
 
 ## Tekton Triggers
 
-The Tekton Triggers take care of rebuilding the application as and when the new code is pushed into the Git repository.
+The Tekton Triggers take care of rebuilding the application as and when the new code is committed into the Git repository.
 
-Get the gloo gateway-proxy LoadBalancer ip to configure the gloo routes and the same will be used to configure the Git Webhooks later,
+Get the gloo `gateway-proxy` LoadBalancer ip to configure the gloo routes and the same will be used to configure the Git Webhooks later,
 
 ```shell
 export GLOO_GATEWAY_PROXY_IP="$(kubectl --context="$CLUSTER1" -n gloo-system  get svc gateway-proxy -ojsonpath='{.status.loadBalancer.ingress[*].ip}')"
 ```
 
+Verify to see if it has value set,
+
+```shell
+echo "${GLOO_GATEWAY_PROXY_IP}"
+```
+
 Create Tekton Triggers that will run the image build once changes are pushed to fruits-api,
 
 ```bash
-kustomize build triggers  | envsubst | kubectl apply --context $CLUSTER1 -f -
+kustomize build triggers  \
+  | envsubst | kubectl apply --context $CLUSTER1 -f -
+```
+
+Wait for the Gitea event listener webhook to be running,
+
+```shell
+kubectl --context=$CLUSTER1 \
+  rollout status deploy/el-gitea-webhook --timeout=120s
+```
+
+## Create the dev remote to Gitea
+
+```shell
+export GITEA_URL="https://gitea-$(kubectl --context="$MGMT" -n gitea  get svc gateway-proxy -ojsonpath='{.status.loadBalancer.ingress[*].ip}')/gitea/fruits-api-gitops.git"
+git remote add dev $GITEA_URL
+```
+
+Commit and push the local code to the Gitea repository.
+
+```shell
+git commit -a -m "Repo Init"
+git push dev main
 ```
 
 ## GitOps

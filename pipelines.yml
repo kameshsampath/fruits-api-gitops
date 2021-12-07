@@ -41,7 +41,7 @@
          body:
            clone_addr: "{{ github_template_repos.fruits_api }}"
            uid: 1
-           repo_name: "fruits-api-2"
+           repo_name: "fruits-api"
          status_code:
            - 200
            - 201
@@ -81,7 +81,7 @@
          body:
            auto_init: false
            description: "Gloo Fruits API GitOps Demo"
-           name: "fruits-api-gitops-2"
+           name: "fruits-api-gitops"
            private: false
            default_branch: main
          status_code:

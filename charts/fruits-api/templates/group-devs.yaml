@@ -24,8 +24,8 @@ spec:
         usagePlans:
           - basic
     portals:
-      - name: fruits-portal
-        namespace: default
+      - name: {{ include "fruits-api.fullname" . }}
+        namespace: {{ Release.Namespace }}
   userSelector:
     matchLabels:
       groups.portal.gloo.solo.io/gloo-portal.developers: "true"

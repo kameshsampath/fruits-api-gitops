@@ -439,10 +439,6 @@
 
   <h1>Environment Setup</h1>
 
-<p>authors:
-- Kamesh Sampath<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#109;&#101;&#115;&#104;&#46;&#115;&#97;&#109;&#112;&#97;&#116;&#104;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#107;&#97;&#109;&#101;&#115;&#104;&#46;&#115;&#97;&#109;&#112;&#97;&#116;&#104;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
-  date: 2021-12-06</p>
-<hr />
 <p>At the end of this chapter you will have,</p>
 <ul class="task-list">
 <li class="task-list-item">
@@ -452,7 +448,7 @@
 <p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>mgmt</code> cluster will have Argocd and Gitea git repository manager</p>
 </li>
 <li class="task-list-item">
-<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>cluster</code> will have Tektoncd and Gloo Edge and Portal deployed</p>
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>cluster1</code> will have Tektoncd, Gloo Edge and Portal deployed</p>
 </li>
 </ul>
 <h2 id="ensure-poetry">Ensure Poetry<a class="headerlink" href="#ensure-poetry" title="Permanent link">&para;</a></h2>
@@ -489,12 +485,12 @@
 <p class="admonition-title">Note</p>
 <p>It will take few minutes for Gitea to be installed</p>
 </div>
-<p>The Gitea details are stored in the file <code>$DEMO_WORK_DIR/gitea-details.txt</code>.</p>
+<p>The Gitea details are stored in the file <code>$DEMO_WORK_DIR/gitea-details.yaml</code>.</p>
 <h3 id="deploy-argocd">Deploy Argocd<a class="headerlink" href="#deploy-argocd" title="Permanent link">&para;</a></h3>
 <p>The Argocd could by deployed by:</p>
 <div class="highlight"><pre><span></span><code>make deploy-argocd
 </code></pre></div>
-<p>The Argocd details are stored in the file <code>$DEMO_WORK_DIR/argocd-details.txt</code>.</p>
+<p>The Argocd details are stored in the file <code>$DEMO_WORK_DIR/argocd-details.yaml</code>.</p>
 <h3 id="deploy-gloo-edge-and-portal">Deploy Gloo Edge and Portal<a class="headerlink" href="#deploy-gloo-edge-and-portal" title="Permanent link">&para;</a></h3>
 <p>The Gloo Edge enterprise and portal could be deployed via,</p>
 <div class="highlight"><pre><span></span><code>make deploy-gloo
@@ -508,9 +504,6 @@
 <div class="highlight"><pre><span></span><code>make deploy-nexus
 </code></pre></div>
 <p>The installation apart from installing the components, it will also download the companion tools such as <code>tkn</code>, <code>gitea</code>, <code>glooctl</code>, <code>kubectl</code> etc., on to <code>$DEMO_HOME/bin</code>.</p>
-<p>Lets add the tools to the path doing,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span> <span class="nv">$DEMO_WORK_DIR</span>/.envrc
-</code></pre></div>
 
               
             </article>

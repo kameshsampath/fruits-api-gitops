@@ -2,7 +2,7 @@
 apiVersion: portal.gloo.solo.io/v1beta1
 kind: APIDoc
 metadata:
-  name: apidoc-v1-fruits
+  name: {{ include "fruits-api.fullname" . }}-apidoc-v1
   labels:
     {{- include "fruits-api.labels" . | nindent 4 }}
 spec:

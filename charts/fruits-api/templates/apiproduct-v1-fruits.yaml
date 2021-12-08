@@ -2,7 +2,7 @@
 apiVersion: portal.gloo.solo.io/v1beta1
 kind: APIProduct
 metadata:
-  name: fruits-product
+  name: {{ include "fruits-api.fullname" . }}
   labels:
     {{- include "fruits-api.labels" . | nindent 4 }}
 spec:
@@ -13,13 +13,13 @@ spec:
     - name: v1
       apis:
         - apiDoc:
-            name: apidoc-v1-fruits
-            namespace: default
+            name: {{ include "fruits-api.fullname" . }}-apidoc-v1
+            namespace: {{ .Release.Namespace }}
       gatewayConfig:
         route:
           inlineRoute:
             backends:
               - upstream:
-                  name: default-{{ include "fruits-api.fullname" . }}-8080
+                  name: {{ .Release.Namespace }}-{{ include "fruits-api.fullname" . }}-8080
                   namespace: gloo-system
 {{- end }}

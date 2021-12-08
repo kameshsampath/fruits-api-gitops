@@ -2,7 +2,7 @@
 apiVersion: portal.gloo.solo.io/v1beta1
 kind: Portal
 metadata:
-  name: fruits-portal
+  name: {{ include "fruits-api.fullname" . }}
   labels:
     {{- include "fruits-api.labels" . | nindent 4 }}
 spec:
@@ -19,7 +19,7 @@ spec:
     - {{ printf "portal.%s" .Values.portalDomainSuffix }}
 
   publishedEnvironments:
-    - name: dev
+    - name: {{ include "fruits-api.fullname" . }}-dev
       namespace: default
 
   allApisPublicViewable: true # this will make APIs visible by unauthenticated users

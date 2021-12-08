@@ -2,8 +2,8 @@
 apiVersion: portal.gloo.solo.io/v1beta1
 kind: Environment
 metadata:
-  name: dev
-  namespace: default
+  name: {{ include "fruits-api.fullname" . }}-dev
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "fruits-api.labels" . | nindent 4 }}
 spec:

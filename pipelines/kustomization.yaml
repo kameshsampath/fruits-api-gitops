@@ -9,6 +9,7 @@ configMapGenerator:
       - settings.xml
 resources:
   - github-credentials.yaml
+  - quayio-credentials.yaml
   - rbac
   - git-source-pvc.yaml
   - pom-version-task.yaml

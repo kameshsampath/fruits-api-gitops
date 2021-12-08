@@ -93,7 +93,7 @@ tkn pipeline start fruits-api-deploy \
   --serviceaccount=pipeline \
   --param git-url=https://gitea-192.168.64.81.nip.io/gitea/fruits-api \
   --param git-ssl-verify=false \
-  --param image-name=ghcr.io/kameshsampath/fruits-api \
+  --param image-name=quay.io/kameshsampath/fruits-api \
   --workspace name=maven-settings,config=maven-settings \
   --workspace name=git-source,claimName=fruits-api-git-source \
   --use-param-defaults \

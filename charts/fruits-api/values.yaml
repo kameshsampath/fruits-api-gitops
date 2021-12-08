@@ -23,7 +23,7 @@ postgresql:
 
 # The fruits-api image to be used in the deployment
 image:
-  name: ghcr.io/kameshsampath/fruits-api
+  name: quay.io/kameshsampath/fruits-api
   pullPolicy: IfNotPresent
   tag: ""
 

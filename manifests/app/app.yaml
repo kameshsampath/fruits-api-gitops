@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: fruits-api
   annotations:
-    argocd-image-updater.argoproj.io/image-list: "fruitsapi=ghcr.io/kameshsampath/fruits-api:1.x-0"
+    argocd-image-updater.argoproj.io/image-list: "fruitsapi=quay.io/kameshsampath/fruits-api:1.x-0"
 spec:
   destination:
     name: ''

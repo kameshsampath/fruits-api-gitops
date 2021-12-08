@@ -5,7 +5,7 @@
   roles:
     - role: kameshsampath.kubernetes_spices.argocd
   tasks:
-    - name: "Create ghcr.io token secret"
+    - name: "Create quay.io token secret"
       kubernetes.core.k8s:
         state: present
         definition:
@@ -13,10 +13,10 @@
           apiVersion: v1
           metadata:
             namespace: argocd
-            name: ghcr-io
+            name: quay-io
           data:
-            username: "{{ lookup('env', 'GITHUB_USERNAME') | b64encode }}"
-            token: "{{ lookup('env', 'GHCR_PASSWORD') | b64encode }}"
+            username: "{{ lookup('env', 'QUAYIO_USERNAME') | b64encode }}"
+            token: "{{ lookup('env', 'QUAYIO_PASSWORD') | b64encode }}"
         context: "{{ kubernetes_spices_argocd_k8s_context }}"
 
     - name: "Configure Image Updater Registries"
@@ -30,13 +30,13 @@
           data:
             registries.conf: |
               registries:
-                - name: ghcr
-                  prefix: ghcr.io
-                  api_url: https://docker.pkg.github.com
+                - name: quay
+                  prefix: quay.io
+                  api_url: https://quay.io
                   ping: yes
                   defaultns: kameshsampath
                   tagsortmode: latest-first
-                  credentials: secret:argocd/ghcr-io#token
+                  credentials: secret:argocd/quay-io#token
 
     - name: "direnv allow"
       ansible.builtin.command:

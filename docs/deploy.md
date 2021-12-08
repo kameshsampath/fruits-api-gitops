@@ -58,21 +58,15 @@ tkn hub install task openshift-client \
 
 ## Create Tektoncd pipelines
 
-As the piplines will build and push the container image to [ghcr.io](https://github.com/features/packages) it is required to have the following two variables set in your enviroment,
+As the piplines will build and push the container image to [quay.io](https://quay.io) it is required to have the following two variables set in your enviroment,
 
 ```shell
-export GITHUB_USERNAME=<your github username>
+export QUAYIO_USERNAME=<your github username>
 ```
 
 ```shell
-export GHCR_PASSWORD=<your Github PAT>
+export QUAYIO_PASSWORD=<your QUAY.io password/token>
 ```
-
-!!!important
-    `GHCR_PASSWORD` is the [GitHub PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) with the following permissions:
-
-     - repo **read** access
-     - package **write** access
 
 Create the pipeline `fruits-api-deploy`,
 

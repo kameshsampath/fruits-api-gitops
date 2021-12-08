@@ -1,10 +1,11 @@
 ---
-title: Fruits API GitOps Demo 
+title: Environment Setup
 summary: Quick and easy way to publish your APIs using solo.io Gloo 
 
 authors:
 - Kamesh Sampath<kamesh.sampath@hotmail.com>
-  date: 2021-12-06
+
+date: 2021-12-06
 ---
 
 At the end of this chapter you will have,
@@ -13,7 +14,7 @@ At the end of this chapter you will have,
 
 - [x] `mgmt` cluster will have Argocd and Gitea git repository manager
 
-- [x] `cluster` will have Tektoncd and Gloo Edge and Portal deployed
+- [x] `cluster1` will have Tektoncd, Gloo Edge and Portal deployed
 
 ## Ensure Poetry
 
@@ -74,7 +75,7 @@ make deploy-gitea
 !!! note
     It will take few minutes for Gitea to be installed
 
-The Gitea details are stored in the file `$DEMO_WORK_DIR/gitea-details.txt`.
+The Gitea details are stored in the file `$DEMO_WORK_DIR/gitea-details.yaml`.
 
 ### Deploy Argocd
 
@@ -84,7 +85,7 @@ The Argocd could by deployed by:
 make deploy-argocd
 ```
 
-The Argocd details are stored in the file `$DEMO_WORK_DIR/argocd-details.txt`.
+The Argocd details are stored in the file `$DEMO_WORK_DIR/argocd-details.yaml`.
 
 ### Deploy Gloo Edge and Portal
 
@@ -111,7 +112,3 @@ make deploy-nexus
 ```
 
 The installation apart from installing the components, it will also download the companion tools such as `tkn`, `gitea`, `glooctl`, `kubectl` etc., on to `$DEMO_HOME/bin`.
-
-Lets add the tools to the path doing,
-
----8<--- "includes/env.md"

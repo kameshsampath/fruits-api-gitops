@@ -16,12 +16,16 @@ spec:
     spec:
       containers:
         - name: db-adminer
-          image: docker.io/adminer
           env:
-            - name: ADMINER_DESIGN
-              value: nette
-            - name: ADMINER_DEFAULT_SERVER
-              value: postgresql
+          - name: ADMINER_SERVER
+            value: postgresql
+          - name: ADMINER_DRIVER
+            value: pgsql
+          - name: ADMINER_USERNAME
+            value: postgres
+          - name: ADMINER_PASSWORD
+            value: password
+          image: docker.io/michalhosna/adminer
           resources:
             limits:
               memory: "128Mi"

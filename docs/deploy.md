@@ -16,9 +16,9 @@ At the end of chapter you would have,
 
 ---8<--- "includes/env.md"
 
-## Pipelines
+## GitOps with Argocd and Tektoncd
 
-As part of the demo we will be using [tektoncd](https://tekton.dev) pipelines to build and push the image to the container registry.
+As part of the demo we will be using [tektoncd](https://tekton.dev) to perform the **CI** part of building the container image and [argocd](https://argoproj.github.io) to do the **CD** part of synchnronizing the clusters using GitOps.
 
 ### Deploy Tektoncd Tasks
 
@@ -56,7 +56,7 @@ tkn hub install task openshift-client \
   --context="$CLUSTER1" 
 ```
 
-## Create Tektoncd pipelines
+### Create Tektoncd pipelines
 
 As the piplines will build and push the container image to [quay.io](https://quay.io) it is required to have the following two variables set in your enviroment,
 
@@ -76,7 +76,7 @@ kustomize build  pipelines \
   | kubectl apply --context $CLUSTER1 -f -
 ```
 
-## Tekton Triggers
+### Tekton Triggers
 
 The Tekton Triggers take care of rebuilding the application as and when the new code is committed into the Git repository.
 
@@ -106,25 +106,9 @@ kubectl --context=$CLUSTER1 \
   rollout status deploy/el-gitea-webhook --timeout=120s
 ```
 
-## Create the dev remote to Gitea
-
-```shell
-export FRUITS_API_GITOPS_REPO_URL="https://gitea-$(kubectl --context="$MGMT" -n gitea  get svc gateway-proxy -ojsonpath='{.status.loadBalancer.ingress[*].ip}').nip.io/gitea/fruits-api-gitops.git"
-git remote add dev $FRUITS_API_GITOPS_REPO_URL
-```
-
-Commit and push the local code to the Gitea repository.
-
-```shell
-git commit -a -m "Repo Init"
-git push dev main
-```
-
 The default Gitea credentials is `gitea/password`.
 
-## GitOps with Argocd
-
-## Add Gitea Repository to Argocd
+### Add Gitea Repository to Argocd
 
 As the Gitea repository we will be using local and uses self signed certificates, let us configure that in Argocd to skip `sslVerify`,
 
@@ -145,7 +129,7 @@ Add the local Gitea repository,
 argocd repo add "$(yq e '.gitea_url' work/gitea_details.yaml)/${GITEA_USERNAME}/fruits-api-gitops.git" --username "${GITEA_USERNAME}" --password "${GITEA_PASSWORD}" --insecure-skip-server-verification
 ```
 
-## Create Application
+### Create Application
 
 Query the `cluster1` info to get the cluster API URL and run the following command to create `fruits-api` ArgoCD application.
 
@@ -155,7 +139,7 @@ export TARGET_CLUSTER="$(kubectl --context="$CLUSTER1" cluster-info | sed 's/\x1
 yq eval \
   '.spec.destination.server = strenv(TARGET_CLUSTER) | .spec.source.repoURL = strenv(FRUITS_API_GITOPS_REPO_URL)' \
   manifests/app/app.yaml \
-  | kubectl apply --context="$MGMT" -n argocd -f - 
+  | kubectl --context="$MGMT" apply -n argocd -f - 
 ```
 
 The Argocd application will apply the helm chart `$DEMO_HOME/charts/fruits-api using Helm values from $DEMO_HOME/helm_vars/fruits-api/values.yaml`.
@@ -172,13 +156,13 @@ Wait for few mins while argocd synchronizes the resource.
 
 Once you see the resources synchronized you will see the image pull backoff as the version of image `quay.io/kameshsampath/fruits-api:1.0.0` is not yet available in the repo.
 
-![Image Pull Backoff](./images/img_pull_backoff.png){ align=left }
+![Image Pull Backoff](./images/img_pull_backoff.png){ align=center  }
 
-Lets trigger the pipeline to build and deploy the image to quay.io repository,
+Lets trigger the [pipeline](./pipelines/fruits-api-pipeline.yaml){ target=_blank }  to build and deploy the image to quay.io repository,
 
-![Build Image](./images/gitea_test_trigger.png){ align=left }
+![Build Image](./images/gitea_test_trigger.png){ align=center  }
 
-The trigger should have started a pipeline,
+The [trigger](./triggers/fruits-api-trigger-template.yaml){ target=_blank } should have started a pipeline,
 
 ```shell
 tkn pr --context="${CLUSTER1}" ls 
@@ -205,7 +189,11 @@ e.g. `tkn pr --context="${CLUSTER1}" logs -f fruits-api-vqpbl`
 
 The sucessful pipeline should push the image to quay.io.
 
+![Image](./images/image_in_registry.png){ align=center }
+
 Wait for few mins before Argocd updates the deployment with the pushed image and show fruits-api pod running successfully.
+
+![Image Updated](./images/img_updated.png){ align=center  }
 
 ### Routes
 
@@ -240,7 +228,11 @@ spec:
 EOF
 ```
 
-Now calling the service `http fruits-api-192.168.64.100.nip.io/api/fruits` will return a list of fruits.
+Now calling the service will return a list of fruits.
+
+```shell
+http fruits-api-192.168.64.100.nip.io/api/fruits
+```
 
 Lets delete the test route we have created as we will be using the Gloo Developer Portal to access the API.
 
@@ -258,30 +250,22 @@ git commit $DEMO_HOME/helm_vars/fruits-api/values.yaml -m "Enable Portal"
 git push dev main
 ```
 
-Wait for Argocd to synchroize the commit, once the commit is synchronized you should see the Gloo Portal resources created in the `default` namespace,
+Wait for Argocd to synchroize the commit, once the commit is synchronized you should see the following Gloo Portal resources created in the `default` namespace,
 
 ```shell
-kubectl --context="${CLUSTER1}" get apidocs,apiproducts,portal,environment
+kubectl --context="${CLUSTER1}" get apidocs,apiproducts,portal,environment -oname
 ```
 
 ```shell
-NAME                                          AGE
-apidoc.portal.gloo.solo.io/apidoc-v1-fruits   2m21s
-
-NAME                                            AGE
-apiproduct.portal.gloo.solo.io/fruits-product   2m21s
-
-NAME                                       AGE
-portal.portal.gloo.solo.io/fruits-portal   2m21s
-
-NAME                                  AGE
-environment.portal.gloo.solo.io/dev   2m21s
+apidoc.portal.gloo.solo.io/fruits-api-apidoc-v1
+apiproduct.portal.gloo.solo.io/fruits-api
+portal.portal.gloo.solo.io/fruits-api
+environment.portal.gloo.solo.io/fruits-api-dev
 ```
 
 Now you can open the portal on your browser using the domain `http://portal.kameshs.me`
 
 !!!tip
-   
     Update your `/etc/hosts` as shown to allow accessing the portal using domain names
     ```shell
       192.168.64.100 api.kameshs.me api
@@ -311,35 +295,53 @@ http api.kameshs.me/fruits/v1/api/fruits
 
 You should see you are not authorized,
 
-Let use geneate an API Key for `dev1`,
-
-```shell
- http api.kameshs.me/fruits/v1/api/fruits 'api-key: $API_KEY'
+```text
+HTTP/1.1 401 Unauthorized
+content-length: 0
+date: Wed, 08 Dec 2021 04:39:54 GMT
+server: envoy
+www-authenticate: API key is missing or invalid
 ```
 
-## Monetization
+The `enableRBAC` generates a default demo API key `Nzg4Y2VkODQtZTdlMS1mMzc0LWFhZGMtMGJjNDk4YmM5YTVl` that can be used to test the Authentication.
+
+```shell
+ http api.kameshs.me/fruits/v1/api/fruits "api-key: $API_KEY"
+```
+
+The API Key secret is stored in the `gloo-system` namespace, you can query it using the command:
+
+```shell
+kubectl --context=${CLUSTER1} get secrets -n gloo-system -lusageplans.portal.gloo.solo.io=basic -o yaml | yq e '.items[0].data["api-key"]' - | base64 -d
+```
+
+!!!tip
+    You can also create API Key secret as shown below, make the note of annotations as they are key for Gloo to recognoize the annotation
+    ```shell
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      labels:
+        apiproducts.portal.gloo.solo.io: fruits-product.default
+        environments.portal.gloo.solo.io: dev.default
+        usageplans.portal.gloo.solo.io: apikey
+      name: fruits-apikey-test
+      namespace: gloo-system
+    type: extauth.solo.io/apikey
+    stringData:
+      api-key: Nzg4Y2VkODQtZTdlMS1mMzc0LWFhZGMtMGJjNDk4YmM5YTVl
+      environment: dev
+      plan: basic
+      product: fruits-product.default
+      username: dev1
+    ```
+
+### Monetization
 
 Lets enable access to Admin console of the portal,
 
 ```shell
 kubectl --context="${CLUSTER1}"  -n gloo-portal port-forward svc/gloo-portal-admin-server 8080
-```
-
-### DB Setup
-
-Lets create the requests table,
-
-```shell
-kubectl --context="${CLUSTER1}" get cm \
-  -n gloo-system postgres-schema -o yaml \
-  | yq e '.data["init-schema.sql"]' > /tmp/gloo-portal-db.sql
-```
-
-Deploy the [DBAdminer](https://www.adminer.org) utility,
-
-```shell
-kubectl --context="${CLUSTER1}" apply -k mainfests/dbadminer
-kubectl --context="${CLUSTER1}" rollout status deploy/db-adminer
 ```
 
 Open the DB Adminer via the browser,
@@ -355,6 +357,12 @@ Lets fire some requests to the API to generate the API calls graph,
 ```shell
 for i in {1..5}; 
 do 
-  http api.kameshs.me/fruits/v1/api/fruits 'api-key: $API_KEY'
+  http api.kameshs.me/fruits/v1/api/fruits "api-key: $API_KEY"
 done
+```
+
+As our API plan allows only three requests per minute, you will start to get **HTTP 429** after three requests,
+
+```yaml hl_lines="23-25"
+---8<--- "charts/fruits-api/templates/dev-environment.yaml"
 ```

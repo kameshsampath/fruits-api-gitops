@@ -1,0 +1,19 @@
+{{- if .Values.enableRBAC -}}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ printf "%s-dev1-api-key" include "fruits-api.fullname" . }}
+  namespace: gloo-system
+  labels:
+    apiproducts.portal.gloo.solo.io: {{ printf "%s.%s" .Values.portal.demo.product .Release.Namespace }}
+    environments.portal.gloo.solo.io: {{ printf "%s.%s" .Values.portal.demo.environment .Release.Namespace }}
+    usageplans.portal.gloo.solo.io: {{ .Values.portal.demo.plan }}
+    {{- include "fruits-api.labels" . | nindent 4 }}
+type: extauth.solo.io/apikey
+stringdata:
+  api-key: {{ .Values.portal.demo.apiKey }}
+  environment:  {{ printf "%s.%s" .Values.portal.demo.environment .Release.Namespace }}
+  plan: {{ .Values.portal.demo.plan }}
+  product: {{ printf "%s.%s" .Values.portal.demo.product .Release.Namespace }}
+  username: {{ .Values.portal.demo.user }}
+{{- end }}

@@ -10,6 +10,14 @@ enableRBAC: false
 # e.g. api.kameshs.me, portal.kamesh.me
 portalDomainSuffix: kameshs.me
 
+portal:
+  demo:
+    apiKey: 'Nzg4Y2VkODQtZTdlMS1mMzc0LWFhZGMtMGJjNDk4YmM5YTVl'
+    environment: dev
+    plan: basic
+    product: fruits-product
+    username: dev1
+
 # DB Configuration to be used with Fruits API
 postgresql:
   global:

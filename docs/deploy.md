@@ -166,7 +166,48 @@ The helm values supports by the chart are,
 ---8<--- "charts/fruits-api/values.yaml"
 ```
 
-## Routes
+Wait for few mins while argocd synchronizes the resource.
+
+### Trigger Pipeline
+
+Once you see the resources synchronized you will see the image pull backoff as the version of image `quay.io/kameshsampath/fruits-api:1.0.0` is not yet available in the repo.
+
+![Image Pull Backoff](./images/img_pull_backoff.png){ align=left }
+
+Lets trigger the pipeline to build and deploy the image to quay.io repository,
+
+![Build Image](./images/gitea_test_trigger.png){ align=left }
+
+The trigger should have started a pipeline,
+
+```shell
+tkn pr --context="${CLUSTER1}" ls 
+```
+
+The command should show an output like,
+
+```shell
+NAME               STARTED          DURATION   STATUS
+fruits-api-vqpbl   26 seconds ago   ---        Running
+```
+
+You can get the logs of the pipeline by,
+
+```shell
+tkn pr --context="${CLUSTER1}" logs -f <pipeline id form earlier command> 
+```
+
+e.g. `tkn pr --context="${CLUSTER1}" logs -f fruits-api-vqpbl`
+
+!!!note
+    * The pipeline *NAME* may vary in your setup
+    * The first pipeline run will take time as it will cache maven artifacts to the nexus repository manager running in `cluster1`
+
+The sucessful pipeline should push the image to quay.io.
+
+Wait for few mins before Argocd updates the deployment with the pushed image and show fruits-api pod running successfully.
+
+### Routes
 
 As we have already deployed the Gloo Edge, the service should have been auto discovered via Gloo. Let us run the following command to verify it,
 

@@ -354,12 +354,25 @@
     Create Application
   </a>
   
+    <nav class="md-nav" aria-label="Create Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trigger-pipeline" class="md-nav__link">
+    Trigger Pipeline
+  </a>
+  
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#routes" class="md-nav__link">
     Routes
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -551,12 +564,25 @@
     Create Application
   </a>
   
+    <nav class="md-nav" aria-label="Create Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trigger-pipeline" class="md-nav__link">
+    Trigger Pipeline
+  </a>
+  
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#routes" class="md-nav__link">
     Routes
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -649,19 +675,11 @@
   --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span> 
 </code></pre></div>
 <h2 id="create-tektoncd-pipelines">Create Tektoncd pipelines<a class="headerlink" href="#create-tektoncd-pipelines" title="Permanent link">&para;</a></h2>
-<p>As the piplines will build and push the container image to <a href="https://github.com/features/packages">ghcr.io</a> it is required to have the following two variables set in your enviroment,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GITHUB_USERNAME</span><span class="o">=</span>&lt;your github username&gt;
+<p>As the piplines will build and push the container image to <a href="https://quay.io">quay.io</a> it is required to have the following two variables set in your enviroment,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">QUAYIO_USERNAME</span><span class="o">=</span>&lt;your github username&gt;
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GHCR_PASSWORD</span><span class="o">=</span>&lt;your Github PAT&gt;
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">QUAYIO_PASSWORD</span><span class="o">=</span>&lt;your QUAY.io password/token&gt;
 </code></pre></div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p><code>GHCR_PASSWORD</code> is the <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">GitHub PAT</a> with the following permissions:</p>
-<ul>
-<li>repo <strong>read</strong> access</li>
-<li>package <strong>write</strong> access</li>
-</ul>
-</div>
 <p>Create the pipeline <code>fruits-api-deploy</code>,</p>
 <div class="highlight"><pre><span></span><code>kustomize build  pipelines <span class="se">\</span>
   <span class="p">|</span> envsubst <span class="se">\</span>
@@ -742,7 +760,7 @@ yq <span class="nb">eval</span> <span class="se">\</span>
 
 <span class="c1"># The fruits-api image to be used in the deployment</span>
 <span class="nt">image</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ghcr.io/kameshsampath/fruits-api</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">quay.io/kameshsampath/fruits-api</span>
   <span class="nt">pullPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
   <span class="nt">tag</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
 
@@ -795,7 +813,33 @@ yq <span class="nb">eval</span> <span class="se">\</span>
 <span class="c1"># Kubernetes Pod Affinity</span>
 <span class="nt">affinity</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
 </code></pre></div>
-<h2 id="routes">Routes<a class="headerlink" href="#routes" title="Permanent link">&para;</a></h2>
+<p>Wait for few mins while argocd synchronizes the resource.</p>
+<h3 id="trigger-pipeline">Trigger Pipeline<a class="headerlink" href="#trigger-pipeline" title="Permanent link">&para;</a></h3>
+<p>Once you see the resources synchronized you will see the image pull backoff as the version of image <code>quay.io/kameshsampath/fruits-api:1.0.0</code> is not yet available in the repo.</p>
+<p><img align="left" alt="Image Pull Backoff" src="../images/img_pull_backoff.png" /></p>
+<p>Lets trigger the pipeline to build and deploy the image to quay.io repository,</p>
+<p><img align="left" alt="Build Image" src="../images/gitea_test_trigger.png" /></p>
+<p>The trigger should have started a pipeline,</p>
+<div class="highlight"><pre><span></span><code>tkn pr --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> ls 
+</code></pre></div>
+<p>The command should show an output like,</p>
+<div class="highlight"><pre><span></span><code>NAME               STARTED          DURATION   STATUS
+fruits-api-vqpbl   <span class="m">26</span> seconds ago   ---        Running
+</code></pre></div>
+<p>You can get the logs of the pipeline by,</p>
+<div class="highlight"><pre><span></span><code>tkn pr --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> logs -f &lt;pipeline id form earlier command&gt; 
+</code></pre></div>
+<p>e.g. <code>tkn pr --context="${CLUSTER1}" logs -f fruits-api-vqpbl</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>The pipeline <em>NAME</em> may vary in your setup</li>
+<li>The first pipeline run will take time as it will cache maven artifacts to the nexus repository manager running in <code>cluster1</code></li>
+</ul>
+</div>
+<p>The sucessful pipeline should push the image to quay.io.</p>
+<p>Wait for few mins before Argocd updates the deployment with the pushed image and show fruits-api pod running successfully.</p>
+<h3 id="routes">Routes<a class="headerlink" href="#routes" title="Permanent link">&para;</a></h3>
 <p>As we have already deployed the Gloo Edge, the service should have been auto discovered via Gloo. Let us run the following command to verify it,</p>
 <div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> get upstream default-fruits-api-8080 <span class="se">\</span>
   -n gloo-system -o yaml

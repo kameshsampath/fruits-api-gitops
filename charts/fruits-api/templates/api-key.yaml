@@ -5,14 +5,14 @@ metadata:
   name: {{ include "fruits-api.fullname" . }}-dev1-api-key
   namespace: gloo-system
   labels:
-    apiproducts.portal.gloo.solo.io: {{ printf "%s.%s" (include "fruits-api.fullname" .) .Release.Namespace }}-dev
-    environments.portal.gloo.solo.io: {{ printf "%s.%s" (include "fruits-api.fullname" .) .Release.Namespace }}
+    apiproducts.portal.gloo.solo.io: {{ printf "%s.%s" (include "fruits-api.fullname" .) .Release.Namespace }}
+    environments.portal.gloo.solo.io: {{ printf "%s-dev.%s" (include "fruits-api.fullname" .) .Release.Namespace }}
     usageplans.portal.gloo.solo.io: {{ .Values.portal.demo.plan }}
     {{- include "fruits-api.labels" . | nindent 4 }}
 type: extauth.solo.io/apikey
 stringData:
   api-key: {{ .Values.portal.demo.apiKey }}
-  environment:  {{ printf "%s.%s" ( include "fruits-api.fullname" .) .Release.Namespace }}
+  environment:  {{ printf "%s-dev.%s" ( include "fruits-api.fullname" .) .Release.Namespace }}
   plan: {{ .Values.portal.demo.plan }}
   product: {{ printf "%s.%s" ( include "fruits-api.fullname" .) .Release.Namespace }}-dev
   username: {{ .Values.portal.demo.username }}

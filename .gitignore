@@ -76,3 +76,4 @@ __pycache__
 *.tar.gz
 dist
 .envrc
+**/*.log

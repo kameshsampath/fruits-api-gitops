@@ -20,15 +20,15 @@ minikube_profiles:
     destroy: no
     addons:
       - metallb
-    lbStartIP: 192.168.64.80
-    lbEndIP: 192.168.64.90
+    lbStartIP: 192.168.205.80
+    lbEndIP: 192.168.205.90
   cluster1:
     create: yes
     destroy: no
     addons:
       - metallb
-    lbStartIP: 192.168.64.100
-    lbEndIP: 192.168.64.110
+    lbStartIP: 192.168.205.100
+    lbEndIP: 192.168.205.110
 # Gloo Edge Kubernetes clusters
 gloo_clusters:
   cluster1:
@@ -37,7 +37,7 @@ gloo_clusters:
     cluster_name: cluster1
     enable_portal: yes
 
-enable_portal_monetization: yes
+enable_portal_monetization: no
 
 kubernetes_spices_argocd_k8s_context: "mgmt"
 kubernetes_spices_tektoncd_k8s_context: "cluster1"

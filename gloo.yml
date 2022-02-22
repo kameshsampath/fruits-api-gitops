@@ -5,6 +5,12 @@
   roles:
     - role: kameshsampath.gloo.edge
   tasks:
+    - name: "Setup .envrc"
+      ansible.builtin.blockinfile:
+        marker: "# {mark} fruits-api-gitops ANSIBLE MANAGED BLOCK"
+        path: "{{ work_dir }}/.envrc"
+        create: yes
+        block: "{{ lookup('template', playbook_dir + '/templates/' + '.envrc.j2') }}"
 
     - name: "direnv allow"
       ansible.builtin.command:

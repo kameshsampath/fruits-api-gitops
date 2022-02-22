@@ -16,33 +16,15 @@ At the end of this chapter you will have,
 
 - [x] `cluster1` will have Tektoncd, Gloo Edge and Portal deployed
 
-## Ensure Poetry
+## Ensure Python venv
 
-The project uses [poetry](https://python-poetry.org) to setup Python3 virtual environment to run ansible scripts. You can use `pipx` to install poetry by,
-
-```bash
-pipx install poetry && pipx ensurepath
-```
-
-Lets ensure `poetry` is setup correctly, running the following command should return the version of the installed `poetry` utility.
+To create the virtual environment run the following command,
 
 ```bash
-poetry --version
+direnv allow .
 ```
 
-Let us configure `poetry` to create the python3 virutalenv in the project directory `$DEMO_HOME`,
-
-```bash
-poetry config  virtualenvs.in-project true
-```
-
-To create the virutal environment run the following command,
-
-```bash
-poetry install
-```
-
-The command will instal all the required python modules in the `$DEMO_HOME/.venv`.
+The command will instal all the required python modules in the `$DEMO_HOME/.direnv`.
 
 Install the ansible roles and collections that will be used by the playbooks,
 
@@ -50,11 +32,9 @@ Install the ansible roles and collections that will be used by the playbooks,
 make install-roles-and-collections
 ```
 
-!!! tip poetry run is shortcut to invoke the python3 modules from your virtualenv
-
 ## Setup Kubernetes Environment
 
-With Ansible environmnt ready we are all good to setup demo environment with required components installed,
+With Ansible environment ready we are all good to setup demo environment with required components installed,
 
 ### Minikube clusters
 

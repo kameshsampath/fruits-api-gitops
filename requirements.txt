@@ -1,0 +1,6 @@
+mkdocs-material
+ansible
+kubernetes
+jmespath
+jsonpatch
+pexpect

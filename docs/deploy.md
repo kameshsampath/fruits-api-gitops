@@ -58,7 +58,7 @@ tkn hub install task openshift-client \
 
 ### Create Tektoncd pipelines
 
-As the piplines will build and push the container image to [quay.io](https://quay.io) it is required to have the following two variables set in your enviroment,
+As the pipelines will build and push the container image to [quay.io](https://quay.io) it is required to have the following two variables set in your environment,
 
 ```shell
 export QUAYIO_USERNAME=<your github username>
@@ -231,7 +231,7 @@ EOF
 Now calling the service will return a list of fruits.
 
 ```shell
-http fruits-api-192.168.64.100.nip.io/api/fruits
+http "fruits-api-${GLOO_GATEWAY_PROXY_IP}.nip.io/api/fruits"
 ```
 
 Lets delete the test route we have created as we will be using the Gloo Developer Portal to access the API.

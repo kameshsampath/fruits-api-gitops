@@ -271,11 +271,15 @@ Now you can open the portal on your browser using the domain `http://portal.kame
       192.168.64.100 api.kameshs.me api
       192.168.64.100 portal.kameshs.me portal
     ```
-    Where `192.168.64.100` is the `minikube -pcluster1 ip`
+    Where `192.168.64.100` is the Gloo Gateway proxy address `$GLOO_GATEWAY_PROXY_IP`
 
 ### Enable Authentication
 
-As you have observed by navigating to the `APIs` that all APIs are read only. To make the portal accessible we need to enable authentication.
+As you have observed by navigating to the `APIs` that all APIs are read only. 
+
+![Need Authorization](./images/fruits_api_locked.png)
+
+To make the portal accessible we need to enable authentication.
 
 To enable porta edit and update the `$DEMO_HOME/helm_vars/fruits-api/values.yaml` **enablePortal** to **true**. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources,
 

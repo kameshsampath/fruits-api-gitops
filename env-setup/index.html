@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://kameshsampath.github.com/fruits-api-gitops/env-setup/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.5">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
     
     
       
@@ -19,10 +19,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a617204b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e8d9bf0c.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9204c3b2.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ensure-poetry" class="md-skip">
+        <a href="#ensure-python-venv" class="md-skip">
           Skip to content
         </a>
       
@@ -239,8 +239,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ensure-poetry" class="md-nav__link">
-    Ensure Poetry
+  <a href="#ensure-python-venv" class="md-nav__link">
+    Ensure Python venv
   </a>
   
 </li>
@@ -363,8 +363,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ensure-poetry" class="md-nav__link">
-    Ensure Poetry
+  <a href="#ensure-python-venv" class="md-nav__link">
+    Ensure Python venv
   </a>
   
 </li>
@@ -437,6 +437,7 @@
               
                 
 
+
   <h1>Environment Setup</h1>
 
 <p>At the end of this chapter you will have,</p>
@@ -451,28 +452,16 @@
 <p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>cluster1</code> will have Tektoncd, Gloo Edge and Portal deployed</p>
 </li>
 </ul>
-<h2 id="ensure-poetry">Ensure Poetry<a class="headerlink" href="#ensure-poetry" title="Permanent link">&para;</a></h2>
-<p>The project uses <a href="https://python-poetry.org">poetry</a> to setup Python3 virtual environment to run ansible scripts. You can use <code>pipx</code> to install poetry by,</p>
-<div class="highlight"><pre><span></span><code>pipx install poetry <span class="o">&amp;&amp;</span> pipx ensurepath
+<h2 id="ensure-python-venv">Ensure Python venv<a class="headerlink" href="#ensure-python-venv" title="Permanent link">&para;</a></h2>
+<p>To create the virtual environment run the following command,</p>
+<div class="highlight"><pre><span></span><code>direnv allow .
 </code></pre></div>
-<p>Lets ensure <code>poetry</code> is setup correctly, running the following command should return the version of the installed <code>poetry</code> utility.</p>
-<div class="highlight"><pre><span></span><code>poetry --version
-</code></pre></div>
-<p>Let us configure <code>poetry</code> to create the python3 virutalenv in the project directory <code>$DEMO_HOME</code>,</p>
-<div class="highlight"><pre><span></span><code>poetry config  virtualenvs.in-project <span class="nb">true</span>
-</code></pre></div>
-<p>To create the virutal environment run the following command,</p>
-<div class="highlight"><pre><span></span><code>poetry install
-</code></pre></div>
-<p>The command will instal all the required python modules in the <code>$DEMO_HOME/.venv</code>.</p>
+<p>The command will instal all the required python modules in the <code>$DEMO_HOME/.direnv</code>.</p>
 <p>Install the ansible roles and collections that will be used by the playbooks,</p>
 <div class="highlight"><pre><span></span><code>make install-roles-and-collections
 </code></pre></div>
-<div class="admonition tip poetry run is shortcut to invoke the python3 modules from your virtualenv">
-<p class="admonition-title">Tip</p>
-</div>
 <h2 id="setup-kubernetes-environment">Setup Kubernetes Environment<a class="headerlink" href="#setup-kubernetes-environment" title="Permanent link">&para;</a></h2>
-<p>With Ansible environmnt ready we are all good to setup demo environment with required components installed,</p>
+<p>With Ansible environment ready we are all good to setup demo environment with required components installed,</p>
 <h3 id="minikube-clusters">Minikube clusters<a class="headerlink" href="#minikube-clusters" title="Permanent link">&para;</a></h3>
 <p>The minikube clusters could be created by running:</p>
 <div class="highlight"><pre><span></span><code>make create-kube-clusters
@@ -569,10 +558,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.cefbb252.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+      <script src="../assets/javascripts/bundle.8aa65030.min.js"></script>
       
     
   </body>

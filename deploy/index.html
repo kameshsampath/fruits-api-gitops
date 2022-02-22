@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://kameshsampath.github.com/fruits-api-gitops/deploy/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.5">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
     
     
       
@@ -19,10 +19,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a617204b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e8d9bf0c.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9204c3b2.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -573,6 +573,7 @@
               
                 
 
+
   <h1>Deploy Microservices</h1>
 
 <p>At the end of chapter you would have,</p>
@@ -582,7 +583,7 @@
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Configure the Fruits API Webhook with Gitea</li>
 </ul>
 <h2 id="ensure-environment">Ensure Environment<a class="headerlink" href="#ensure-environment" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span> <span class="nv">$DEMO_WORK_DIR</span>/.envrc
+<div class="highlight"><pre><span></span><code>direnv allow .
 </code></pre></div>
 <h2 id="gitops-with-argocd-and-tektoncd">GitOps with Argocd and Tektoncd<a class="headerlink" href="#gitops-with-argocd-and-tektoncd" title="Permanent link">&para;</a></h2>
 <p>As part of the demo we will be using <a href="https://tekton.dev">tektoncd</a> to perform the <strong>CI</strong> part of building the container image and <a href="https://argoproj.github.io">argocd</a> to do the <strong>CD</strong> part of synchnronizing the clusters using GitOps.</p>
@@ -609,7 +610,7 @@
   --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span> 
 </code></pre></div>
 <h3 id="create-tektoncd-pipelines">Create Tektoncd pipelines<a class="headerlink" href="#create-tektoncd-pipelines" title="Permanent link">&para;</a></h3>
-<p>As the piplines will build and push the container image to <a href="https://quay.io">quay.io</a> it is required to have the following two variables set in your enviroment,</p>
+<p>As the pipelines will build and push the container image to <a href="https://quay.io">quay.io</a> it is required to have the following two variables set in your environment,</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">QUAYIO_USERNAME</span><span class="o">=</span>&lt;your github username&gt;
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">QUAYIO_PASSWORD</span><span class="o">=</span>&lt;your QUAY.io password/token&gt;
@@ -660,90 +661,90 @@ yq <span class="nb">eval</span> <span class="se">\</span>
 </code></pre></div>
 <p>The Argocd application will apply the helm chart <code>$DEMO_HOME/charts/fruits-api using Helm values from $DEMO_HOME/helm_vars/fruits-api/values.yaml</code>.</p>
 <p>The helm values supports by the chart are,</p>
-<div class="highlight"><pre><span></span><code><span class="nt">replicaCount</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<div class="highlight"><pre><span></span><code><span class="nt">replicaCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
 
-<span class="c1"># Gloo Portal Configuration</span>
-<span class="nt">enablePortal</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="c1"># Gloo Portal Configuration</span><span class="w"></span>
+<span class="nt">enablePortal</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
 
-<span class="c1"># Enable Gloo Portal RBAC</span>
-<span class="nt">enableRBAC</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="c1"># Enable Gloo Portal RBAC</span><span class="w"></span>
+<span class="nt">enableRBAC</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
 
-<span class="c1"># The Portal suffix to use with Gloo Dev Portal</span>
-<span class="c1"># e.g. api.kameshs.me, portal.kamesh.me</span>
-<span class="nt">portalDomainSuffix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kameshs.me</span>
+<span class="c1"># The Portal suffix to use with Gloo Dev Portal</span><span class="w"></span>
+<span class="c1"># e.g. api.kameshs.me, portal.kamesh.me</span><span class="w"></span>
+<span class="nt">portalDomainSuffix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kameshs.me</span><span class="w"></span>
 
-<span class="c1"># Fruits Portal configuration</span>
-<span class="nt">portal</span><span class="p">:</span>
-  <span class="nt">demo</span><span class="p">:</span>
-    <span class="nt">apiKey</span><span class="p">:</span> <span class="s">&#39;Nzg4Y2VkODQtZTdlMS1mMzc0LWFhZGMtMGJjNDk4YmM5YTVl&#39;</span>
-    <span class="nt">plan</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">basic</span>
-    <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dev1</span>
+<span class="c1"># Fruits Portal configuration</span><span class="w"></span>
+<span class="nt">portal</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">demo</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">apiKey</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Nzg4Y2VkODQtZTdlMS1mMzc0LWFhZGMtMGJjNDk4YmM5YTVl&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">plan</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basic</span><span class="w"></span>
+<span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev1</span><span class="w"></span>
 
-<span class="c1"># DB Configuration to be used with Fruits API</span>
-<span class="nt">postgresql</span><span class="p">:</span>
-  <span class="nt">global</span><span class="p">:</span>
-    <span class="nt">postgresql</span><span class="p">:</span>
-      <span class="nt">postgresqlDatabase</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">fruitsdb</span>
-      <span class="nt">postgresqlUsername</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
-      <span class="nt">postgresqlPassword</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">password</span>
-      <span class="nt">servicePort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5432</span>
-  <span class="c1"># the ConfigMap that will hold the DB init script</span>
-  <span class="nt">initdbScriptsConfigMap</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres-schema</span>
+<span class="c1"># DB Configuration to be used with Fruits API</span><span class="w"></span>
+<span class="nt">postgresql</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">global</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">postgresql</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">postgresqlDatabase</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fruitsdb</span><span class="w"></span>
+<span class="w">      </span><span class="nt">postgresqlUsername</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span><span class="w"></span>
+<span class="w">      </span><span class="nt">postgresqlPassword</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span><span class="w"></span>
+<span class="w">      </span><span class="nt">servicePort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5432</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># the ConfigMap that will hold the DB init script</span><span class="w"></span>
+<span class="w">  </span><span class="nt">initdbScriptsConfigMap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres-schema</span><span class="w"></span>
 
-<span class="c1"># The fruits-api image to be used in the deployment</span>
-<span class="nt">image</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">quay.io/kameshsampath/fruits-api</span>
-  <span class="nt">pullPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
-  <span class="nt">tag</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+<span class="c1"># The fruits-api image to be used in the deployment</span><span class="w"></span>
+<span class="nt">image</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quay.io/kameshsampath/fruits-api</span><span class="w"></span>
+<span class="w">  </span><span class="nt">pullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Always</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
 
-<span class="nt">imagePullSecrets</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="p p-Indicator">]</span>
-<span class="nt">nameOverride</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
-<span class="nt">fullnameOverride</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+<span class="nt">imagePullSecrets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="nt">nameOverride</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
+<span class="nt">fullnameOverride</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
 
-<span class="nt">serviceAccount</span><span class="p">:</span>
-  <span class="c1"># Specifies whether a service account should be created</span>
-  <span class="nt">create</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
-  <span class="c1"># Annotations to add to the service account</span>
-  <span class="nt">annotations</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
-  <span class="c1"># The name of the service account to use.</span>
-  <span class="c1"># If not set and create is true, a name is generated using the fullname template</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+<span class="nt">serviceAccount</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Specifies whether a service account should be created</span><span class="w"></span>
+<span class="w">  </span><span class="nt">create</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Annotations to add to the service account</span><span class="w"></span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># The name of the service account to use.</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># If not set and create is true, a name is generated using the fullname template</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"></span>
 
-<span class="nt">podAnnotations</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+<span class="nt">podAnnotations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"></span>
 
-<span class="nt">podSecurityContext</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
-<span class="c1"># fsGroup: 2000</span>
+<span class="nt">podSecurityContext</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"></span>
+<span class="c1"># fsGroup: 2000</span><span class="w"></span>
 
-<span class="nt">securityContext</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
-<span class="c1"># capabilities:</span>
-<span class="c1">#   drop:</span>
-<span class="c1">#   - ALL</span>
-<span class="c1"># readOnlyRootFilesystem: true</span>
-<span class="c1"># runAsNonRoot: true</span>
-<span class="c1"># runAsUser: 1000</span>
+<span class="nt">securityContext</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"></span>
+<span class="c1"># capabilities:</span><span class="w"></span>
+<span class="c1">#   drop:</span><span class="w"></span>
+<span class="c1">#   - ALL</span><span class="w"></span>
+<span class="c1"># readOnlyRootFilesystem: true</span><span class="w"></span>
+<span class="c1"># runAsNonRoot: true</span><span class="w"></span>
+<span class="c1"># runAsUser: 1000</span><span class="w"></span>
 
-<span class="c1"># The fruits-api Kubernetes Service</span>
-<span class="nt">service</span><span class="p">:</span>
-  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ClusterIP</span>
-  <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span>
+<span class="c1"># The fruits-api Kubernetes Service</span><span class="w"></span>
+<span class="nt">service</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterIP</span><span class="w"></span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"></span>
 
-<span class="c1"># the pod resource limit and requests</span>
-  <span class="nt">resources</span><span class="p">:</span>
-  <span class="nt">limits</span><span class="p">:</span>
-    <span class="nt">cpu</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">512m</span>
-    <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1Gi</span>
-  <span class="nt">requests</span><span class="p">:</span>
-    <span class="nt">cpu</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">256m</span>
-    <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">512Mi</span>
+<span class="c1"># the pod resource limit and requests</span><span class="w"></span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512m</span><span class="w"></span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span><span class="w"></span>
+<span class="w">  </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">256m</span><span class="w"></span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512Mi</span><span class="w"></span>
 
-<span class="c1"># Kubernetes NodeSelector Labels</span>
-<span class="nt">nodeSelector</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+<span class="c1"># Kubernetes NodeSelector Labels</span><span class="w"></span>
+<span class="nt">nodeSelector</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"></span>
 
-<span class="c1"># Kubernetes Pod Tolerations</span>
-<span class="nt">tolerations</span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="p p-Indicator">]</span>
+<span class="c1"># Kubernetes Pod Tolerations</span><span class="w"></span>
+<span class="nt">tolerations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w"></span>
 
-<span class="c1"># Kubernetes Pod Affinity</span>
-<span class="nt">affinity</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
+<span class="c1"># Kubernetes Pod Affinity</span><span class="w"></span>
+<span class="nt">affinity</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"></span>
 </code></pre></div>
 <p>Wait for few mins while argocd synchronizes the resource.</p>
 <h3 id="trigger-pipeline">Trigger Pipeline<a class="headerlink" href="#trigger-pipeline" title="Permanent link">&para;</a></h3>
@@ -800,7 +801,7 @@ fruits-api-vqpbl   <span class="m">26</span> seconds ago   ---        Running
 <span class="s">EOF</span>
 </code></pre></div>
 <p>Now calling the service will return a list of fruits.</p>
-<div class="highlight"><pre><span></span><code>http fruits-api-192.168.64.100.nip.io/api/fruits
+<div class="highlight"><pre><span></span><code>http <span class="s2">&quot;fruits-api-</span><span class="si">${</span><span class="nv">GLOO_GATEWAY_PROXY_IP</span><span class="si">}</span><span class="s2">.nip.io/api/fruits&quot;</span>
 </code></pre></div>
 <p>Lets delete the test route we have created as we will be using the Gloo Developer Portal to access the API.</p>
 <div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> delete vs -n gloo-system fruits-api-http
@@ -826,11 +827,13 @@ environment.portal.gloo.solo.io/fruits-api-dev
 <div class="highlight"><pre><span></span><code>  <span class="m">192</span>.168.64.100 api.kameshs.me api
   <span class="m">192</span>.168.64.100 portal.kameshs.me portal
 </code></pre></div>
-Where <code>192.168.64.100</code> is the <code>minikube -pcluster1 ip</code></p>
+Where <code>192.168.64.100</code> is the Gloo Gateway proxy address <code>$GLOO_GATEWAY_PROXY_IP</code></p>
 </div>
 <h3 id="enable-authentication">Enable Authentication<a class="headerlink" href="#enable-authentication" title="Permanent link">&para;</a></h3>
-<p>As you have observed by navigating to the <code>APIs</code> that all APIs are read only. To make the portal accessible we need to enable authentication.</p>
-<p>To enable porta edit and update the <code>$DEMO_HOME/helm_vars/fruits-api/values.yaml</code> <strong>enablePortal</strong> to <strong>true</strong>. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources,</p>
+<p>As you have observed by navigating to the <code>APIs</code> that all APIs are read only. </p>
+<p><img alt="Need Authorization" src="../images/fruits_api_locked.png" /></p>
+<p>To make the portal accessible we need to enable authentication.</p>
+<p>To enable portal edit and update the <code>$DEMO_HOME/helm_vars/fruits-api/values.yaml</code> <strong>enablePortal</strong> to <strong>true</strong>. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources,</p>
 <div class="highlight"><pre><span></span><code>yq -i e <span class="s1">&#39;.enableRBAC=true&#39;</span> <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml
 git commit <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml -m <span class="s2">&quot;Enable Portal RBAC&quot;</span>
 git push dev main
@@ -880,7 +883,7 @@ stringData:
 <p>Open the DB Adminer via the browser,</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DB_ADMINER_IP</span><span class="o">=</span><span class="k">$(</span>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> get svc db-adminer -ojsonpath<span class="o">=</span><span class="s1">&#39;{.status.loadBalancer.ingress[*].ip}&#39;</span><span class="k">)</span>
 </code></pre></div>
-<p>Open the url <code>http://$(DB_ADMINER_IP):8080</code>, use the <code>Posygresql</code> as database with user id <code>postgres</code> and password <code>password</code>. Then run the following SQL command to create the <em>requests</em> tabl using the sql <code>/tmp/gloo-portal-db.sql</code></p>
+<p>Open the url <code>http://$(DB_ADMINER_IP):8080</code>, use the <code>Postgresql</code> as database with user id <code>postgres</code> and password <code>password</code>. Then run the following SQL command to create the <em>requests</em> tabl using the sql <code>/tmp/gloo-portal-db.sql</code></p>
 <p>Lets fire some requests to the API to generate the API calls graph,</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span> i <span class="k">in</span> <span class="o">{</span><span class="m">1</span>..5<span class="o">}</span><span class="p">;</span> 
 <span class="k">do</span> 
@@ -888,58 +891,59 @@ stringData:
 <span class="k">done</span>
 </code></pre></div>
 <p>As our API plan allows only three requests per minute, you will start to get <strong>HTTP 429</strong> after three requests,</p>
-<div class="highlight"><pre><span></span><code><span class="p p-Indicator">{{</span><span class="nv">- if .Values.enablePortal -</span><span class="p p-Indicator">}}</span>
-<span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">portal.gloo.solo.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Environment</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">include &quot;fruits-api.fullname&quot; .</span> <span class="p p-Indicator">}}</span><span class="l l-Scalar l-Scalar-Plain">-dev</span>
-  <span class="nt">namespace</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">.Release.Namespace</span> <span class="p p-Indicator">}}</span>
-  <span class="nt">labels</span><span class="p">:</span>
-    <span class="p p-Indicator">{{</span><span class="nv">- include &quot;fruits-api.labels&quot; . | nindent 4</span> <span class="p p-Indicator">}}</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">domains</span><span class="p">:</span>
-    <span class="c1"># the domain name where the API will be exposed</span>
-    <span class="p p-Indicator">-</span> <span class="p p-Indicator">{{</span> <span class="nv">printf &quot;api.%s&quot; .Values.portalDomainSuffix</span> <span class="p p-Indicator">}}</span>
-  <span class="nt">displayInfo</span><span class="p">:</span>
-    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">This environment is meant for developers to deploy and test their APIs.</span>
-    <span class="nt">displayName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Development</span>
-  <span class="p p-Indicator">{{</span> <span class="nv">if .Values.enableRBAC</span> <span class="p p-Indicator">}}</span>
-  <span class="nt">parameters</span><span class="p">:</span>
-    <span class="nt">usagePlans</span><span class="p">:</span>
-      <span class="nt">basic</span><span class="p">:</span>
-        <span class="nt">displayName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Basic plan with API key auth</span>
-        <span class="nt">authPolicy</span><span class="p">:</span>
-          <span class="nt">apiKey</span><span class="p">:</span> <span class="p p-Indicator">{</span> <span class="p p-Indicator">}</span>
-<span class="hll">        <span class="nt">rateLimit</span><span class="p">:</span>
-</span><span class="hll">          <span class="nt">requestsPerUnit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
-</span><span class="hll">          <span class="nt">unit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MINUTE</span>
-</span>  <span class="p p-Indicator">{{</span> <span class="nv">end</span> <span class="p p-Indicator">}}</span>
-  <span class="c1"># a global basepath for our APIs</span>
-  <span class="nt">basePath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/fruits</span>
-  <span class="c1"># we will select our APIProduct using a selector and the 2 version of it</span>
-  <span class="nt">apiProducts</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">namespaces</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="s">&quot;*&quot;</span>
-      <span class="nt">labels</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="nt">key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">app.kubernetes.io/name</span>
-          <span class="nt">operator</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">In</span>
-          <span class="nt">values</span><span class="p">:</span>
-            <span class="p p-Indicator">-</span> <span class="p p-Indicator">{{</span> <span class="nv">include &quot;fruits-api.name&quot; .</span> <span class="p p-Indicator">}}</span>
-      <span class="nt">versions</span><span class="p">:</span>
-        <span class="nt">names</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-      <span class="c1"># this will dynamically prefix the API with the version names</span>
-      <span class="nt">basePath</span><span class="p">:</span> <span class="s">&quot;{%version%}&quot;</span>
-      <span class="p p-Indicator">{{</span> <span class="nv">if .Values.enableRBAC</span> <span class="p p-Indicator">}}</span>
-      <span class="nt">usagePlans</span><span class="p">:</span>
-       <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">basic</span>
-      <span class="p p-Indicator">{{</span> <span class="nv">end</span> <span class="p p-Indicator">}}</span>
-  <span class="nt">gatewayConfig</span><span class="p">:</span>
-    <span class="c1"># we actually want to expose the APIs on a Gateway (optional)</span>
-    <span class="nt">disableRoutes</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">{{</span><span class="nv">- if .Values.enablePortal -</span><span class="p p-Indicator">}}</span><span class="w"></span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">portal.gloo.solo.io/v1beta1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Environment</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">include &quot;fruits-api.fullname&quot; .</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="l l-Scalar l-Scalar-Plain">-dev</span><span class="w"></span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">.Release.Namespace</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="w"></span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">{{</span><span class="nv">- include &quot;fruits-api.labels&quot; . | nindent 4</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">domains</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># the domain name where the API will be exposed</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">printf &quot;api.%s&quot; .Values.portalDomainSuffix</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="w"></span>
+<span class="w">  </span><span class="nt">displayInfo</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">This environment is meant for developers to deploy and test their APIs.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Development</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">if .Values.enableRBAC</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="w"></span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">usagePlans</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">basic</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">displayName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Basic plan with API key auth</span><span class="w"></span>
+<span class="w">        </span><span class="nt">authPolicy</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">apiKey</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"> </span><span class="p p-Indicator">}</span><span class="w"></span>
+<span class="hll"><span class="w">        </span><span class="nt">rateLimit</span><span class="p">:</span><span class="w"></span>
+</span><span class="hll"><span class="w">          </span><span class="nt">requestsPerUnit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span><span class="w"></span>
+</span><span class="hll"><span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MINUTE</span><span class="w"></span>
+</span><span class="w">  </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">end</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># a global basepath for our APIs</span><span class="w"></span>
+<span class="w">  </span><span class="nt">basePath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/fruits</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># we will select our APIProduct using a selector and the 2 version of it</span><span class="w"></span>
+<span class="w">  </span><span class="nt">apiProducts</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">namespaces</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;*&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app.kubernetes.io/name</span><span class="w"></span>
+<span class="w">          </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In</span><span class="w"></span>
+<span class="w">          </span><span class="nt">values</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">include &quot;fruits-api.name&quot; .</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="w"></span>
+<span class="w">      </span><span class="nt">versions</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">names</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="w">      </span><span class="c1"># this will dynamically prefix the API with the version names</span><span class="w"></span>
+<span class="w">      </span><span class="nt">basePath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{%version%}&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">if .Values.enableRBAC</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="w"></span>
+<span class="w">      </span><span class="nt">usagePlans</span><span class="p">:</span><span class="w"></span>
+<span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basic</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">end</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="w"></span>
+<span class="w">  </span><span class="nt">gatewayConfig</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># we actually want to expose the APIs on a Gateway (optional)</span><span class="w"></span>
+<span class="w">    </span><span class="nt">disableRoutes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
 
-<span class="p p-Indicator">{{</span><span class="nv">- end</span> <span class="p p-Indicator">}}</span>
+<span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span><span class="w"></span>
 </code></pre></div>
+<p>But you should see some graphs geneated.</p>
 
               
             </article>
@@ -1005,10 +1009,10 @@ stringData:
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.cefbb252.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+      <script src="../assets/javascripts/bundle.8aa65030.min.js"></script>
       
     
   </body>

@@ -281,7 +281,7 @@ As you have observed by navigating to the `APIs` that all APIs are read only.
 
 To make the portal accessible we need to enable authentication.
 
-To enable porta edit and update the `$DEMO_HOME/helm_vars/fruits-api/values.yaml` **enablePortal** to **true**. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources,
+To enable portal edit and update the `$DEMO_HOME/helm_vars/fruits-api/values.yaml` **enablePortal** to **true**. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources,
 
 ```shell
 yq -i e '.enableRBAC=true' $DEMO_HOME/helm_vars/fruits-api/values.yaml
@@ -354,7 +354,7 @@ Open the DB Adminer via the browser,
 export DB_ADMINER_IP=$(kubectl --context="${CLUSTER1}" get svc db-adminer -ojsonpath='{.status.loadBalancer.ingress[*].ip}')
 ```
 
-Open the url `http://$(DB_ADMINER_IP):8080`, use the `Posygresql` as database with user id `postgres` and password `password`. Then run the following SQL command to create the *requests* tabl using the sql `/tmp/gloo-portal-db.sql`
+Open the url `http://$(DB_ADMINER_IP):8080`, use the `Postgresql` as database with user id `postgres` and password `password`. Then run the following SQL command to create the *requests* tabl using the sql `/tmp/gloo-portal-db.sql`
 
 Lets fire some requests to the API to generate the API calls graph,
 
@@ -370,3 +370,5 @@ As our API plan allows only three requests per minute, you will start to get **H
 ```yaml hl_lines="23-25"
 ---8<--- "charts/fruits-api/templates/dev-environment.yaml"
 ```
+
+But you should see some graphs geneated.

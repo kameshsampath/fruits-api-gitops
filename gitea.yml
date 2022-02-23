@@ -35,16 +35,11 @@
 
     - name: "Set Gitea Hostname"
       set_fact:
-        # kubernetes_spices_gitea_host_name:  "gitea-{{ git_service_result.resources[0] | json_query(q) | first }}.{{ kubernetes_spices_acme_dns_zone }}"
         kubernetes_spices_gitea_host_name:  "gitea.{{ kubernetes_spices_acme_dns_zone }}"
-      vars:
-        q: "status.loadBalancer.ingress[*].ip"
 
     - name: "Set Gitea Service Facts"
       set_fact:
         git_url: "https://{{ kubernetes_spices_gitea_host_name }}"
-      vars:
-        q: "status.loadBalancer.ingress[*].ip"
 
     - name: "Set Gitea Repo Facts"
       set_fact:
@@ -82,36 +77,6 @@
         namespace: "{{ kubernetes_spices_gitea_namespace  }}"
         state: present
 
-    - name: "Clone the template repo from github"
-      ansible.builtin.uri:
-        url: "{{ git_url }}/api/v1/repos/migrate"
-        user: "{{ gitea_admin_user.username }}"
-        password: "{{ gitea_admin_user.password }}"
-        method: POST
-        body:
-          clone_addr: '{{ github_template_repo }}'
-          uid: 1
-          repo_name: "{{ gitea_repo_name }}"
-        return_content: yes
-        status_code: 
-          - 200
-          - 201
-        body_format: json
-        validate_certs: no
-        force_basic_auth: yes
-      register: clone_repo_result
-      when: github_template_repo is defined
-
-    - name: "Add demo origin to current git repo"
-      ansible.builtin.command:
-        argv:
-          - git
-          - remote
-          - add
-          - demo
-          - "{{ git_repo_fqn }}"
-      when: github_template_repo is defined and not clone_repo_result.failed
-
     - name: "Dump Gitea Repo Details"
       ansible.builtin.copy:
         dest: "{{ work_dir }}/gitea_details.yaml"
@@ -131,4 +96,5 @@
         block: |
           export GITEA_USERNAME="{{ gitea_admin_user.username }}"
           export GITEA_PASSWORD="{{ gitea_admin_user.password }}"
+          export GITEA_URL="{{ gitea_url }}"
       when: st_envrc_file.stat.exists

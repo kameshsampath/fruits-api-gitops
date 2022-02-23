@@ -4,8 +4,8 @@ ENV_FILE := $(CURRENT_DIR)/.envrc
 
 create-venv:
 	direnv allow .
-  pip install -r requirements.txt
-  pip install -r https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt
+	pip install -r requirements.txt
+	pip install -r https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt
 
 install-roles-and-collections:
 	@ansible-galaxy role install -r requirements.yml
@@ -56,6 +56,20 @@ deploy-registry:
 	direnv allow $(ENV_FILE)
 	@ansible-playbook registry.yml $(EXTRA_ARGS)
 	direnv allow $(ENV_FILE)
+
+install-pipeline-tasks:
+	tkn hub install task maven \
+  --version=0.2 \
+  --context="$(CLUSTER1)"
+	tkn hub install task git-clone \
+  --version=0.5 \
+  --context="$(CLUSTER1)"
+	tkn hub install task buildah \
+		--version=0.3 \
+		--context="$(CLUSTER1)"
+	tkn hub install task openshift-client \
+   --version=0.2 \
+  --context="$(CLUSTER1)"
 
 tools:
 	direnv allow $(ENV_FILE)

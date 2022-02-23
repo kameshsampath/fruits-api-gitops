@@ -88,7 +88,60 @@ make deploy-pipelines
 To make the demo builds faster we will use sonatype nexus repository manager, it be deployed by,
 
 ```bash
-make deploy-nexus
+make deploy-extras
 ```
 
 The installation apart from installing the components, it will also download the companion tools such as `tkn`, `gitea`, `glooctl`, `kubectl` etc., on to `$DEMO_HOME/bin`.
+
+## Demo Sources
+
+### Fruits API
+
+Clone the `fruits-api` demo sources,
+
+```shell
+git clone https://github.com/kameshsampath/fruits-api
+cd fruits-api
+```
+
+Add Gitea repo as `dev` remote,
+
+```shell
+export FRUITS_API_REPO_URL="$GITEA_URL/gitea/fruits-api.git"
+git remote add dev $FRUITS_API_REPO_URL
+```
+
+### Fruits API GitOps
+
+Clone the `fruits-api-gitops` demo sources from the GitHub respository,
+
+```shell
+cd ..
+git clone https://github.com/kameshsampath/fruits-api-gitops
+```
+
+For convinience, we will refer the clone demo sources folder as `$DEMO_HOME`,
+
+```shell
+export DEMO_HOME="$PWD"
+```
+
+Navigate to the gitops sources,
+
+```bash
+cd $DEMO_HOME
+```
+
+Add the git `dev` remote to Gitea,
+
+```shell
+export FRUITS_API_GITOPS_REPO_URL="$GITEA_URL/gitea/fruits-api-gitops.git"
+git remote add dev $FRUITS_API_GITOPS_REPO_URL
+```
+
+Commit and push the local code to the dev `remote`,
+
+```shell
+git commit -a -m "Repo Init"
+git push dev main
+```

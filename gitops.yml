@@ -3,6 +3,12 @@
   vars_files:
     - vars.yml
   vars:
+    #owner/repo format
+    gitea_repo_name: "gitea/{{ github_template_repo | basename }}"
+    # uncomment this to point to GitHub or other url,
+    # if this is not set it will use local gitea
+    # gitops_repo_url: 'https://gitea.kameshs.dev/'
+    # the cluster where the target applications will be deployed
     target_cluster_context: cluster1
     # the kubernetes context where we can find Argocd deployment
     git_k8s_context: mgmt
@@ -20,28 +26,46 @@
       set_fact:
         argocd_server_address: "{{ argcod_server_svc_result.resources[0].status.loadBalancer.ingress[0].ip }}"
 
+    - name: "Query Git url"
+      kubernetes.core.k8s_info:
+        kind: Service
+        name: gateway-proxy
+        namespace: gitea
+        context: "{{ git_k8s_context }}"
+      register: git_service_result
+      when: gitops_repo_url is not defined
+
+    - name: "Set Git Repo Facts"
+      set_fact:
+        git_url: "https://gitea.kameshs.dev"
+        git_repo_fqn: "https://gitea.kameshs.dev/{{ gitea_repo_name }}"
+      vars:
+        q: "status.loadBalancer.ingress[*].ip"
+      when: gitops_repo_url is not defined
+
+    - name: "Retrieve Gitea password"
+      ansible.builtin.slurp:
+         path: "{{ work_dir }}/gitea.password"
+      register: gitea_password
+
     - name: "Register demo git Repo"
       ansible.builtin.command:
         argv:
           - argocd
           - repo
           - add
-          - "{{ github_template_repos.fruits_api_gitops }}"
-          - --username="{{ ansible_env.GITHUB_USERNAME }}"
-          - --password="{{ ansible_env.GITHUB_PASSWORD }}"
-          - --insecure
-          - --insecure-skip-server-verification
+          - "{{ git_repo_fqn }}"
+          - --username="gitea"
+          - --password="{{ gitea_password['contents'] | b64decode }}"
           - --server={{ argocd_server_address }}
           - "{{ argocd_k8s_context }}"
-      environment:
-        KUBECONFIG: "{{ work_dir }}/.kube/config"
       loop_control:
         label: "{{ item.key }}"
 
     - name: "Register GitOps Facts"
       set_fact:
         kube_cluster_url: "{{ api.connection.host }}"
-        git_repository_url: "{{ github_template_repos.fruits_api_gitops }}"
+        git_repository_url: "{{ git_repo_fqn }}"
 
     - name: "Deploy Argocd Applications"
       kubernetes.core.helm:

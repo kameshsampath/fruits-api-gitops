@@ -1,0 +1,46 @@
+#jinja2: lstrip_blocks: "True"
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: {{ kubernetes_spices_acme_account_email }}
+
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-prod-ac-key
+
+    # ACME DNS-01 provider configurations
+    solvers:
+    # An empty 'selector' means that this solver matches all domains
+    - selector:
+        matchLabels:
+          "dns-provider": "azure"
+      dns01:
+        azureDNS:
+          clientID: {{ ansible_env.AZURE_CLIENT_ID }}
+          clientSecretSecretRef:
+          # The following is the secret we created in Kubernetes. Issuer will use this to present challenge to Azure DNS.
+            name: azuredns-{{ azure_dns_zone }}-config
+            key: client-secret
+          subscriptionID: {{ ansible_env.AZURE_SUBSCRIPTION_ID }}
+          tenantID: {{ ansible_env.AZURE_TENANT }}
+          resourceGroupName: {{ azure_resource_group }}
+          hostedZoneName: {{ azure_dns_zone }}
+          # Azure Cloud Environment, default to AzurePublicCloud
+          environment: AzurePublicCloud
+    # An empty 'selector' means that this solver matches all domains
+    - selector:
+        matchLabels:
+          "dns-provider": "gcp"
+      dns01:
+        cloudDNS:
+          # The ID of the GCP project
+          # reference: https://cert-manager.io/docs/tutorials/acme/dns-validation/
+          project: {{ ansible_env.CLOUDSDK_CORE_PROJECT }}
+          # This is the secret used to access the service account
+          serviceAccountSecretRef:
+            name: clouddns-{{ cloud_dns_zone }}-config
+            key: key.json

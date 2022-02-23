@@ -10,6 +10,8 @@ minikube_home_dir: "{{ work_dir }}/.minikube"
 helm_version: 3.7.1
 # the kubectl version
 kubectl_version: 1.21.6
+# cert manager version (comment this to install latest)
+cert_manager_version: v1.7.1
 
 # minikube Kubernetes Clusters
 minikube_profiles:
@@ -42,9 +44,19 @@ enable_portal_monetization: no
 kubernetes_spices_argocd_k8s_context: "mgmt"
 kubernetes_spices_tektoncd_k8s_context: "cluster1"
 
+# GCP Cloud DNS Zone
+cloud_dns_zone: kameshs.dev
+
+# Azure DNS Config
+azure_dns_zone: kameshs.me
+azure_resource_group: kameshs-rg
+azure_resource_location: southindia
+
+# which DNS to use for the demo application
+kubernetes_spices_acme_dns_zone: kameshs.dev
+
 # Gitea
 kubernetes_spices_gitea_k8s_context: "mgmt"
-gitea_tls_cert_path: "{{ work_dir}}/ssl/gitea-tls.crt"
 
 # GitHub Template Repo
 github_template_repos: 

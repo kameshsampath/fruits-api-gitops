@@ -1,0 +1,13 @@
+#jinja2: lstrip_blocks: "True"
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-{{ kubernetes_spices_acme_dns_zone }}
+  labels:
+    dns-provider: {{ acme_dns_resolver_provider }}
+spec:
+  secretName: wildcard-{{ kubernetes_spices_acme_dns_zone }}-tls
+  issuerRef:
+    name: {{ kubernetes_spices_certm_issuer }}
+  dnsNames:
+  - '*.{{ kubernetes_spices_acme_dns_zone }}'

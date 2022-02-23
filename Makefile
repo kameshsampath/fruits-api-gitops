@@ -4,6 +4,8 @@ ENV_FILE := $(CURRENT_DIR)/.envrc
 
 create-venv:
 	direnv allow .
+  pip install -r requirements.txt
+  pip install -r https://raw.githubusercontent.com/ansible-collections/azure/dev/requirements-azure.txt
 
 install-roles-and-collections:
 	@ansible-galaxy role install -r requirements.yml

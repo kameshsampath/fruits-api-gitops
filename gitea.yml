@@ -1,15 +1,134 @@
-- name: "Setup Gitea"
+- name: "Deploy Gitea"
   hosts: all
   vars_files:
     - vars.yml
-  
+  vars:
+    # one of letsencrypt-staging or letsencrypt-prod
+    kubernetes_spices_certm_issuer: letsencrypt-prod
+    # one of gcp or azure
+    acme_dns_resolver_provider: gcp
   roles:
-   - role: kameshsampath.kubernetes_spices.gitea
-  
+    - name: kameshsampath.kubernetes_spices.gitea
+    - name: certm
+      vars:
+        kubernetes_spices_cert_manager_k8s_context: "mgmt"
+        kubernetes_spices_certm_issuer_namespace: gitea
+        kubernetes_spices_acme_dns_zone: kameshs.dev
   tasks:
-    - name: "direnv allow"
+    - name: Create gitea wildcard certificate
+      kubernetes.core.k8s:
+        state: present
+        namespace: gitea
+        template:
+          - path: "{{ playbook_dir }}/templates/certs/wildcard-cert.yaml.j2"
+
+    - name: "Query Git url"
+      kubernetes.core.k8s_info:
+        kind: Service
+        name: gateway-proxy
+        namespace: "{{ kubernetes_spices_gitea_namespace  }}"
+        context: "{{ kubernetes_spices_gitea_k8s_context }}"
+      register: git_service_result
+
+    # - debug:
+    #     var: github_template_repo
+
+    - name: "Set Gitea Hostname"
+      set_fact:
+        # kubernetes_spices_gitea_host_name:  "gitea-{{ git_service_result.resources[0] | json_query(q) | first }}.{{ kubernetes_spices_acme_dns_zone }}"
+        kubernetes_spices_gitea_host_name:  "gitea.{{ kubernetes_spices_acme_dns_zone }}"
+      vars:
+        q: "status.loadBalancer.ingress[*].ip"
+
+    - name: "Set Gitea Service Facts"
+      set_fact:
+        git_url: "https://{{ kubernetes_spices_gitea_host_name }}"
+      vars:
+        q: "status.loadBalancer.ingress[*].ip"
+
+    - name: "Set Gitea Repo Facts"
+      set_fact:
+        git_repo_fqn: "{{ git_url }}/{{ gitea_admin_user.username }}/{{ github_template_repo | basename }}"
+        gitea_repo_name: "{{ github_template_repo | basename }}"
+      vars:
+        q: "status.loadBalancer.ingress[*].ip"
+      when: github_template_repo is defined
+
+    - name: "Generate Gitea config"
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/templates/gitea/gitea-values.yaml.j2"
+        dest: "{{ work_dir }}/gitea-values.yaml"
+
+    - name: "Deploy Gitea"
+      kubernetes.core.helm:
+        release_name: gitea
+        chart_ref: gitea-charts/gitea
+        release_namespace: "{{ kubernetes_spices_gitea_namespace }}"
+        create_namespace: yes
+        chart_version: "{{ gitea_version }}"
+        values_files:
+            - "{{ work_dir }}/gitea-values.yaml"
+        update_repo_cache: yes
+        context: "{{ kubernetes_spices_gitea_k8s_context }}"
+        wait: yes
+
+    # Gitea external access
+    - name: "Create/Update Gitea Upstream and Route"
+      kubernetes.core.k8s:
+        template: 
+          - path: "{{ playbook_dir }}/templates/gitea/gitea-upstream.yaml.j2"
+          - path: "{{ playbook_dir }}/templates/gitea/gitea-virtual-service.yaml.j2"
+        context: "{{ kubernetes_spices_gitea_k8s_context }}"
+        namespace: "{{ kubernetes_spices_gitea_namespace  }}"
+        state: present
+
+    - name: "Clone the template repo from github"
+      ansible.builtin.uri:
+        url: "{{ git_url }}/api/v1/repos/migrate"
+        user: "{{ gitea_admin_user.username }}"
+        password: "{{ gitea_admin_user.password }}"
+        method: POST
+        body:
+          clone_addr: '{{ github_template_repo }}'
+          uid: 1
+          repo_name: "{{ gitea_repo_name }}"
+        return_content: yes
+        status_code: 
+          - 200
+          - 201
+        body_format: json
+        validate_certs: no
+        force_basic_auth: yes
+      register: clone_repo_result
+      when: github_template_repo is defined
+
+    - name: "Add demo origin to current git repo"
       ansible.builtin.command:
         argv:
-          - direnv
-          - allow
-          - "{{ playbook_dir }}"
+          - git
+          - remote
+          - add
+          - demo
+          - "{{ git_repo_fqn }}"
+      when: github_template_repo is defined and not clone_repo_result.failed
+
+    - name: "Dump Gitea Repo Details"
+      ansible.builtin.copy:
+        dest: "{{ work_dir }}/gitea_details.yaml"
+        content: |
+            gitea_url: {{ git_url }}
+            gitea_credentials: {{ gitea_admin_user }}
+    
+    - name: "Checking if .envrc file exists"
+      ansible.builtin.stat:
+        path: "{{ work_dir }}/.envrc"
+      register: st_envrc_file
+  
+    - name: "Checking if .envrc file exists"
+      ansible.builtin.blockinfile:
+        path: "{{ work_dir }}/.envrc"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK GITEA"
+        block: |
+          export GITEA_USERNAME="{{ gitea_admin_user.username }}"
+          export GITEA_PASSWORD="{{ gitea_admin_user.password }}"
+      when: st_envrc_file.stat.exists

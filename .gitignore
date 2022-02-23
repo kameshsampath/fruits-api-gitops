@@ -78,3 +78,5 @@ dist
 .envrc.local
 **/*.log
 .direnv
+azure_acme_challenge.yml
+self_signed.yml

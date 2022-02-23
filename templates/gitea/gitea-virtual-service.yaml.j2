@@ -1,0 +1,22 @@
+#jinja2: lstrip_blocks: "True"
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: gitea-http
+  namespace: {{ kubernetes_spices_gitea_namespace }}
+spec:
+  sslConfig:
+    secretRef:
+      name: wildcard-{{ kubernetes_spices_acme_dns_zone }}-tls
+      namespace: {{ kubernetes_spices_gitea_namespace }}
+  virtualHost:
+    domains:
+      - "{{ kubernetes_spices_gitea_host_name }}"
+    routes:
+      - matchers:
+          - prefix: /
+        routeAction:
+          single:
+            upstream:
+              name: gitea-gitea-http-3000
+              namespace: gitea

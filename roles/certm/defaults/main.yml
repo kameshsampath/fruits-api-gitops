@@ -1,0 +1,8 @@
+kubernetes_spices_acme_challenge_provider: selfsigned
+kubernetes_spices_acme_dns_zone: sslip.io
+kubernetes_spices_ssl_dir: "{{ work_dir }}/ssl"
+kubernetes_spices_acme_account_email: kamesh.sampath@hotmail.com
+#https://acme-v02.api.letsencrypt.org/directory
+kubernetes_spices_acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
+kubernetes_spices_certm_issuer: staging
+kubernetes_spices_certm_namespace: cert-manager

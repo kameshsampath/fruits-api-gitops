@@ -1,0 +1,19 @@
+#jinja2: lstrip_blocks: "True"
+ingress:
+  hosts:
+    - host: {{ kubernetes_spices_gitea_host_name }}
+      paths:
+         - path: /
+           pathType:  Prefix
+  tls:
+    - secretName: wildcard-{{ kubernetes_spices_acme_dns_zone }}-tls
+      hosts:
+       - "{{ kubernetes_spices_gitea_host_name }}"
+gitea:
+  admin:
+    username: {{ gitea_admin_user.username }}
+    password: '{{ gitea_admin_user.password }}'
+    email: {{ gitea_admin_user.email }}
+  config:
+    server:
+      ROOT_URL: "https://{{ kubernetes_spices_gitea_host_name }}"

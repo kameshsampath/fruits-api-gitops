@@ -1,0 +1,13 @@
+#jinja2: lstrip_blocks: "True"
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  name: gitea-gitea-http-3000
+  namespace: {{ kubernetes_spices_gitea_namespace }}
+spec:
+  kube:
+    selector:
+      app: gitea
+    serviceName: gitea-http
+    serviceNamespace: {{ kubernetes_spices_gitea_namespace }}
+    servicePort: 3000

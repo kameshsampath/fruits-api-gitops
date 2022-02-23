@@ -57,6 +57,7 @@ kubernetes_spices_acme_dns_zone: kameshs.dev
 
 # Gitea
 kubernetes_spices_gitea_k8s_context: "mgmt"
+kubernetes_spices_gitea_namespace: "gitea"
 
 # GitHub Template Repo
 github_template_repos: 

@@ -56,6 +56,12 @@ tkn hub install task openshift-client \
   --context="$CLUSTER1" 
 ```
 
+!!!tip
+      You can also install all the tasks using the make target
+      ```shell
+        make install-pipeline-tasks
+      ```
+
 ### Create Tektoncd pipelines
 
 As the pipelines will build and push the container image to [quay.io](https://quay.io) it is required to have the following two variables set in your environment,
@@ -126,7 +132,7 @@ argocd login --insecure \
 Add the local Gitea repository,
 
 ```shell
-argocd repo add "$(yq e '.gitea_url' work/gitea_details.yaml)/${GITEA_USERNAME}/fruits-api-gitops.git" --username "${GITEA_USERNAME}" --password "${GITEA_PASSWORD}" --insecure-skip-server-verification
+argocd repo add "$(yq e '.gitea_url' work/gitea_details.yaml)/${GITEA_USERNAME}/fruits-api-gitops.git" --username "${GITEA_USERNAME}" --password "${GITEA_PASSWORD}"
 ```
 
 ### Create Application

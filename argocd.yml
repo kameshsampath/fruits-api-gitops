@@ -2,9 +2,56 @@
   hosts: all
   vars_files:
     - vars.yml
+  vars:
+    # https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml#L33
+    # https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
+    kubernetes_spices_argocd_host_aliases: []
+    # set to false if you dont need to add the aliases
+    kubernetes_spices_argocd_add_host_aliases: true
   roles:
     - role: kameshsampath.kubernetes_spices.argocd
   tasks:
+    - name: Query Gitea url
+      kubernetes.core.k8s_info:
+        kind: Service
+        name: gateway-proxy
+        namespace: "{{ kubernetes_spices_gitea_namespace  }}"
+        context: "{{ kubernetes_spices_gitea_k8s_context }}"
+      register: git_service_result
+      when: kubernetes_spices_argocd_add_host_aliases
+    
+    - name: Set Gitea Host Aliases
+      set_fact:
+        kubernetes_spices_argocd_host_aliases:
+          - ip: "{{ git_service_result.resources[0] | json_query(q) | first }}"
+            hostnames:
+              - "{{ 'gitea.' + kubernetes_spices_acme_dns_zone }}"
+      vars:
+        q: "status.loadBalancer.ingress[*].ip"
+      when: kubernetes_spices_argocd_add_host_aliases
+
+    - name: Add argo-cd to use gitea host aliases
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/templates/argocd/values.yaml.j2"
+        dest: "{{ work_dir }}/argocd-values.yaml"
+        variable_start_string: '[['
+        variable_end_string: ']]'
+      when: kubernetes_spices_argocd_add_host_aliases
+
+    - name: "Rollout updates to  Argocd"
+      kubernetes.core.helm:
+        release_name: argocd
+        chart_ref: argo/argo-cd
+        release_namespace: "{{ kubernetes_spices_argocd_namespace }}"
+        create_namespace: yes
+        chart_version: "{{ kubernetes_spices_argocd_chart_version }}"
+        values_files:
+            - "{{ work_dir }}/argocd-values.yaml"
+        update_repo_cache: yes
+        context: "{{ kubernetes_spices_argocd_k8s_context }}"
+        wait: yes
+      when: kubernetes_spices_argocd_add_host_aliases
+
     - name: "Create quay.io token secret"
       kubernetes.core.k8s:
         state: present

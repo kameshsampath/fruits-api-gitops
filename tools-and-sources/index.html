@@ -203,60 +203,9 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Get Started
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         Get Started
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#demo-sources" class="md-nav__link">
-    Demo Sources
-  </a>
-  
-    <nav class="md-nav" aria-label="Demo Sources">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fruits-api" class="md-nav__link">
-    Fruits API
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fruits-api-gitops" class="md-nav__link">
-    Fruits API GitOps
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -327,41 +276,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#demo-sources" class="md-nav__link">
-    Demo Sources
-  </a>
-  
-    <nav class="md-nav" aria-label="Demo Sources">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fruits-api" class="md-nav__link">
-    Fruits API
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fruits-api-gitops" class="md-nav__link">
-    Fruits API GitOps
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -413,16 +327,16 @@ proceeding further.</p>
 <td><a href="https://github.com/wercker/stern/releases/download/1.11.0/stern_windows_amd64.exe" target="_blank">Download</a></td>
 </tr>
 <tr>
-<td><a href="https://github.com/ansible/ansible" target="_blank">Ansible</a></td>
-<td><a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-macos">Install</a></td>
-<td><a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-specific-operating-systems" target="_blank">Install</a></td>
-<td>N.A</td>
-</tr>
-<tr>
 <td><a href="https://httpie.io">httpie</a></td>
 <td><a href="https://httpie.io/cli">Install</a></td>
 <td><a href="https://httpie.io/cli">Install</a></td>
 <td><a href="https://httpie.io/cli">Install</a></td>
+</tr>
+<tr>
+<td><a href="https://direnv.net/">direnv</a></td>
+<td><a href="https://direnv.net/">Install</a></td>
+<td><a href="https://direnv.net/">Install</a></td>
+<td><a href="https://direnv.net/">Install</a></td>
 </tr>
 </tbody>
 </table>
@@ -430,35 +344,6 @@ proceeding further.</p>
 <p class="admonition-title">Important</p>
 </div>
 <p>You will need Gloo Mesh Enterprise License Key to run the demo exercises. If you dont have one, get a trial license from <a href="https://lp.solo.io/request-trial">solo.io</a>.</p>
-<h2 id="demo-sources">Demo Sources<a class="headerlink" href="#demo-sources" title="Permanent link">&para;</a></h2>
-<h3 id="fruits-api">Fruits API<a class="headerlink" href="#fruits-api" title="Permanent link">&para;</a></h3>
-<p>Clone the <code>fruits-api</code> demo sources,</p>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/kameshsampath/fruits-api
-<span class="nb">cd</span> fruits-api
-</code></pre></div>
-<p>Add Gitea repo as <code>dev</code> remote,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">FRUITS_API_REPO_URL</span><span class="o">=</span><span class="s2">&quot;https://gitea-</span><span class="k">$(</span>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$MGMT</span><span class="s2">&quot;</span> -n gitea  get svc gateway-proxy -ojsonpath<span class="o">=</span><span class="s1">&#39;{.status.loadBalancer.ingress[*].ip}&#39;</span><span class="k">)</span><span class="s2">.nip.io/gitea/fruits-api.git&quot;</span>
-git remote add dev <span class="nv">$FRUITS_API_REPO_URL</span>
-</code></pre></div>
-<h3 id="fruits-api-gitops">Fruits API GitOps<a class="headerlink" href="#fruits-api-gitops" title="Permanent link">&para;</a></h3>
-<p>Clone the <code>fruits-api-gitops</code> demo sources from the GitHub respository,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ..
-git clone https://github.com/kameshsampath/fruits-api-gitops
-</code></pre></div>
-<p>For convinience, we will refer the clone demo sources folder as <code>$DEMO_HOME</code>,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DEMO_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">&quot;</span>
-</code></pre></div>
-<p>Navigate to the gitops sources,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> <span class="nv">$DEMO_HOME</span>
-</code></pre></div>
-<p>Add the git <code>dev</code> remote to Gitea,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">FRUITS_API_GITOPS_REPO_URL</span><span class="o">=</span><span class="s2">&quot;https://gitea-</span><span class="k">$(</span>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$MGMT</span><span class="s2">&quot;</span> -n gitea  get svc gateway-proxy -ojsonpath<span class="o">=</span><span class="s1">&#39;{.status.loadBalancer.ingress[*].ip}&#39;</span><span class="k">)</span><span class="s2">.nip.io/gitea/fruits-api-gitops.git&quot;</span>
-git remote add dev <span class="nv">$FRUITS_API_GITOPS_REPO_URL</span>
-</code></pre></div>
-<p>Commit and push the local code to the dev <code>remote</code>,</p>
-<div class="highlight"><pre><span></span><code>git commit -a -m <span class="s2">&quot;Repo Init&quot;</span>
-git push dev main
-</code></pre></div>
 
               
             </article>

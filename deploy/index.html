@@ -609,6 +609,12 @@
    --version<span class="o">=</span><span class="m">0</span>.2 <span class="se">\</span>
   --context<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$CLUSTER1</span><span class="s2">&quot;</span> 
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can also install all the tasks using the make target
+  <div class="highlight"><pre><span></span><code>  make install-pipeline-tasks
+</code></pre></div></p>
+</div>
 <h3 id="create-tektoncd-pipelines">Create Tektoncd pipelines<a class="headerlink" href="#create-tektoncd-pipelines" title="Permanent link">&para;</a></h3>
 <p>As the pipelines will build and push the container image to <a href="https://quay.io">quay.io</a> it is required to have the following two variables set in your environment,</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">QUAYIO_USERNAME</span><span class="o">=</span>&lt;your github username&gt;
@@ -648,7 +654,7 @@ argocd login --insecure <span class="se">\</span>
   --password <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARGOCD_ADMIN_PASSWORD</span><span class="si">}</span><span class="s2">&quot;</span>
 </code></pre></div>
 <p>Add the local Gitea repository,</p>
-<div class="highlight"><pre><span></span><code>argocd repo add <span class="s2">&quot;</span><span class="k">$(</span>yq e <span class="s1">&#39;.gitea_url&#39;</span> work/gitea_details.yaml<span class="k">)</span><span class="s2">/</span><span class="si">${</span><span class="nv">GITEA_USERNAME</span><span class="si">}</span><span class="s2">/fruits-api-gitops.git&quot;</span> --username <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GITEA_USERNAME</span><span class="si">}</span><span class="s2">&quot;</span> --password <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GITEA_PASSWORD</span><span class="si">}</span><span class="s2">&quot;</span> --insecure-skip-server-verification
+<div class="highlight"><pre><span></span><code>argocd repo add <span class="s2">&quot;</span><span class="k">$(</span>yq e <span class="s1">&#39;.gitea_url&#39;</span> work/gitea_details.yaml<span class="k">)</span><span class="s2">/</span><span class="si">${</span><span class="nv">GITEA_USERNAME</span><span class="si">}</span><span class="s2">/fruits-api-gitops.git&quot;</span> --username <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GITEA_USERNAME</span><span class="si">}</span><span class="s2">&quot;</span> --password <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GITEA_PASSWORD</span><span class="si">}</span><span class="s2">&quot;</span>
 </code></pre></div>
 <h3 id="create-application">Create Application<a class="headerlink" href="#create-application" title="Permanent link">&para;</a></h3>
 <p>Query the <code>cluster1</code> info to get the cluster API URL and run the following command to create <code>fruits-api</code> ArgoCD application.</p>

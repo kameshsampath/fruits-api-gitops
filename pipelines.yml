@@ -26,12 +26,15 @@
       kubernetes.core.k8s:
         state: patched
         kind: ConfigMap
-        name: tekton-pipelines
-        namespace: config-defaults
+        name: config-defaults
+        namespace: tekton-pipelines
         definition:
           data:
+            # https://tekton.dev/docs/pipelines/podtemplates/
+            # https://tekton.dev/docs/pipelines/install/#customizing-basic-execution-parameters
             default-pod-template: |
               hostAliases: {{ kubernetes_spices_pipelines_host_aliases}}
+        context: "{{ kubernetes_spices_tektoncd_k8s_context }}"
       when: kubernetes_spices_pipelines_host_aliases | length > 0
 
     - name: "Query Gitea Service"

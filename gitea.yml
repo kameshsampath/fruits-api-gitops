@@ -43,15 +43,12 @@
 
     - name: "Set Gitea Repo Facts"
       set_fact:
-        git_repo_fqn: "{{ git_url }}/{{ gitea_admin_user.username }}/{{ github_template_repo | basename }}"
-        gitea_repo_name: "{{ github_template_repo | basename }}"
-        kubernetes_spices_argocd_host_aliases:
+        kubernetes_spices_gitea_host_aliases:
           - ip: "{{ git_service_result.resources[0] | json_query(q) | first }}"
             hostnames:
               - "{{ 'gitea.' + kubernetes_spices_acme_dns_zone }}"
       vars:
         q: "status.loadBalancer.ingress[*].ip"
-      when: github_template_repo is defined
 
     - name: "Generate Gitea config"
       ansible.builtin.template:
@@ -102,5 +99,5 @@
         block: |
           export GITEA_USERNAME="{{ gitea_admin_user.username }}"
           export GITEA_PASSWORD="{{ gitea_admin_user.password }}"
-          export GITEA_URL="{{ gitea_url }}"
+          export GITEA_URL="{{ git_url }}"
       when: st_envrc_file.stat.exists

@@ -365,6 +365,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#enable-rbac" class="md-nav__link">
+    Enable RBAC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#enable-authentication" class="md-nav__link">
     Enable Authentication
   </a>
@@ -540,6 +547,13 @@
   
     <nav class="md-nav" aria-label="Portal">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-rbac" class="md-nav__link">
+    Enable RBAC
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#enable-authentication" class="md-nav__link">
@@ -813,12 +827,20 @@ fruits-api-vqpbl   <span class="m">26</span> seconds ago   ---        Running
 <div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> delete vs -n gloo-system fruits-api-http
 </code></pre></div>
 <h2 id="portal">Portal<a class="headerlink" href="#portal" title="Permanent link">&para;</a></h2>
-<p>To enable porta edit and update the <code>$DEMO_HOME/helm_vars/fruits-api/values.yaml</code> <strong>enablePortal</strong> to <strong>true</strong>. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources,</p>
+<p>To enable portal edit and update the <code>$DEMO_HOME/helm_vars/fruits-api/values.yaml</code> <strong>enablePortal</strong> to <strong>true</strong>. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources.</p>
+<p>(OR)</p>
 <div class="highlight"><pre><span></span><code>yq -i e <span class="s1">&#39;.enablePortal=true&#39;</span> <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml
-git commit <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml -m <span class="s2">&quot;Enable Portal&quot;</span>
+git commit <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml -m <span class="s2">&quot;Demo Enable Portal&quot;</span>
 git push dev main
 </code></pre></div>
-<p>Wait for Argocd to synchroize the commit, once the commit is synchronized you should see the following Gloo Portal resources created in the <code>default</code> namespace,</p>
+<h3 id="enable-rbac">Enable RBAC<a class="headerlink" href="#enable-rbac" title="Permanent link">&para;</a></h3>
+<p>Now let us enable authorizations on the using API Key, To enable portal edit and update the <code>$DEMO_HOME/helm_vars/fruits-api/values.yaml</code> <strong>enableRBAC</strong> to <strong>true</strong>. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources.</p>
+<p>(OR)</p>
+<div class="highlight"><pre><span></span><code>yq -i e <span class="s1">&#39;.enableRBAC=true&#39;</span> <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml
+git commit <span class="nv">$DEMO_HOME</span>/helm_vars/fruits-api/values.yaml -m <span class="s2">&quot;Demo Enable Portal RBAC&quot;</span>
+git push dev main
+</code></pre></div>
+<p>Wait for Argocd to synchronize the commit, once the commit is synchronized you should see the following Gloo Portal resources created in the <code>default</code> namespace,</p>
 <div class="highlight"><pre><span></span><code>kubectl --context<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER1</span><span class="si">}</span><span class="s2">&quot;</span> get apidocs,apiproducts,portal,environment -oname
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>apidoc.portal.gloo.solo.io/fruits-api-apidoc-v1

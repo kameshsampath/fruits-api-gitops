@@ -515,7 +515,8 @@
 <div class="highlight"><pre><span></span><code>make install-roles-and-collections
 </code></pre></div>
 <h2 id="setup-kubernetes-environment">Setup Kubernetes Environment<a class="headerlink" href="#setup-kubernetes-environment" title="Permanent link">&para;</a></h2>
-<p>With Ansible environment ready we are all good to setup demo environment with required components installed,</p>
+<p>With Ansible environment ready we are all good to setup demo environment with required components installed.</p>
+<p>Copy the <code>$DEMO_HOME/vars.yml</code> to <code>$DEMO_HOME/vars.local.yml</code> and edit the values to suit your environment.</p>
 <h3 id="minikube-clusters">Minikube clusters<a class="headerlink" href="#minikube-clusters" title="Permanent link">&para;</a></h3>
 <p>The minikube clusters could be created by running:</p>
 <div class="highlight"><pre><span></span><code>make create-kube-clusters

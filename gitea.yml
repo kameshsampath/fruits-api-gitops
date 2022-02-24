@@ -21,6 +21,13 @@
         namespace: gitea
         template:
           - path: "{{ playbook_dir }}/templates/certs/wildcard-cert.yaml.j2"
+        wait: yes
+        wait_condition:
+          reason: Ready
+          status: "True"
+          type: Ready
+        wait_sleep: 10
+        wait_timeout: 600
 
     - name: "Query Git url"
       kubernetes.core.k8s_info:

@@ -309,15 +309,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fruits-api" class="md-nav__link">
-    Fruits API
+  <a href="#fruits-api-gitops" class="md-nav__link">
+    Fruits API GitOps
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fruits-api-gitops" class="md-nav__link">
-    Fruits API GitOps
+  <a href="#fruits-api" class="md-nav__link">
+    Fruits API
   </a>
   
 </li>
@@ -460,15 +460,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fruits-api" class="md-nav__link">
-    Fruits API
+  <a href="#fruits-api-gitops" class="md-nav__link">
+    Fruits API GitOps
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fruits-api-gitops" class="md-nav__link">
-    Fruits API GitOps
+  <a href="#fruits-api" class="md-nav__link">
+    Fruits API
   </a>
   
 </li>
@@ -520,6 +520,10 @@
 <p>The minikube clusters could be created by running:</p>
 <div class="highlight"><pre><span></span><code>make create-kube-clusters
 </code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The order of the deployment in the following section is crucial as <strong>Argocd</strong> and <strong>Pipelines</strong> is dependent on the <strong>gitea</strong> deployment and its details.</p>
+</div>
 <h3 id="deploy-gitea">Deploy Gitea<a class="headerlink" href="#deploy-gitea" title="Permanent link">&para;</a></h3>
 <p>The Gitea git repository manager could by deployed by running:</p>
 <div class="highlight"><pre><span></span><code>make deploy-gitea
@@ -548,33 +552,34 @@
 </code></pre></div>
 <p>The installation apart from installing the components, it will also download the companion tools such as <code>tkn</code>, <code>gitea</code>, <code>glooctl</code>, <code>kubectl</code> etc., on to <code>$DEMO_HOME/bin</code>.</p>
 <h2 id="demo-sources">Demo Sources<a class="headerlink" href="#demo-sources" title="Permanent link">&para;</a></h2>
-<h3 id="fruits-api">Fruits API<a class="headerlink" href="#fruits-api" title="Permanent link">&para;</a></h3>
-<p>Clone the <code>fruits-api</code> demo sources,</p>
-<div class="highlight"><pre><span></span><code>git clone https://github.com/kameshsampath/fruits-api
-<span class="nb">cd</span> fruits-api
-</code></pre></div>
-<p>Add Gitea repo as <code>dev</code> remote,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">FRUITS_API_REPO_URL</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$GITEA_URL</span><span class="s2">/gitea/fruits-api.git&quot;</span>
-git remote add dev <span class="nv">$FRUITS_API_REPO_URL</span>
-</code></pre></div>
 <h3 id="fruits-api-gitops">Fruits API GitOps<a class="headerlink" href="#fruits-api-gitops" title="Permanent link">&para;</a></h3>
-<p>Clone the <code>fruits-api-gitops</code> demo sources from the GitHub respository,</p>
+<p>Clone the <code>fruits-api-gitops</code> demo sources from the GitHub repository,</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> ..
 git clone https://github.com/kameshsampath/fruits-api-gitops
 </code></pre></div>
-<p>For convinience, we will refer the clone demo sources folder as <code>$DEMO_HOME</code>,</p>
+<p>For convenience, we will refer the clone demo sources folder as <code>$DEMO_HOME</code>,</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DEMO_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">&quot;</span>
-</code></pre></div>
-<p>Navigate to the gitops sources,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> <span class="nv">$DEMO_HOME</span>
 </code></pre></div>
 <p>Add the git <code>dev</code> remote to Gitea,</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">FRUITS_API_GITOPS_REPO_URL</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$GITEA_URL</span><span class="s2">/gitea/fruits-api-gitops.git&quot;</span>
 git remote add dev <span class="nv">$FRUITS_API_GITOPS_REPO_URL</span>
 </code></pre></div>
 <p>Commit and push the local code to the dev <code>remote</code>,</p>
-<div class="highlight"><pre><span></span><code>git commit -a -m <span class="s2">&quot;Repo Init&quot;</span>
+<div class="highlight"><pre><span></span><code>git commit -a -m <span class="s2">&quot;Demo Setup&quot;</span>
 git push dev main
+</code></pre></div>
+<h3 id="fruits-api">Fruits API<a class="headerlink" href="#fruits-api" title="Permanent link">&para;</a></h3>
+<p>Clone the <code>fruits-api</code> demo sources,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ..
+git clone https://github.com/kameshsampath/fruits-api
+<span class="nb">cd</span> fruits-api
+</code></pre></div>
+<p>Add Gitea repo as <code>dev</code> remote,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">FRUITS_API_REPO_URL</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$GITEA_URL</span><span class="s2">/gitea/fruits-api.git&quot;</span>
+git remote add dev <span class="nv">$FRUITS_API_REPO_URL</span>
+</code></pre></div>
+<p>Navigate to the gitops sources,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> <span class="nv">$DEMO_HOME</span>
 </code></pre></div>
 
               

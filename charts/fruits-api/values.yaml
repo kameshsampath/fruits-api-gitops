@@ -1,7 +1,7 @@
 replicaCount: 1
 
 # Gloo Portal Configuration
-enablePortal: false
+enablePortal: true
 
 # Enable Gloo Portal RBAC
 enableRBAC: false

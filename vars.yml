@@ -41,6 +41,9 @@ gloo_clusters:
 
 enable_portal_monetization: no
 
+
+## Env Settings
+
 kubernetes_spices_argocd_k8s_context: "mgmt"
 kubernetes_spices_tektoncd_k8s_context: "cluster1"
 
@@ -54,6 +57,10 @@ azure_resource_location: southindia
 
 # which DNS to use for the demo application
 kubernetes_spices_acme_dns_zone: kameshs.dev
+# if you want to add gitea hostAliases to the argocd, pipelines etc.,
+# https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
+kubernetes_spices_gitea_add_host_aliases: true
+
 
 # Gitea
 kubernetes_spices_gitea_k8s_context: "mgmt"

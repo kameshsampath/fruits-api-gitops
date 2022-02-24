@@ -2,10 +2,37 @@
   hosts: all
   vars_files:
     - vars.yml
+  vars:
+    kubernetes_spices_pipelines_host_aliases: []
   roles:
    - role: kameshsampath.kubernetes_spices.tektoncd
 
   tasks:
+    - name: Include gitea_details
+      include_vars: 
+        file: "{{ work_dir }}/gitea_details.yaml"
+        name:  kubernetes_spices_gitea_details
+      when: kubernetes_spices_gitea_add_host_aliases
+   
+    # - debug: 
+    #    var: kubernetes_spices_gitea_details
+
+    - name: Add gitea hosts to step pods
+      set_fact:
+        kubernetes_spices_pipelines_host_aliases:  "{{ kubernetes_spices_pipelines_host_aliases + kubernetes_spices_gitea_details.kubernetes_spices_gitea_host_aliases }}"
+      when: kubernetes_spices_gitea_details is defined
+       
+    - name: Update tekton config-defaults to use hostAliases
+      kubernetes.core.k8s:
+        state: patched
+        kind: ConfigMap
+        name: tekton-pipelines
+        namespace: config-defaults
+        definition:
+          data:
+            default-pod-template: |
+              hostAliases: {{ kubernetes_spices_pipelines_host_aliases}}
+      when: kubernetes_spices_pipelines_host_aliases | length > 0
 
     - name: "Query Gitea Service"
       kubernetes.core.k8s_info:

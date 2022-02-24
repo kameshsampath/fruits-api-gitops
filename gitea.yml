@@ -45,6 +45,10 @@
       set_fact:
         git_repo_fqn: "{{ git_url }}/{{ gitea_admin_user.username }}/{{ github_template_repo | basename }}"
         gitea_repo_name: "{{ github_template_repo | basename }}"
+        kubernetes_spices_argocd_host_aliases:
+          - ip: "{{ git_service_result.resources[0] | json_query(q) | first }}"
+            hostnames:
+              - "{{ 'gitea.' + kubernetes_spices_acme_dns_zone }}"
       vars:
         q: "status.loadBalancer.ingress[*].ip"
       when: github_template_repo is defined
@@ -80,9 +84,11 @@
     - name: "Dump Gitea Repo Details"
       ansible.builtin.copy:
         dest: "{{ work_dir }}/gitea_details.yaml"
+        mode: "u=rwx,g=rw,o="
         content: |
             gitea_url: {{ git_url }}
             gitea_credentials: {{ gitea_admin_user }}
+            kubernetes_spices_gitea_host_aliases: {{ kubernetes_spices_gitea_host_aliases }}
     
     - name: "Checking if .envrc file exists"
       ansible.builtin.stat:

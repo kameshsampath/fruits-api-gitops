@@ -1,7 +1,7 @@
 - name: "Setup Argocd"
   hosts: all
   vars_files:
-    - vars.yml
+    - vars.local.yml
   vars:
     # https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml#L33
     # https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/

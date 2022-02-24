@@ -248,15 +248,29 @@ kubectl --context="${CLUSTER1}" delete vs -n gloo-system fruits-api-http
 
 ## Portal
 
-To enable porta edit and update the `$DEMO_HOME/helm_vars/fruits-api/values.yaml` **enablePortal** to **true**. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources,
+To enable portal edit and update the `$DEMO_HOME/helm_vars/fruits-api/values.yaml` **enablePortal** to **true**. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources.
+
+(OR)
 
 ```shell
 yq -i e '.enablePortal=true' $DEMO_HOME/helm_vars/fruits-api/values.yaml
-git commit $DEMO_HOME/helm_vars/fruits-api/values.yaml -m "Enable Portal"
+git commit $DEMO_HOME/helm_vars/fruits-api/values.yaml -m "Demo Enable Portal"
 git push dev main
 ```
 
-Wait for Argocd to synchroize the commit, once the commit is synchronized you should see the following Gloo Portal resources created in the `default` namespace,
+### Enable RBAC
+
+Now let us enable authorizations on the using API Key, To enable portal edit and update the `$DEMO_HOME/helm_vars/fruits-api/values.yaml` **enableRBAC** to **true**. Commit and push the code to git repository to see the Argocd synchronizing the application to create the new Gloo Portal resources.
+
+(OR)
+
+```shell
+yq -i e '.enableRBAC=true' $DEMO_HOME/helm_vars/fruits-api/values.yaml
+git commit $DEMO_HOME/helm_vars/fruits-api/values.yaml -m "Demo Enable Portal RBAC"
+git push dev main
+```
+
+Wait for Argocd to synchronize the commit, once the commit is synchronized you should see the following Gloo Portal resources created in the `default` namespace,
 
 ```shell
 kubectl --context="${CLUSTER1}" get apidocs,apiproducts,portal,environment -oname

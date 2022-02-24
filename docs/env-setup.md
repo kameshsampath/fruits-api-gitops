@@ -34,7 +34,9 @@ make install-roles-and-collections
 
 ## Setup Kubernetes Environment
 
-With Ansible environment ready we are all good to setup demo environment with required components installed,
+With Ansible environment ready we are all good to setup demo environment with required components installed.
+
+Copy the `$DEMO_HOME/vars.yml` to `$DEMO_HOME/vars.local.yml` and edit the values to suit your environment.
 
 ### Minikube clusters
 

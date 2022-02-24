@@ -1,7 +1,7 @@
 - name: "Deploy Argocd Applications"
   hosts: all
   vars_files:
-    - vars.yml
+    - vars.local.yml
   vars:
     #owner/repo format
     gitea_repo_name: "gitea/{{ github_template_repo | basename }}"

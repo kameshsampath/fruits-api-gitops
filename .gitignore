@@ -80,3 +80,4 @@ dist
 .direnv
 azure_acme_challenge.yml
 self_signed.yml
+vars.local.yml

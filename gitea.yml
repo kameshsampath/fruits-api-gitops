@@ -1,7 +1,7 @@
 - name: "Deploy Gitea"
   hosts: all
   vars_files:
-    - vars.yml
+    - vars.local.yml
   vars:
     # one of letsencrypt-staging or letsencrypt-prod
     kubernetes_spices_certm_issuer: letsencrypt-prod

@@ -1,7 +1,7 @@
 - name: "Deploy Tektoncd pipelines"
   hosts: all
   vars_files:
-    - vars.yml
+    - vars.local.yml
   vars:
     kubernetes_spices_pipelines_host_aliases: []
   roles:

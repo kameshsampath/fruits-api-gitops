@@ -1,7 +1,7 @@
 - name: "Extra Components used by Applications"
   hosts: all
   vars_files:
-    - vars.yml
+    - vars.local.yml
   tasks:
     - name: "Download Sonatype nexus manifest"
       ansible.builtin.get_url:

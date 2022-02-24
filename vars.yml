@@ -2,7 +2,7 @@
 work_dir: "{{ playbook_dir }}/work"
 # the kubeconfig directory
 kubeconfig_dir: "{{ work_dir }}/.kube"
-# the kubernetes version to use with minikube
+# the kubernetes version to use with minikube, unset this to set up with latest kubernetes  but the demos were tests with v1.21.6
 minikube_kubernetes_version: v1.21.6
 # the minikube home directory
 minikube_home_dir: "{{ work_dir }}/.minikube"
@@ -17,18 +17,20 @@ cert_manager_version: v1.7.1
 minikube_profiles:
   # cluster where management and infrastructure components are deployed
   # e.g. gitea, argocd
-  mgmt:
+  mgmt: # *_context variables can be mapped to this value
     create: yes
     destroy: no
     addons:
       - metallb
+    # Adjust these values as per minikube -p mgmt ip
     lbStartIP: 192.168.205.80
     lbEndIP: 192.168.205.90
-  cluster1:
+  cluster1: # *_context variables can be mapped to this value
     create: yes
     destroy: no
     addons:
       - metallb
+    # Adjust these values as per minikube -p cluster1 ip
     lbStartIP: 192.168.205.100
     lbEndIP: 192.168.205.110
 # Gloo Edge Kubernetes clusters
@@ -39,34 +41,53 @@ gloo_clusters:
     cluster_name: cluster1
     enable_portal: yes
 
+# Enable Gloo Portal Monetization feature
 enable_portal_monetization: no
-
 
 ## Env Settings
 
+## Right now the cert-manager setup is configured to use only Azure DNS and Google Cloud DNS
+# TODO AWS route53 Config 
+
+# The cluster where to install Argocd
 kubernetes_spices_argocd_k8s_context: "mgmt"
+# The cluster where to install Tekton pipelines
 kubernetes_spices_tektoncd_k8s_context: "cluster1"
 
-# GCP Cloud DNS Zone
-cloud_dns_zone: kameshs.dev
+# GCP Cloud DNS Zone e.g. example.com
+# Ensure you have the Google service account json and have that configured via .envrc.local
+# export CLOUDSDK_CORE_PROJECT=<your GCP project to use for Cloud DNS>
+# export GOOGLE_APPLICATION_CREDENTIALS=<path to your service account JSON file>
+cloud_dns_zone: <your Google Cloud DNS zone>
 
 # Azure DNS Config
-azure_dns_zone: kameshs.me
-azure_resource_group: kameshs-rg
-azure_resource_location: southindia
+# The setup uses Azure Service Principal for ACME resolver
+# https://cert-manager.io/docs/configuration/acme/dns01/azuredns/#service-principal
+# You can then add the following variables to the .envrc.local for the playbooks to use them while configuring cert-manager issuer
+# export AZURE_SUBSCRIPTION_ID=<your azure subscription id>
+# export AZURE_CLIENT_ID=<your azure client id>
+# export AZURE_SECRET=<your azure secret>
+# export AZURE_TENANT=<your azure tenant id>
+azure_dns_zone: <your Azure DNS zone>
+azure_resource_group: <your Azure DNS zone>
+azure_resource_location: <your Azure location>
 
 # which DNS to use for the demo application
-kubernetes_spices_acme_dns_zone: kameshs.dev
+kubernetes_spices_acme_dns_zone: <one of cloud_dns_zone or azure_dns_zone>
 # if you want to add gitea hostAliases to the argocd, pipelines etc.,
+# This is use for local setups and you have entries via /etc/hosts
 # https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
 kubernetes_spices_gitea_add_host_aliases: true
 
-
-# Gitea
+# For the demos GitOps we use gitea(https://gitea.com/) as the Git Repository manager
+# The Kubernetes context to install gitea
 kubernetes_spices_gitea_k8s_context: "mgmt"
+# The namespace to install gitea
 kubernetes_spices_gitea_namespace: "gitea"
 
-# GitHub Template Repo
+# GitHub Template Repos
+# These are used to do the initial repo setup with gitea they will be cloned 
+# and created in gitea
 github_template_repos: 
   fruits_api: 'https://github.com/kameshsampath/fruits-api.git'
   fruits_api_gitops: 'https://github.com/kameshsampath/fruits-api-gitops.git'

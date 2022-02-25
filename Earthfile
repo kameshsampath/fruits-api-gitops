@@ -119,8 +119,8 @@ aks-clusters:
 civo-clusters:
   LOCALLY
 
-  DO +CREATE_CIVO_CLUSTER --cluster_name="mgmt"
-  DO +SAVE_CIVO_KUBECONFIG --cluster_name="mgmt"
+  # DO +CREATE_CIVO_CLUSTER --cluster_name="mgmt"
+  # DO +SAVE_CIVO_KUBECONFIG --cluster_name="mgmt"
 
   DO +CREATE_CIVO_CLUSTER --cluster_name="cluster1" \
     --cluster_size='g4p.kube.medium' \

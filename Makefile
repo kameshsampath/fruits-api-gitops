@@ -72,6 +72,9 @@ install-pipeline-tasks:
    --version=0.2 \
   --context="$(CLUSTER1)"
 
+warm-m2-cache:	install-pipeline-tasks
+	kubectl --context=$(CLUSTER1) apply -f $(CURRENT_DIR)/pipelines/m2-cache.yaml
+
 tools:
 	direnv allow $(ENV_FILE)
 	@ansible-playbook tools.yml $(EXTRA_ARGS)

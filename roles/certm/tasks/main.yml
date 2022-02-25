@@ -53,6 +53,7 @@
 #   kubernetes.core.k8s:
 #     state: present
 #     src: "{{ work_dir }}/cert-manager.crds.yaml"
+#     context: "{{ kubernetes_spices_cert_manager_k8s_context }}"
 
 #######
 # https://artifacthub.io/packages/helm/cert-manager/cert-manager
@@ -79,9 +80,11 @@
     kind: Namespace
     name: "{{ kubernetes_spices_certm_issuer_namespace }}"
     state: present
+    context: "{{ kubernetes_spices_cert_manager_k8s_context }}"
 
 - name: "Create Azure DNS Secret"
   kubernetes.core.k8s:
+    context: "{{ kubernetes_spices_cert_manager_k8s_context }}"
     definition:
       apiVersion: v1
       kind: Secret
@@ -93,6 +96,7 @@
 
 - name: "Create GCP Cloud DNS Secret"
   kubernetes.core.k8s:
+    context: "{{ kubernetes_spices_cert_manager_k8s_context }}"
     definition:
       apiVersion: v1
       kind: Secret
@@ -106,6 +110,7 @@
 - name: Create Lets Encrypt Issuers
   kubernetes.core.k8s:
     state: present
+    context: "{{ kubernetes_spices_cert_manager_k8s_context }}"
     namespace: "{{ kubernetes_spices_certm_issuer_namespace}}"
     template:
       - path: "letsencrypt-staging-issuer.yaml.j2"

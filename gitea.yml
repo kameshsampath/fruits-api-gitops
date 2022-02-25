@@ -17,6 +17,7 @@
   tasks:
     - name: Create gitea wildcard certificate
       kubernetes.core.k8s:
+        context: "{{ kubernetes_spices_cert_manager_k8s_context }}"
         state: present
         namespace: gitea
         template:
@@ -31,6 +32,7 @@
 
     - name: "Query Git url"
       kubernetes.core.k8s_info:
+        context: "{{ kubernetes_spices_cert_manager_k8s_context }}"
         kind: Service
         name: gateway-proxy
         namespace: "{{ kubernetes_spices_gitea_namespace  }}"

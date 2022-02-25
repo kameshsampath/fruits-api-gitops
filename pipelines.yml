@@ -6,7 +6,6 @@
     kubernetes_spices_pipelines_host_aliases: []
   roles:
    - role: kameshsampath.kubernetes_spices.tektoncd
-
   tasks:
     - name: Include gitea_details
       include_vars: 
